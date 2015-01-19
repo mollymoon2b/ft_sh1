@@ -82,8 +82,7 @@ char	*ft_get_envpwd(char **env)
 		if (ft_strncmp("PWD", env[i], 2) == 0)
 		{
 			get_pwd_line = ft_strsub(ft_strdup(env[i]),
-										4,
-										ft_strlen(env[i]) - 4);
+				4, ft_strlen(env[i]) - 4);
 		}
 		++i;
 	}

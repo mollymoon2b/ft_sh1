@@ -63,6 +63,7 @@ SRC =	ft_memset.c				\
 			ft_strtolower.c 		\
 			ft_strdel_double_sp.c 	\
 			ft_strdup_tabtosp.c     \
+			ft_char_to_inc.c 		\
 			ft_strsplitint.c
 
 OBJ = $(SRC:.c=.o)

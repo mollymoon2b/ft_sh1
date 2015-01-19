@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup_tabtosp.c                                :+:      :+:    :+:   */
+/*   ft_chartab2inc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/19 10:47:48 by ade-bonn          #+#    #+#             */
-/*   Updated: 2015/01/19 10:47:51 by ade-bonn         ###   ########.fr       */
+/*   Created: 2015/01/19 14:59:50 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/01/19 14:59:55 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strdup_tabtosp(const char *str)
+char	**ft_chartab2inc(char **tab)
 {
-	char	*dest;
-	int		i;
+	char	**new_tab;
+	int		len;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (dest == NULL)
-		return (NULL);
-	while (str[i])
+	len = 0;
+	new_tab = NULL;
+	while (tab[len])
+		++len;
+	if (len != 0)
 	{
-		if (str[i] == '\t')
-			dest[i] = ' ';
-		else
-			dest[i] = str[i];
-		++i;
+		new_tab = (char **)malloc((len + 2) * sizeof(char *));
+		if (new_tab != NULL)
+		{
+			len = 0;
+			while (tab[len])
+			{
+				new_tab[len] = ft_strdup(tab[len]);
+				free(tab[len]);
+				++len;
+			}
+			new_tab[len + 1] = 0;
+			free(tab);
+		}
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (new_tab);
 }
