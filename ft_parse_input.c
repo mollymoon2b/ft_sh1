@@ -1,36 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_input.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/01/19 10:47:36 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/01/19 10:47:39 by ade-bonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
 #include "libft/libft.h"
 #include "ft_minishell.h"
 
-char	**ft_parse_get_args(char *input)
+void	ft_print_environ(t_env *shell)
 {
-	char	**argv;
+	int	i;
 
-	input = ft_strdel_double_sp(ft_strdup_tabtosp(input));
-	argv = ft_strsplit(input, ' ');
-	return (argv);
+	if (shell->env)
+	{
+		i = 0;
+		while (shell->env[i])
+		{
+			printf("%s\n", shell->env[i]);
+			++i;
+		}
+	}
 }
 
-void	ft_parse_input(t_shell **shell)
+int	ft_count_arg(char **av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+		++i;
+	return (i);
+}
+
+char	**ft_parse_args(char *input)
+{
+	char	**av;
+
+	input = ft_strdel_double_sp(ft_strdup_tabtosp(input));
+	av = ft_strsplit(input, ' ');
+	return (av);
+}
+
+void	ft_parse_input(t_env **shell)
 {
 	if (*(*shell)->input)
 	{
-		(*shell)->argv = ft_parse_get_args((*shell)->input);
-		(*shell)->argc = ft_count_arg((*shell)->argv);
-		if ((*shell)->argc != 0)
+		(*shell)->av = ft_parse_args((*shell)->input);
+		(*shell)->ac = ft_count_arg((*shell)->av);
+		if ((*shell)->ac != 0)
 		{
-			if (ft_strcmp(ft_strtolower((*shell)->argv[0]), "env") == 0)
+			if (ft_strcmp(ft_strtolower((*shell)->av[0]), "env") == 0)
 				ft_print_environ(*shell);
-			//else if (ft_strcmp(ft_strtolower((*shell)->argv[0]), "setenv") == 0)
+			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "setenv") == 0)
 			//	ft_setenv(&(*shell));
-			//else if (ft_strcmp(ft_strtolower((*shell)->argv[0]),
+			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]),
 			//					"unsetenv") == 0)
 			//	ft_unsetenv(&(*shell));
-			else if (ft_strcmp(ft_strtolower((*shell)->argv[0]), "exit") == 0)
+			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "exit") == 0)
 				ft_exit(&(*shell));
-			//else if (ft_strcmp(ft_strtolower((*shell)->argv[0]), "cd") == 0)
+			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "cd") == 0)
 			//	ft_cd(&(*shell));
 			else
 				ft_exec_bin(&(*shell));
