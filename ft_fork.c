@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "ft_minishell.h"
+#include "ft_sh1.h"
 
 int	ft_fork(t_env **shell)
 {
 	if (((*shell)->pid = fork()) < 0)
 	{
-		write(1, "Error on fork function.\n", 25);
+		ft_putstr("Error on fork function.\n");
 		return (-1);
 	}
 	if ((*shell)->pid)
 	{
 		if (waitpid((*shell)->pid, 0, 0) < 0)
 		{
-			write(1, "Error on waitpid function\n", 28);
+			ft_putstr("Error on waitpid function\n");
 			return (-1);
 		}
 		return (0);

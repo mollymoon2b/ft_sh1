@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dup_environ.c                                   :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/19 10:44:38 by ade-bonn          #+#    #+#             */
-/*   Updated: 2015/01/19 10:44:39 by ade-bonn         ###   ########.fr       */
+/*   Created: 2015/01/23 11:40:23 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/01/23 11:40:25 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
-#include "libft/libft.h"
-#include "ft_sh1.h"
+#include "libft.h"
 
-char	**ft_dup_environ(const char **environ)
+char	*ft_strndup(const char *str, size_t n)
 {
-	char	**bis;
-	size_t	i;
+	char	*str_copy;
+	int		size;
+	int		count;
 
-	i = 0;
-	while (environ[i])
-		i++;
-	bis = (char **)malloc((i + 1) * sizeof(char *));
-	if (bis == NULL)
+	if (!n || !str || !*str)
 		return (NULL);
-	i = 0;
-	while (environ[i])
+	str_copy = NULL;
+	count = 0;
+	size = (int)ft_strlen(str);
+	str_copy = malloc (size * sizeof(char) + 1);
+	if (str_copy == NULL)
+		return (NULL);
+	while (count != size && n--)
 	{
-		bis[i] = ft_strdup(environ[i]);
-		++i;
+		str_copy[count] = str[count];
+		count++;
 	}
-	bis[i] = 0;
-	return (bis);
+	str_copy[count] = '\0';
+	return (str_copy);
 }

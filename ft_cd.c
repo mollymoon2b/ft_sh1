@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
+#include "ft_sh1.h"
 #include "libft/libft.h"
 
-int	sh_update_old_pwd(t_env **shell)
+int		ft_update_old_pwd(t_env **shell)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ int	sh_update_old_pwd(t_env **shell)
 	return (-1);
 }
 
-void	sh_update_env_pwd(t_env **shell)
+int		ft_update_env_pwd(t_env **shell)
 {
 	int		i;
 
@@ -51,7 +51,7 @@ void	sh_update_env_pwd(t_env **shell)
 	return (-1);
 }
 
-void	sh_updat_cdpwd(t_env **shell)
+int		ft_updat_cdpwd(t_env **shell)
 {
 	int		i;
 
@@ -70,7 +70,7 @@ void	sh_updat_cdpwd(t_env **shell)
 	return (0);
 }
 
-void	sh_rel_pwd(char *path)
+char	*ft_rel_pwd(char *path)
 {
 	char	*pwd;
 
@@ -84,7 +84,30 @@ void	sh_rel_pwd(char *path)
 	return (pwd);
 }
 
-void	sh_cd()
+int		ft_cd(t_env **shell)
 {
-	if ()
+	char	*path;
+
+	if ((*shell)->av[1])
+	{
+		path = ((*shell)->av[1][0] && (*shell)->av[1][0] != '/')
+			? ft_rel_pwd((*shell)->av[1]) : ft_strdup((*shell)->av[1]);
+		if ((*shell)->av[1][0] == '-' && !(*shell)->av[1][1])
+		{
+			if ((*shell)->oldpwd != NULL)
+				path = (*shell)->oldpwd;
+			else
+				ft_putstr(" cd: << OLDPWD >> undefined\n");
+		}
+		if (access(path, F_OK) == 0)
+		{
+			chdir(path);
+			ft_update_env_pwd(shell);
+			ft_updat_cdpwd(shell);
+			return (0);
+		}
+		else
+			ft_error_2char((*shell)->av[0], ": No such file or directory\n");
+	}
+	return (-1);
 }

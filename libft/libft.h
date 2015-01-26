@@ -87,4 +87,7 @@ char				*ft_strtoupper(char *str);
 char				*ft_strtolower(char *str);
 char				*ft_strdup_tabtosp(const char *str);
 char				*ft_strdel_double_sp(char *str);
+char				**ft_char_to_inc(char **tab);
+char				*ft_strndup(const char *str, size_t n);
+
 #endif

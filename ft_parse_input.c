@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "ft_minishell.h"
+#include "ft_sh1.h"
 
 void	ft_print_environ(t_env *shell)
 {
@@ -22,13 +22,14 @@ void	ft_print_environ(t_env *shell)
 		i = 0;
 		while (shell->env[i])
 		{
-			printf("%s\n", shell->env[i]);
+			ft_putstr(shell->env[i]);
+			ft_putstr("\n");
 			++i;
 		}
 	}
 }
 
-int	ft_count_arg(char **av)
+int		ft_count_arg(char **av)
 {
 	int	i;
 
@@ -49,23 +50,23 @@ char	**ft_parse_args(char *input)
 
 void	ft_parse_input(t_env **shell)
 {
-	if (*(*shell)->input)
+	if (*(*shell)->str)
 	{
-		(*shell)->av = ft_parse_args((*shell)->input);
+		(*shell)->av = ft_parse_args((*shell)->str);
 		(*shell)->ac = ft_count_arg((*shell)->av);
 		if ((*shell)->ac != 0)
 		{
 			if (ft_strcmp(ft_strtolower((*shell)->av[0]), "env") == 0)
 				ft_print_environ(*shell);
-			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "setenv") == 0)
-			//	ft_setenv(&(*shell));
-			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]),
-			//					"unsetenv") == 0)
-			//	ft_unsetenv(&(*shell));
+			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "setenv") == 0)
+				ft_setenv(&(*shell));
+			else if (ft_strcmp(ft_strtolower((*shell)->av[0]),
+								"unsetenv") == 0)
+				ft_unsetenv(&(*shell));
 			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "exit") == 0)
 				ft_exit(&(*shell));
-			//else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "cd") == 0)
-			//	ft_cd(&(*shell));
+			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "cd") == 0)
+				ft_cd(&(*shell));
 			else
 				ft_exec_bin(&(*shell));
 		}

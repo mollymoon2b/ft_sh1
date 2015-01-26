@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_chartab2inc.c                                   :+:      :+:    :+:   */
+/*   ft_char_to_inc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	**ft_chartab2inc(char **tab)
+char	**ft_char_to_inc(char **tab)
 {
 	char	**new_tab;
 	int		len;

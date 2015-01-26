@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "ft_minishell.h"
+#include "ft_sh1.h"
 
 int			ft_set_binpath(t_env **shell)
 {
@@ -32,13 +32,11 @@ int			ft_set_binpath(t_env **shell)
 				return (0);
 			++i;
 		}
-		if ((*shell)->binpath)
-			free((*shell)->binpath);
 		(*shell)->binpath = NULL;
-		ft_error_2char((*shell)->av[0], ":command not found\n");//printf("%s : command not found\n", (*shell)->av[0]);
+		ft_error_2char((*shell)->av[0], ": command not found\n");
 	}
 	else
-		printf("bash: %s: Undefined environment PATH\n", (*shell)->av[0]);
+		ft_error_2char((*shell)->av[0], ": Undefined environment PATH\n");
 	return (-1);
 }
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "ft_minishell.h"
+#include "ft_sh1.h"
 
 char	*ft_get_envhome(char **env)
 {
@@ -81,8 +81,11 @@ char	*ft_get_envpwd(char **env)
 	{
 		if (ft_strncmp("PWD", env[i], 2) == 0)
 		{
+			ft_putstr(env[i]);
+			ft_putstr("in\n");
 			get_pwd_line = ft_strsub(ft_strdup(env[i]),
 				4, ft_strlen(env[i]) - 4);
+			ft_putstr("out\n");
 		}
 		++i;
 	}
@@ -94,8 +97,7 @@ char	*ft_get_pwd(void)
 	char	*pwd;
 
 	pwd = NULL;
-	pwd = (char *)malloc((MAXPATHLEN + 1) * sizeof(char));
-	if (pwd != NULL)
+	if (!(pwd = (char *)malloc((MAXPATHLEN + 1) * sizeof(char))))
 	{
 		ft_bzero(pwd, 0);
 		pwd = getcwd(pwd, MAXPATHLEN);
