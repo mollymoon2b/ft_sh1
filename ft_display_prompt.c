@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dispay_propmt.c                                 :+:      :+:    :+:   */
+/*   ft_dispay_propmt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,6 +16,7 @@
 
 void	ft_display_prompt(t_env **shell, int value)
 {
+		write (1, "\e[37m-bash: \e[0m ", 12);
 	if (value == 1)
 	{
 		(*shell)->path = ft_get_envpath((*shell)->env);

@@ -50,6 +50,7 @@ char	**ft_parse_args(char *input)
 
 void	ft_parse_input(t_env **shell)
 {
+
 	if (*(*shell)->str)
 	{
 		(*shell)->av = ft_parse_args((*shell)->str);

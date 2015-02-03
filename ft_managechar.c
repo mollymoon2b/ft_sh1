@@ -41,6 +41,7 @@ void		ft_process_lchar(t_env *e, char *inputs)
 		len = e->max - e->index;
 	while (len--)
 		tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+
 	tmp2 = ft_strndup(e->str, e->index);
 	tmp = ft_strjoin(tmp2, inputs);
 	free(tmp2);

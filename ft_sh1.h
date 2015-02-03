@@ -108,6 +108,8 @@ int					ft_setenv(t_env **shell);
 int					ft_valid_setenv(char **argv);
 int					ft_set_var_env(t_env **shell);
 
+//bonus
+
 void				ft_shellup(t_env *e);
 void				ft_shelldown(t_env *e);
 void				ft_leftright(t_env *e, char *inputs);
@@ -140,6 +142,5 @@ int					ft_process_charloop(t_env *e, char *inputs);
 int					ft_process_char(t_env *e, char *inputs);
 int					ft_putc(int c);
 void				ft_put_histo(t_env *e);
-void				ft_leftright2(t_env *e);
 
 #endif

@@ -43,6 +43,7 @@ t_env			*ft_get_env(void)
 
 	if (!e)
 	{
+		write (1, "\e[34m-bash: \e[0m ", 12);
 		e = (t_env *)ft_memalloc(sizeof(t_env));
 		e->name = ft_strdup("Shell > ");
 		if (!(e->p = ft_get_params()))

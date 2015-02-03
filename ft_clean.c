@@ -17,6 +17,8 @@ int			ft_clear_imput(t_env *e)
 	int		len;
 
 	len = e->index;
+	// printf("\nINSIDE\n");
+	// tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
 	if (((ft_strlen(e->name) + ft_strlen(e->str)) % tgetnum("co")) == 0)
 	{
 		len--;

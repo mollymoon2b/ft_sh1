@@ -18,12 +18,13 @@ void	ft_exit(t_env **shell)
 	int	i;
 
 	i = 0;
+	ft_putstr("exit alice");// lhiu;g
 	while ((*shell)->env[i])
 		free((*shell)->env[i++]);
 	if ((*shell)->env)
 		free((*shell)->env);
-	if ((*shell)->input)
-		free((*shell)->input);
+	// if ((*shell)->input)
+		// free((*shell)->input);
 	i = 0;
 	while ((*shell)->av[i])
 		free((*shell)->av[i++]);

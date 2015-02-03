@@ -22,6 +22,7 @@ int			ft_quit(t_env *e, char *inputs)
 			free(e->histo->str);
 		e->histo->str = ft_strdup(e->str);
 		ft_endline(e);
+		// ft_put_histo(e);
 		return (1);
 	}
 	else if (inputs[0] == 4)
@@ -69,7 +70,7 @@ int			ft_manage_inputs(t_env *e, char *inputs)
 
 	if ((inputs[0] == 3 || inputs[0] == 4 || inputs[0] == 10) &&
 		inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0 && inputs[4] == 0)
-		return (ft_quit(e, inputs));
+		return (ft_quit(e, inputs)); // ?13?
 	else if (!ft_delete(e, inputs))
 		if (!ft_arrows(e, inputs))
 			if (!ft_clear(e, inputs))
