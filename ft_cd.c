@@ -92,6 +92,8 @@ int		ft_cd(t_env *shell)
 	{
 		path = (shell->av[1][0] && shell->av[1][0] != '/')
 			? ft_rel_pwd(shell->av[1]) : ft_strdup(shell->av[1]);
+		ft_putstr(path);
+		ft_putstr(" \n");
 		if (shell->av[1][0] == '-' && !shell->av[1][1])
 		{
 			if (shell->oldpwd != NULL)

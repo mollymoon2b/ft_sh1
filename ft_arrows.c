@@ -48,7 +48,7 @@ void	ft_shelldown(t_env *e)
 	}
 }
 
-void	ft_trucbidule(t_env *e)
+void 	ft_trucbidule(t_env *e)
 {
 	char tmp[2];
 
