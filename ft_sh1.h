@@ -6,7 +6,7 @@
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/23 11:55:51 by ade-bonn          #+#    #+#             */
-/*   Updated: 2015/01/23 11:56:31 by ade-bonn         ###   ########.fr       */
+/*   Updated: 2015/02/06 14:17:34 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,34 @@ typedef struct		s_env
 }					t_env;
 
 char				**ft_dup_environ(const char **environ);
-void				ft_display_prompt(t_env **shell, int value);
+void				ft_display_prompt(t_env *shell, int value);
 void				ft_print_environ(t_env *shell);
-int					ft_fork(t_env **shell);
-void				ft_parse_input(t_env **shell);
+int					ft_fork(t_env *shell);
+void				ft_parse_input(t_env *shell);
 int					ft_count_arg(char **argv);
-int					ft_setenv(t_env **shell);
-int					ft_unsetenv(t_env **shell);
-void				ft_exit(t_env **shell);
+int					ft_setenv(t_env *shell);
+int					ft_unsetenv(t_env *shell);
+void				ft_exit(t_env *shell);
 char				**ft_get_envpath(char **env);
-int					ft_exec_bin(t_env **shell);
+int					ft_exec_bin(t_env *shell);
 char				*ft_get_envpwd(char **env);
 char				*ft_get_envoldpwd(char **env);
 char				*ft_get_envhome(char **env);
-int					ft_cd(t_env **shell);
+int					ft_cd(t_env *shell);
 char				*ft_get_pwd(void);
-int					ft_cd(t_env **shell);
+int					ft_cd(t_env *shell);
 char				*ft_rel_pwd(char *path);
-int					ft_updat_cdpwd(t_env **shell);
-int					ft_update_env_pwd(t_env **shell);
-int					ft_update_old_pwd(t_env **shell);
+int					ft_updat_cdpwd(t_env *shell);
+int					ft_update_env_pwd(t_env *shell);
+int					ft_update_old_pwd(t_env *shell);
 void				ft_error_2char(char *str, char *str2);
-int					ft_unsetenv(t_env **shell);
+int					ft_unsetenv(t_env *shell);
 int					ft_valid_unsetenv_arg(char *str);
-int					ft_unset_from_env(t_env **shell);
-int					ft_add_var_env(t_env **shell, int len, char *var_env);
-int					ft_setenv(t_env **shell);
+int					ft_unset_from_env(t_env *shell);
+int					ft_add_var_env(t_env *shell, int len, char *var_env);
+int					ft_setenv(t_env *shell);
 int					ft_valid_setenv(char **argv);
-int					ft_set_var_env(t_env **shell);
-
-//bonus
+int					ft_set_var_env(t_env *shell);
 
 void				ft_shellup(t_env *e);
 void				ft_shelldown(t_env *e);

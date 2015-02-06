@@ -14,14 +14,14 @@
 #include "ft_sh1.h"
 #include "get_next_line.h"
 
-void	ft_display_prompt(t_env **shell, int value)
+void	ft_display_prompt(t_env *shell, int value)
 {
-		write (1, "\e[37m-bash: \e[0m ", 12);
+	ft_putstr("\e[37m\e[0m");
 	if (value == 1)
 	{
-		(*shell)->path = ft_get_envpath((*shell)->env);
-		ft_parse_input(&(*shell));
+		shell->path = ft_get_envpath(shell->env);
+		ft_parse_input(shell);
 	}
 	else if (value == 0)
-		ft_exit(&(*shell));
+		ft_exit(shell);
 }

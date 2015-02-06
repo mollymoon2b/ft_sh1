@@ -13,22 +13,20 @@
 #include "libft/libft.h"
 #include "ft_sh1.h"
 
-void	ft_exit(t_env **shell)
+void	ft_exit(t_env *shell)
 {
 	int	i;
 
 	i = 0;
-	ft_putstr("exit alice");// lhiu;g
-	while ((*shell)->env[i])
-		free((*shell)->env[i++]);
-	if ((*shell)->env)
-		free((*shell)->env);
-	// if ((*shell)->input)
-		// free((*shell)->input);
+	while (shell->env[i])
+		free(shell->env[i++]);
+	if ((shell)->env)
+		free(shell->env);
 	i = 0;
-	while ((*shell)->av[i])
-		free((*shell)->av[i++]);
-	if ((*shell)->av)
-		free((*shell)->av);
-	(*shell)->pid = 0;
+	while (shell->av[i])
+		free(shell->av[i++]);
+	if (shell->av)
+		free(shell->av);
+	shell->pid = 0;
+	exit(shell->pid);
 }

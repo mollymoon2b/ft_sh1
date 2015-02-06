@@ -48,28 +48,28 @@ char	**ft_parse_args(char *input)
 	return (av);
 }
 
-void	ft_parse_input(t_env **shell)
+void	ft_parse_input(t_env *shell)
 {
 
-	if (*(*shell)->str)
+	if (*shell->str)
 	{
-		(*shell)->av = ft_parse_args((*shell)->str);
-		(*shell)->ac = ft_count_arg((*shell)->av);
-		if ((*shell)->ac != 0)
+		shell->av = ft_parse_args(shell->str);
+		shell->ac = ft_count_arg(shell->av);
+		if (shell->ac != 0)
 		{
-			if (ft_strcmp(ft_strtolower((*shell)->av[0]), "env") == 0)
-				ft_print_environ(*shell);
-			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "setenv") == 0)
-				ft_setenv(&(*shell));
-			else if (ft_strcmp(ft_strtolower((*shell)->av[0]),
+			if (ft_strcmp(ft_strtolower(shell->av[0]), "env") == 0)
+				ft_print_environ(shell);
+			else if (ft_strcmp(ft_strtolower(shell->av[0]), "setenv") == 0)
+				ft_setenv(shell);
+			else if (ft_strcmp(ft_strtolower(shell->av[0]),
 								"unsetenv") == 0)
-				ft_unsetenv(&(*shell));
-			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "exit") == 0)
-				ft_exit(&(*shell));
-			else if (ft_strcmp(ft_strtolower((*shell)->av[0]), "cd") == 0)
-				ft_cd(&(*shell));
+				ft_unsetenv(shell);
+			else if (ft_strcmp(ft_strtolower(shell->av[0]), "exit") == 0)
+				ft_exit(shell);
+			else if (ft_strcmp(ft_strtolower(shell->av[0]), "cd") == 0)
+				ft_cd(shell);
 			else
-				ft_exec_bin(&(*shell));
+				ft_exec_bin(shell);
 		}
 	}
 }

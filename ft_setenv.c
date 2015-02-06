@@ -13,7 +13,7 @@
 #include "ft_sh1.h"
 #include "libft/libft.h"
 
-int	ft_add_var_env(t_env **shell, int len, char *var_env)
+int	ft_add_var_env(t_env *shell, int len, char *var_env)
 {
 	int		i;
 	char	**env;
@@ -22,36 +22,36 @@ int	ft_add_var_env(t_env **shell, int len, char *var_env)
 	if (env != NULL)
 	{
 		i = 0;
-		while ((*shell)->env[i])
+		while (shell->env[i])
 		{
-			env[i] = ft_strdup((*shell)->env[i]);
-			free((*shell)->env[i]);
+			env[i] = ft_strdup(shell->env[i]);
+			free(shell->env[i]);
 			++i;
 		}
 		env[i] = ft_strdup(var_env);
 		++i;
 		env[i] = 0;
-		(*shell)->env = env;
+		shell->env = env;
 		return (0);
 	}
 	return (-1);
 }
 
-int	ft_set_var_env(t_env **shell)
+int	ft_set_var_env(t_env *shell)
 {
 	int		i;
 	char	*var_env;
 
 	i = 0;
-	var_env = ft_strdup(ft_strtoupper((*shell)->av[1]));
+	var_env = ft_strdup(ft_strtoupper(shell->av[1]));
 	var_env = ft_strjoin(var_env, "=");
-	var_env = ft_strjoin(var_env, (*shell)->av[2]);
-	while ((*shell)->env[i])
+	var_env = ft_strjoin(var_env, shell->av[2]);
+	while (shell->env[i])
 	{
-		if (ft_strncmp(ft_strjoin(ft_strtoupper((*shell)->av[1]), "="),
-			(*shell)->env[i], ft_strlen((*shell)->av[1])) == 0)
+		if (ft_strncmp(ft_strjoin(ft_strtoupper(shell->av[1]), "="),
+			shell->env[i], ft_strlen(shell->av[1])) == 0)
 		{
-			(*shell)->env[i] = ft_strdup(var_env);
+			shell->env[i] = ft_strdup(var_env);
 			return (0);
 		}
 		++i;
@@ -90,11 +90,11 @@ int	ft_valid_setenv(char **av)
 	return (1);
 }
 
-int	ft_setenv(t_env **shell)
+int	ft_setenv(t_env *shell)
 {
-	if ((*shell)->ac == 3)
+	if (shell->ac == 3)
 	{
-		if (ft_valid_setenv((*shell)->av) == 1)
+		if (ft_valid_setenv(shell->av) == 1)
 			ft_set_var_env(shell);
 	}
 	else

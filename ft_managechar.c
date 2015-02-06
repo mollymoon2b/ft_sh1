@@ -6,7 +6,7 @@
 /*   By: achazal <achazal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/22 08:14:16 by achazal           #+#    #+#             */
-/*   Updated: 2015/01/22 08:17:06 by achazal          ###   ########.fr       */
+/*   Updated: 2015/02/06 14:08:43 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void		ft_process_lchar(t_env *e, char *inputs)
 		len = e->max - e->index;
 	while (len--)
 		tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
-
 	tmp2 = ft_strndup(e->str, e->index);
 	tmp = ft_strjoin(tmp2, inputs);
 	free(tmp2);

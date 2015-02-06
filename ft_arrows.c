@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrows.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achazal <achazal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/22 08:06:01 by achazal           #+#    #+#             */
-/*   Updated: 2015/01/22 08:07:11 by achazal          ###   ########.fr       */
+/*   Created: 2015/02/06 14:16:08 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/02/06 14:16:09 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void ft_leftright(t_env *e, char *inputs)
 			e->index--;
 		}
 		else
-    		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
+			tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
 	}
 	if (inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 67)
 	{
@@ -69,18 +69,18 @@ void ft_leftright(t_env *e, char *inputs)
 			if (((ft_strlen(e->name) + e->index) % tgetnum("co")) != tgetnum("co") - 1)
 				tputs(tgetstr("nd", (char **)(&e->p->buf)), 1, ft_putc);
 			else
-		{
-			tmp[1] = '\0';
-			tmp[0] = e->str[e->index];
-			tputs(tmp, 1, ft_putc);
-			tmp[0] = e->str[e->index + 1];
-    			tputs(tmp, 1, ft_putc);
-    			tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
-    		}
+			{
+				tmp[1] = '\0';
+				tmp[0] = e->str[e->index];
+				tputs(tmp, 1, ft_putc);
+				tmp[0] = e->str[e->index + 1];
+				tputs(tmp, 1, ft_putc);
+				tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+			}
 			e->index++;
 		}
 		else
-    		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
+			tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
 	}
 }
 

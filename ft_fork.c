@@ -13,16 +13,16 @@
 #include "libft/libft.h"
 #include "ft_sh1.h"
 
-int	ft_fork(t_env **shell)
+int	ft_fork(t_env *shell)
 {
-	if (((*shell)->pid = fork()) < 0)
+	if ((shell->pid = fork()) < 0)
 	{
 		ft_putstr("Error on fork function.\n");
 		return (-1);
 	}
-	if ((*shell)->pid)
+	if (shell->pid)
 	{
-		if (waitpid((*shell)->pid, 0, 0) < 0)
+		if (waitpid(shell->pid, 0, 0) < 0)
 		{
 			ft_putstr("Error on waitpid function\n");
 			return (-1);

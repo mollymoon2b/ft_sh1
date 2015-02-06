@@ -15,7 +15,6 @@
 int			ft_process_delete(t_env *e)
 {
 	char	*tmp;
-//	int		len;
 
 	if (e->index > 0)
 	{
@@ -37,7 +36,6 @@ int			ft_process_delete(t_env *e)
 int			ft_process_back_delete(t_env *e)
 {
 	char	*tmp;
-//	int		len;
 
 	if (e->index < e->max)
 	{
@@ -75,7 +73,6 @@ int			ft_ctrlk(t_env *e)
 int			ft_ctrll(t_env *e)
 {
 	int		len;
-//	char	*tmp;
 
 	tputs(tgetstr("cl", (char **)(&e->p->buf)), 1, ft_putc);
 	tputs(e->name, 1, ft_putc);
@@ -91,9 +88,6 @@ int			ft_ctrll(t_env *e)
 
 int			ft_clear(t_env *e, char *inputs)
 {
-//	int		len;
-//	char	*tmp;
-
 	if (inputs[0] == 11 && inputs[1] == 0 && inputs[2] == 0)
 		return (ft_ctrlk(e));
 	if (inputs[0] == 12 && inputs[1] == 0 && inputs[2] == 0)

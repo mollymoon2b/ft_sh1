@@ -15,10 +15,13 @@
 
 void	ft_error_2char(char *str, char *str2)
 {
-	write (1, "\e[31m-bash: \e[0m ", 12);
-	write (1, "Shell: ", 7);
-	write (1, str, ft_strlen(str));
-	write (1, str2, ft_strlen(str2));
+	
+	ft_putstr("\e[31m\e[0m");
+	// ft_putstr("\e[31mShell: \e[0m");
+	ft_putstr("Shell :");
+	ft_putstr(str);
+	ft_putstr(str2);
+	ft_putstr("\e[35m\e[0m");
 }
 
 int		main(void)
@@ -37,11 +40,10 @@ int		main(void)
 		if (shell != NULL)
 		{
 			shell->pid = 1;
-			//shell->pwd = ft_get_envpwd(shell->env);
 			shell->oldpwd = NULL;
 			signal(SIGINT, SIG_IGN);
 		}		
-		ft_display_prompt(&shell, value);
+		ft_display_prompt(shell, value);
 		ft_clean_env(shell);
 	}
 	return (0);
