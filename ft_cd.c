@@ -97,9 +97,7 @@ int		ft_cd(t_env *shell)
 			if (shell->oldpwd != NULL)
 				path = shell->oldpwd;
 			else
-			{
 				ft_putstr(" cd: << OLDPWD >> undefined\n");
-			}
 		}
 		if (access(path, F_OK) == 0)
 		{

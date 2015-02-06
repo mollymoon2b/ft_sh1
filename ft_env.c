@@ -43,7 +43,6 @@ t_env			*ft_get_env(void)
 
 	if (!e)
 	{
-		ft_putstr("\e[34m\e[0m");
 		e = (t_env *)ft_memalloc(sizeof(t_env));
 		e->name = ft_strdup("Shell > ");
 		if (!(e->p = ft_get_params()))

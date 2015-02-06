@@ -140,5 +140,6 @@ int					ft_process_charloop(t_env *e, char *inputs);
 int					ft_process_char(t_env *e, char *inputs);
 int					ft_putc(int c);
 void				ft_put_histo(t_env *e);
+void				ft_trucbidule(t_env *shell);
 
 #endif
