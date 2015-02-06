@@ -23,6 +23,7 @@ SRC =	main.c 			\
 	ft_lstrmanage.c 	\
 	ft_managechar.c 	\
 	ft_put.c 			\
+	ft_moves.c			\
 	get_next_line.c
 
 OBJ = $(SRC:.c=.o)

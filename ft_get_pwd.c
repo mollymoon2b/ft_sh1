@@ -7,14 +7,13 @@
 
 char	*ft_get_pwd(void)
 {
-	char	*pwd;
 
-	pwd = NULL;
-	pwd = (char *)malloc((MAXPATHLEN + 1) * sizeof(char));
-	if (pwd != NULL)
-	{
-		ft_bzero(pwd, 0);
-		pwd = getcwd(pwd, MAXPATHLEN);
-	}
-	return (pwd);
+	// pwd = NULL;
+	// printf("1\n");
+	// if (!(pwd = (char *)ft_memalloc((MAXPATHLEN + 1) * sizeof(char))))
+	// 	return (NULL);
+	// printf("2\n");
+	// pwd = getcwd(pwd, MAXPATHLEN);
+	// printf("CD = '%s'\n", pwd);
+	return (getcwd(NULL, 0));
 }

@@ -27,20 +27,22 @@ void		ft_process_lchar(t_env *e, char *inputs)
 {
 	char	*tmp;
 	char	*tmp2;
-	int		len;
+	size_t	len;
 
 	tputs(tgetstr("cd", (char **)(&e->p->buf)), 1, ft_putc);
 	tputs(inputs, 1, ft_putc);
 	tputs(e->str + e->index, 1, ft_putc);
-	if (((ft_strlen(e->name) + e->index) % tgetnum("co")) == tgetnum("co") - 2)
-	{
-		tputs(" \0", 1, ft_putc);
-		len = e->max - e->index + 1;
-	}
-	else
-		len = e->max - e->index;
-	while (len--)
-		tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+	// if (((ft_strlen(e->name) + e->index) % tgetnum("co")) == tgetnum("co") - 2)
+	// {
+	// 	tputs(" \0", 1, ft_putc);
+	// 	len = e->max - e->index + 1;
+	// }
+	// else
+	// 	len = e->max - e->index;
+	len = e->index;
+	e->index = e->max;
+	while (len != e->index)
+		ft_goleft(e);//tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
 	tmp2 = ft_strndup(e->str, e->index);
 	tmp = ft_strjoin(tmp2, inputs);
 	free(tmp2);

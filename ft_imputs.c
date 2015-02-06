@@ -73,7 +73,7 @@ int			ft_manage_inputs(t_env *e, char *inputs)
 	else if (!ft_delete(e, inputs))
 		if (!ft_arrows(e, inputs))
 			if (!ft_clear(e, inputs))
-				if (ft_isprint(inputs[0]))
+				if (ft_isprint(inputs[0]) || inputs[0] == 9)
 					if ((value = ft_process_char(e, inputs)) != 2)
 						return (value);
 	return (-1);

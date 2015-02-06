@@ -42,7 +42,7 @@ int		ft_update_env_pwd(t_env *shell)
 	{
 		if (ft_strncmp("PWD", shell->env[i], 2) == 0)
 		{
-			shell->env[i] = ft_strjoin("PWD=", ft_get_pwd());
+			shell->env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
 			shell->pwd = ft_get_envpwd(shell->env);
 			return (0);
 		}
@@ -60,13 +60,13 @@ int		ft_updat_cdpwd(t_env *shell)
 	{
 		if (ft_strncmp("CDPATH", shell->env[i], 5) == 0)
 		{
-			shell->env[i] = ft_strjoin("CDPATH=", ft_get_pwd());
+			shell->env[i] = ft_strjoin("CDPATH=", getcwd(NULL, 0));
 			return (0);
 		}
 		++i;
 	}
 	shell->env = ft_char_to_inc(shell->env);
-	shell->env[i] = ft_strjoin("CDPATH=", ft_get_pwd());
+	shell->env[i] = ft_strjoin("CDPATH=", getcwd(NULL, 0));
 	return (0);
 }
 
@@ -75,7 +75,8 @@ char	*ft_rel_pwd(char *path)
 	char	*pwd;
 
 	pwd = NULL;
-	pwd = ft_get_pwd();
+	pwd = getcwd(NULL, 0);
+	// printf("PWD = '%s'\n", pwd);
 	if (pwd != NULL)
 	{
 		pwd = ft_strjoin(pwd, "/");
@@ -87,13 +88,20 @@ char	*ft_rel_pwd(char *path)
 int		ft_cd(t_env *shell)
 {
 	char	*path;
+	// char 	*truc;
 
+	// if (!(truc = (char *)ft_memalloc(sizeof(char) * 0)))
+		// return (-1);
+	// printf("Truc = '%s'\n", truc);
+	// ft_get_pwd();
 	if (shell->av[1])
 	{
 		path = (shell->av[1][0] && shell->av[1][0] != '/')
 			? ft_rel_pwd(shell->av[1]) : ft_strdup(shell->av[1]);
-		ft_putstr(path);
-		ft_putstr(" \n");
+		// ft_putstr(path);
+		// ft_putstr(" \n");
+
+		// printf("\nPWD2 = '%s'\n", ft_get_pwd());
 		if (shell->av[1][0] == '-' && !shell->av[1][1])
 		{
 			if (shell->oldpwd != NULL)
