@@ -13,6 +13,24 @@
 #include "ft_sh1.h"
 #include "libft/libft.h"
 
+int 	ft_home(t_env *shell)
+{
+	int i;
+
+	i = 0;
+	while (shell->av[i])
+	{
+		if (ft_strncmp("HOME", shell->env[i], 3) == 0)
+		{
+			shell->env[i] = ft_strjoin("HOME=", shell->env[i]);
+			shell->env[i] = ft_get_envhome(shell->env);
+			return (0);
+		}
+		i++;
+	}
+	return (-1);
+}
+
 int		ft_update_old_pwd(t_env *shell)
 {
 	int	i;
@@ -70,24 +88,6 @@ int		ft_updat_cdpwd(t_env *shell)
 	return (0);
 }
 
-int	ft_home(t_env *shell)
-{
-	int i;
-
-	i = 0;
-	while (shell->env[i])
-	{
-		if (ft_strncmp("HOME", shell->env[i], 4) == 0)
-		{
-			shell->env[i] = ft_strjoin("HOME=", shell->home);
-			shell->env[i] = ft_get_envhome(shell->env);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
-}
-
 char	*ft_rel_pwd(char *path)
 {
 	char	*pwd;
@@ -120,20 +120,20 @@ int		ft_cd(t_env *shell)
 				ft_putstr(" cd: << OLDPWD >> undefined\n");
 			return (0);
 		}
-		if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == ' ')
+		if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P')
 			|| (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && shell->av[1][2] == 'P')
 			|| (shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == 'L')) ///Volumes/Data/nfs/zfs-student-2/users/2014/ade-bonn
 		{
 			if (shell->home != NULL)
-				ft_home(shell);
+				path = shell->home;
 			else
 				ft_putstr(" cd: << HOME P>> undefined \n");
 			return (0);
 		}
-		if (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && !shell->av[1][2]) //nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
+		if (shell->av[1][0] == '-' && shell->av[1][1] == 'L')//nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
 		{
 			if (shell->home != NULL)
-				ft_home(shell);
+				path = shell->home;
 			else
 				ft_putstr(" cd: << HOME >> undefined \n");
 			return (0);
