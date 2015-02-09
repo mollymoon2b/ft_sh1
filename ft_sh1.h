@@ -70,6 +70,7 @@ typedef struct		s_env
 	char			*oldpwd;
 	char			*binpath;
 	char			*name;
+	char			*home;
 	t_params		*p;
 	char			*str;
 	size_t			index;

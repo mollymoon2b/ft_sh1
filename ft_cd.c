@@ -70,13 +70,30 @@ int		ft_updat_cdpwd(t_env *shell)
 	return (0);
 }
 
+int	ft_home(t_env *shell)
+{
+	int i;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp("HOME", shell->env[i], 4) == 0)
+		{
+			shell->env[i] = ft_strjoin("HOME=", shell->home);
+			shell->env[i] = ft_get_envhome(shell->env);
+			return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*ft_rel_pwd(char *path)
 {
 	char	*pwd;
 
 	pwd = NULL;
 	pwd = getcwd(NULL, 0);
-	// printf("PWD = '%s'\n", pwd);
 	if (pwd != NULL)
 	{
 		pwd = ft_strjoin(pwd, "/");
@@ -88,26 +105,38 @@ char	*ft_rel_pwd(char *path)
 int		ft_cd(t_env *shell)
 {
 	char	*path;
-	// char 	*truc;
+	int i;
 
-	// if (!(truc = (char *)ft_memalloc(sizeof(char) * 0)))
-		// return (-1);
-	// printf("Truc = '%s'\n", truc);
-	// ft_get_pwd();
+	i = 0;
 	if (shell->av[1])
 	{
 		path = (shell->av[1][0] && shell->av[1][0] != '/')
 			? ft_rel_pwd(shell->av[1]) : ft_strdup(shell->av[1]);
-		// ft_putstr(path);
-		// ft_putstr(" \n");
-
-		// printf("\nPWD2 = '%s'\n", ft_get_pwd());
 		if (shell->av[1][0] == '-' && !shell->av[1][1])
 		{
 			if (shell->oldpwd != NULL)
 				path = shell->oldpwd;
 			else
 				ft_putstr(" cd: << OLDPWD >> undefined\n");
+			return (0);
+		}
+		if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == ' ')
+			|| (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && shell->av[1][2] == 'P')
+			|| (shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == 'L')) ///Volumes/Data/nfs/zfs-student-2/users/2014/ade-bonn
+		{
+			if (shell->home != NULL)
+				ft_home(shell);
+			else
+				ft_putstr(" cd: << HOME P>> undefined \n");
+			return (0);
+		}
+		if (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && !shell->av[1][2]) //nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
+		{
+			if (shell->home != NULL)
+				ft_home(shell);
+			else
+				ft_putstr(" cd: << HOME >> undefined \n");
+			return (0);
 		}
 		if (access(path, F_OK) == 0)
 		{
@@ -117,7 +146,7 @@ int		ft_cd(t_env *shell)
 			return (0);
 		}
 		else
-			ft_error_2char(shell->av[0], ": No such file or directory\n");
+			ft_error_2char(shell->av[1], ": No such file or directory\n");
 	}
 	return (-1);
 }
