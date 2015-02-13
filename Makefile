@@ -1,4 +1,4 @@
-NAME = abruti
+NAME = ft_minishell1
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 INCLUDE = 
