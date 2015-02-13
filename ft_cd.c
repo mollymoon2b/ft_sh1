@@ -6,12 +6,84 @@
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/19 13:26:24 by ade-bonn          #+#    #+#             */
-/*   Updated: 2015/01/19 13:26:58 by ade-bonn         ###   ########.fr       */
+/*   Updated: 2015/02/13 17:18:09 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sh1.h"
 #include "libft/libft.h"
+
+size_t	ft_strfcmp(char *s1, char *s2)
+{
+	return (ft_strncmp(s1, s2, ft_strlen(s1)));
+}
+
+void	ft_add_env(char *str, char *elem, t_env *e)
+{
+	size_t size;
+	char **ptr;
+	char **ne;
+	char **nptr;
+	char *tmp;
+
+	size = 0;
+	ptr = e->env;
+    while (*ptr++)
+		size++;
+	if (!(ne = (char **)ft_memalloc(sizeof(char *) * size + 1)))
+		return ;
+	nptr = ne;
+	ptr = e->env;
+	while (*ptr)
+		*nptr++ = *ptr++;
+	tmp = ft_strjoin(str, "=");
+	*nptr = ft_strjoin(tmp, elem);
+	free(tmp);
+	free(e->env);
+	e->env = ne;
+}
+
+void	ft_set_env(char *str, char *elem, t_env *e)
+{
+	char **ptr;
+	size_t len;
+	char *tmp;
+	char *p;
+
+	len = ft_strlen(str);
+    ptr = e->env;
+    while (*ptr)
+    {
+		if (!ft_strfcmp(str, *ptr) && *(*ptr + len) == '=')
+		{
+			p = ft_strchr(*ptr, '=');
+			*p = '\0';
+			tmp = ft_strjoin(*ptr, "=");
+			free(*ptr);
+			*ptr = ft_strjoin(tmp, elem);
+//			*ptr = ft_strdup(elem);
+			free(tmp);
+		}
+        ptr++;
+    }
+    ft_add_env(str, elem, e);
+}
+
+char	*ft_get_env2(char *str, t_env *e)
+{
+	char **ptr;
+	size_t len;
+
+	len = ft_strlen(str);
+	ptr = e->env;
+	while (*ptr)
+	{
+		if (!ft_strfcmp(str, *ptr) && *(*ptr + len) == '=')
+			return (*ptr + len + 1);
+		ptr++;
+	}
+	return (NULL);
+}
 
 int 	ft_home(t_env *shell)
 {
@@ -40,8 +112,9 @@ int		ft_update_old_pwd(t_env *shell)
 	{
 		if (ft_strncmp("OLDPWD", shell->env[i], 5) == 0)
 		{
+			printf("\e[53mshell->pwd = %s\e[0m", shell->pwd);
 			shell->env[i] = ft_strdup(shell->pwd);
-			shell->env[i] = ft_strjoin("OLDPWD=", shell->env[i]);
+			shell->env[i] = ft_strjoin("OLDPWD=", shell->env[i]); //shell->env[i] == NULL
 			return (0);
 		}
 		++i;
@@ -62,6 +135,7 @@ int		ft_update_env_pwd(t_env *shell)
 		{
 			shell->env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
 			shell->pwd = ft_get_envpwd(shell->env);
+			printf("shell->pwd alice = %s", shell->pwd);
 			return (0);
 		}
 		++i;
@@ -114,11 +188,25 @@ int		ft_cd(t_env *shell)
 			? ft_rel_pwd(shell->av[1]) : ft_strdup(shell->av[1]);
 		if (shell->av[1][0] == '-' && !shell->av[1][1])
 		{
-			if (shell->oldpwd != NULL)
+			ft_putstr("OLDPWD was : ");
+			ft_putstr(ft_get_env2("OLDPWD", shell));
+			ft_putstr(" and PWD was : ");
+			ft_putstr(ft_get_env2("PWD", shell));
+			ft_putchar('\n');
+			ft_set_env("PWD", ft_get_env2("OLDPWD", shell), shell);
+			ft_set_env("OLDPWD", path, shell);
+			ft_putstr("OLDPWD is : ");
+			ft_putstr(ft_get_env2("OLDPWD", shell));
+			ft_putstr(" and PWD is : ");
+			ft_putstr(ft_get_env2("PWD", shell));
+			ft_putchar('\n');
+			// ft_putchar('\n');
+			return (0);
+			/* if (shell->oldpwd != NULL)
 				path = shell->oldpwd;
 			else
 				ft_putstr(" cd: << OLDPWD >> undefined\n");
-			return (0);
+			return (0); */
 		}
 		if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P')
 			|| (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && shell->av[1][2] == 'P')
