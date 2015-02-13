@@ -130,7 +130,7 @@ int		ft_cd(t_env *shell)
 				ft_putstr(" cd: << HOME P>> undefined \n");
 			return (0);
 		}
-		if (shell->av[1][0] == '-' && shell->av[1][1] == 'L')//nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
+		if (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && !shell->av[1][2]) //nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
 		{
 			if (shell->home != NULL)
 				path = shell->home;
