@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+//done
+
 int		ft_putc(int c)
 {
 	write(1, &c, 1);

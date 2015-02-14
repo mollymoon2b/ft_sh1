@@ -11,57 +11,59 @@
 /* ************************************************************************** */
 
 #include "ft_sh1.h"
-#include "libft/libft.h"
 
-int	ft_add_var_env(t_env *shell, int len, char *var_env)
+//done
+
+static void	ft_add_var_env(t_env *shell, int len, char *var_env)
 {
 	int		i;
 	char	**env;
 
-	env = malloc((len + 2) * sizeof(char *));
-	if (env != NULL)
+	if (!(env = malloc((len + 2) * sizeof(char *))))
+		return ;
+	i = 0;
+	while (shell->env[i])
 	{
-		i = 0;
-		while (shell->env[i])
-		{
-			env[i] = ft_strdup(shell->env[i]);
-			free(shell->env[i]);
-			++i;
-		}
-		env[i] = ft_strdup(var_env);
+		env[i] = ft_strdup(shell->env[i]);
+		free(shell->env[i]);
 		++i;
-		env[i] = 0;
-		shell->env = env;
-		return (0);
 	}
-	return (-1);
+	env[i] = ft_strdup(var_env);
+	++i;
+	env[i] = 0;
+	free(shell->env);
+	shell->env = env;
 }
 
-int	ft_set_var_env(t_env *shell)
+static void	ft_set_var_env(t_env *shell)
 {
 	int		i;
 	char	*var_env;
 
+	if (!(var_env = (char *)malloc(sizeof(char) * (ft_strlen(shell->av[1]) +
+		ft_strlen(shell->av[2]) + 2))))
+		return ;
+	i = ft_strlen(shell->av[1]);
+	ft_strcpy(var_env, shell->av[1]);
+	ft_strcpy(var_env + i++, "=");
+	ft_strcpy(var_env + i++, shell->av[2]);
+	*(var_env + i + ft_strlen(shell->av[2])) = '\0';
 	i = 0;
-	var_env = ft_strdup(ft_strtoupper(shell->av[1]));
-	var_env = ft_strjoin(var_env, "=");
-	var_env = ft_strjoin(var_env, shell->av[2]);
 	while (shell->env[i])
 	{
-		if (ft_strncmp(ft_strjoin(ft_strtoupper(shell->av[1]), "="),
-			shell->env[i], ft_strlen(shell->av[1])) == 0)
+		if (ft_namematch(shell->av[1], shell->env[i]))
 		{
+			free(var_env);
 			shell->env[i] = ft_strdup(var_env);
-			return (0);
+			return ;
 		}
-		++i;
+		i++;
 	}
-	if (ft_add_var_env(shell, i, var_env) == 0)
-		return (0);
-	return (-1);
+	ft_add_var_env(shell, i, var_env);
+	free(var_env);
 }
 
-int	ft_valid_setenv(char **av)
+static int	ft_valid_setenv(char **av)
 {
 	int		i;
 
@@ -90,7 +92,7 @@ int	ft_valid_setenv(char **av)
 	return (1);
 }
 
-int	ft_setenv(t_env *shell)
+int			ft_setenv(t_env *shell)
 {
 	if (shell->ac == 3)
 	{

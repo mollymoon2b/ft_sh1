@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 void		ft_process_fchar(t_env *e, char *inputs)
 {
 	char	*tmp;
@@ -39,10 +41,7 @@ void		ft_process_lchar(t_env *e, char *inputs)
 	// }
 	// else
 	// 	len = e->max - e->index;
-	len = e->index;
-	e->index = e->max;
-	while (len != e->index)
-		ft_goleft(e);//tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+
 	tmp2 = ft_strndup(e->str, e->index);
 	tmp = ft_strjoin(tmp2, inputs);
 	free(tmp2);
@@ -50,6 +49,12 @@ void		ft_process_lchar(t_env *e, char *inputs)
 	free(tmp);
 	free(e->str);
 	e->str = tmp2;
+
+
+	len = e->index;
+	e->index = e->max;
+	while (len != e->index)
+		ft_goleft(e);
 }
 
 int			ft_process_char2(t_env *e, char *inputs)

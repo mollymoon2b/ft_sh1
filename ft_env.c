@@ -12,7 +12,9 @@
 
 #include "ft_sh1.h"
 
-t_params		*ft_get_params(void)
+// arthur
+
+static t_params	*ft_get_params(void)
 {
 	t_params	*p;
 
@@ -48,7 +50,6 @@ t_env			*ft_get_env(void)
 		if (!(e->p = ft_get_params()))
 			return (NULL);
 		e->str = ft_strdup("");
-		e->pwd = getcwd(NULL, 0);
 		e->max = 0;
 		e->index = 0;
 		e->histo = (t_str *)ft_memalloc(sizeof(t_str));

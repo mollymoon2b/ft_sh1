@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_sh1.h"
+
+// kind of done
 
 char	*ft_get_envhome(char **env)
 {
@@ -22,51 +23,45 @@ char	*ft_get_envhome(char **env)
 	i = 0;
 	while (env[i] && home_line == NULL)
 	{
-		if (ft_strncmp("HOME", env[i], 3) == 0)
-			home_line = ft_strsub(ft_strdup(env[i]),
-				5, ft_strlen(env[i]) - 5);
+		if (ft_namematch("HOME", env[i]))
+			home_line = ft_strdup(env[i] + 5);/*ft_strsub(ft_strdup(env[i]),
+				5, ft_strlen(env[i]) - 5);*/
 		++i;
 	}
 	return (home_line);
 }
 
-char	*ft_get_envoldpwd(char **env)
-{
-	char	*oldpwd_line;
-	int		i;
+// char	*ft_get_envoldpwd(char **env)
+// {
+// 	char	*oldpwd_line;
+// 	int		i;
 
-	oldpwd_line = NULL;
-	i = 0;
-	while (env[i] && oldpwd_line == NULL)
-	{
-		if (ft_strncmp("OLDPWD", env[i], 5) == 0)
-		{
-			oldpwd_line = ft_strsub(ft_strdup(env[i]),
-				7, ft_strlen(env[i]) - 7);
-		}
-		++i;
-	}
-	return (oldpwd_line);
-}
+// 	oldpwd_line = NULL;
+// 	i = 0;
+// 	while (env[i] && oldpwd_line == NULL)
+// 	{
+// 		if (ft_namematch("OLDPWD", env[i]))
+// 		{
+// 			oldpwd_line = ft_strdup(env[i] + 7);/*ft_strsub(ft_strdup(env[i]),
+// 				7, ft_strlen(env[i]) - 7);*/
+// 		}
+// 		++i;
+// 	}
+// 	return (oldpwd_line);
+// }
 
-char	**ft_get_envpath(char **env)
+char	**ft_get_envpath(t_env *shell)
 {
 	char	*path_line;
 	char	**path;
-	int		i;
 
-	path_line = NULL;
+	path_line = ft_get_env_value(shell, "PATH");
 	path = NULL;
-	i = 0;
-	while (env[i] && path_line == NULL)
-	{
-		if (ft_strncmp("PATH", env[i], 3) == 0)
-			path_line = ft_strsub(ft_strdup(env[i]),
-				5, ft_strlen(env[i]) - 5);
-		++i;
-	}
 	if (path_line != NULL)
+	{
 		path = ft_strsplit(path_line, ':');
+		free(path_line);
+	}
 	return (path);
 }
 
@@ -79,9 +74,9 @@ char	*ft_get_envpwd(char **env)
 	i = 0;
 	while (env[i] && get_pwd_line == NULL)
 	{
-		if (ft_strncmp("PWD", env[i], 2) == 0)
-			get_pwd_line = ft_strsub(ft_strdup(env[i]),
-				4, ft_strlen(env[i]) - 4);
+		if (ft_namematch("PWD", env[i]))
+			get_pwd_line = ft_strdup(env[i] + 4);
+			/*ft_strsub(ft_strdup(env[i]), 4, ft_strlen(env[i]) - 4);*/
 		++i;
 	}
 	return (get_pwd_line);

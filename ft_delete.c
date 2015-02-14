@@ -12,14 +12,17 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 int			ft_process_delete(t_env *e)
 {
 	char	*tmp;
 
 	if (e->index > 0)
 	{
-		tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+		ft_goleft(e);
 		tputs(tgetstr("sc", (char **)(&e->p->buf)), 1, ft_putc);
+		e->index++;
 		e->str[e->index - 1] = '\0';
 		tmp = ft_strjoin(e->str, e->str + e->index);
 		free(e->str);

@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 void		ft_update_imput(t_env *e)
 {
 	int len;

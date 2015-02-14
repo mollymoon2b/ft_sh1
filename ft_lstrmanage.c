@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 void		ft_lststr_add(t_str **lst, t_str *new)
 {
 	if (!lst || !new)

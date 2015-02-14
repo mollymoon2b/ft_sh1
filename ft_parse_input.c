@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_sh1.h"
 
-void	ft_print_environ(t_env *shell)
+//done (edit static lower)
+
+void		ft_print_environ(t_env *shell)
 {
-	int	i;
+	int		i;
 
 	if (shell->env)
 	{
@@ -29,7 +30,7 @@ void	ft_print_environ(t_env *shell)
 	}
 }
 
-int		ft_count_arg(char **av)
+static int	ft_count_arg(char **av)
 {
 	int	i;
 
@@ -39,36 +40,47 @@ int		ft_count_arg(char **av)
 	return (i);
 }
 
-char	**ft_parse_args(char *input)
+static char	**ft_parse_args(char *input)
 {
-	char	**av;
-
-	input = ft_strdel_double_sp(ft_strdup_tabtosp(input));
-	av = ft_strsplit(input, ' ');
-	return (av);
+	return (ft_strasplit(input, " \t"));
 }
 
-void	ft_parse_input(t_env *shell)
+static int	ft_commandmatch(char *name, char *test)
+{
+	while (*name && *name == *test)
+	{
+		name++;
+		test++;
+	}
+	if (!*name && !*test)
+		return (1);
+	return (0);
+}
+
+void		ft_parse_input(t_env *shell)
 {
 	if (*shell->str)
 	{
 		shell->av = ft_parse_args(shell->str);
-		shell->ac = ft_count_arg(shell->av);
-		if (shell->ac != 0)
+		if ((shell->ac = ft_count_arg(shell->av)))
 		{
-			if (ft_strcmp(ft_strtolower(shell->av[0]), "env") == 0)
+			if (ft_commandmatch("env", shell->av[0]))
 				ft_print_environ(shell);
-			else if (ft_strcmp(ft_strtolower(shell->av[0]), "setenv") == 0)
+			else if (ft_commandmatch("setenv", shell->av[0]))
 				ft_setenv(shell);
-			else if (ft_strcmp(ft_strtolower(shell->av[0]),
-								"unsetenv") == 0)
+			else if (ft_commandmatch("unsetenv", shell->av[0]))
 				ft_unsetenv(shell);
-			else if (ft_strcmp(ft_strtolower(shell->av[0]), "exit") == 0)
+			else if (ft_commandmatch("exit", shell->av[0]))
 				ft_exit(shell);
-			else if (ft_strcmp(ft_strtolower(shell->av[0]), "cd") == 0)
+			else if (ft_commandmatch("cd", shell->av[0]))
 				ft_cd(shell);
 			else
 				ft_exec_bin(shell);
+		}
+		if (shell->av)
+		{
+			printf("\tCall2 :\n");
+			ft_free_strarray(&shell->av);
 		}
 	}
 }

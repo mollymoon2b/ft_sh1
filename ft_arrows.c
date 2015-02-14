@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 void	ft_shellup(t_env *e)
 {
 	if (e->phisto->next)

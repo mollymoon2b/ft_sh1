@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_sh1.h"
+
+// done
 
 int	ft_fork(t_env *shell)
 {

@@ -1,0 +1,35 @@
+int sizeoftab(t_env *e, int i)
+{
+	int size;
+	int pos;
+	int sizecol;
+	char *ptr;
+	char *end;
+
+	size = 8;
+	pos = 0;
+	sizecol = tgetnum("co");
+	ptr = e->str;
+	end = e->str + i;
+	while (ptr != end)
+	{
+		if (*ptr == '\t')
+		{
+			pos += size;
+			size = 8;
+		}
+		else
+		{
+			pos += 1;
+			if ((--size) == 0)
+				size = 1;
+		}
+		if (pos > sizecol)
+		{
+			pos = 0;
+			size = 8;
+		}
+		ptr++;
+	}
+	return (size);
+}

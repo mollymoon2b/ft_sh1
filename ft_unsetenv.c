@@ -11,31 +11,48 @@
 /* ************************************************************************** */
 
 #include "ft_sh1.h"
-#include "libft/libft.h"
 
-int	ft_unset_from_env(t_env *shell)
+//done
+
+static void	ft_remove_from_env(t_env *shell, int pos, int size)
+{
+	char	**ne;
+	char	**ptr;
+	char	**penv;
+
+	if (!(ne = (char **)malloc(sizeof(char *) * size + 1)))
+		return ;
+	ptr = ne;
+	penv = shell->env;
+	while (size--)
+	{
+		if (pos-- == 0)
+			penv++;
+		*ptr++ = *penv++;
+	}
+	*ptr = '\0';
+	free(shell->env);
+	shell->env = ne;
+}
+
+static void	ft_unset_from_env(t_env *shell)
 {
 	int		line_to_remove;
 	int		i;
 
 	i = 0;
 	line_to_remove = -1;
-	while (shell->env[i] && line_to_remove == -1)
+	while (shell->env[i])
 	{
-		if (ft_strncmp(ft_strjoin(ft_strtoupper(shell->av[1]), "="),
-			shell->env[i], ft_strlen(shell->av[1])) == 0)
+		if (ft_namematch(shell->av[1], shell->env[i]))
 			line_to_remove = i;
 		++i;
 	}
-	i = 0;
-	while (shell->env[i])
-		++i;
-	shell->env[line_to_remove] = ft_strdup(shell->env[i - 1]);
-	shell->env[i - 1] = 0;
-	return (0);
+	if (line_to_remove != i)
+		ft_remove_from_env(shell, line_to_remove, i);
 }
 
-int	ft_valid_unsetenv_arg(char *str)
+static int	ft_valid_unsetenv_arg(char *str)
 {
 	int	i;
 
@@ -49,7 +66,7 @@ int	ft_valid_unsetenv_arg(char *str)
 	return (1);
 }
 
-int	ft_unsetenv(t_env *shell)
+int			ft_unsetenv(t_env *shell)
 {
 	if (shell->ac == 2)
 	{

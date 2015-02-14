@@ -17,7 +17,6 @@
 # include <sys/types.h>
 # include <stdio.h>
 # include "libft/libft.h"
-# include "get_next_line.h"
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <signal.h>
@@ -81,33 +80,34 @@ typedef struct		s_env
 
 char				**ft_dup_environ(const char **environ);
 void				ft_display_prompt(t_env *shell, int value);
-void				ft_print_environ(t_env *shell);
+void			ft_print_environ(t_env *shell);
 int					ft_fork(t_env *shell);
 void				ft_parse_input(t_env *shell);
-int					ft_count_arg(char **argv);
+// int					ft_count_arg(char **argv);
 int					ft_setenv(t_env *shell);
 int					ft_unsetenv(t_env *shell);
 void				ft_exit(t_env *shell);
-char				**ft_get_envpath(char **env);
+char				**ft_get_envpath(t_env *shell);
 int					ft_exec_bin(t_env *shell);
 char				*ft_get_envpwd(char **env);
-char				*ft_get_envoldpwd(char **env);
+// char				*ft_get_envoldpwd(char **env);
 char				*ft_get_envhome(char **env);
 int					ft_cd(t_env *shell);
 char				*ft_get_pwd(void);
 int					ft_cd(t_env *shell);
 char				*ft_rel_pwd(char *path);
-int					ft_updat_cdpwd(t_env *shell);
-int					ft_update_env_pwd(t_env *shell);
-int					ft_update_old_pwd(t_env *shell);
+// int					ft_updat_cdpwd(t_env *shell);
+// int					ft_update_env_pwd(t_env *shell);
+// int					ft_update_old_pwd(t_env *shell);
 void				ft_error_2char(char *str, char *str2);
 int					ft_unsetenv(t_env *shell);
-int					ft_valid_unsetenv_arg(char *str);
-int					ft_unset_from_env(t_env *shell);
-int					ft_add_var_env(t_env *shell, int len, char *var_env);
+// int					ft_valid_unsetenv_arg(char *str);
+// int					ft_unset_from_env(t_env *shell);
+// int					ft_add_var_env(t_env *shell, int len, char *var_env);
 int					ft_setenv(t_env *shell);
-int					ft_valid_setenv(char **argv);
-int					ft_set_var_env(t_env *shell);
+// int					ft_valid_setenv(char **argv);
+// int					ft_set_var_env(t_env *shell);
+char				**ft_strasplit(char const *s, char *c);
 
 void				ft_shellup(t_env *e);
 void				ft_shelldown(t_env *e);
@@ -124,7 +124,7 @@ int					ft_process_back_delete(t_env *e);
 int					ft_ctrlk(t_env *e);
 int					ft_ctrll(t_env *e);
 int					ft_clear(t_env *e, char *inputs);
-t_params			*ft_get_params(void);
+// t_params				*ft_get_params(void);
 t_env				*ft_get_env(void);
 void				ft_clean_env(t_env *e);
 int					ft_quit(t_env *e, char *inputs);
@@ -144,4 +144,17 @@ void				ft_put_histo(t_env *e);
 void				ft_trucbidule(t_env *shell);
 void				ft_goleft(t_env *e);
 void				ft_goright(t_env *e);
+
+
+int					ft_namematch(char *name, char *var);
+void				ft_free_strarray(char ***array);
+char				**ft_get_env_addr(t_env *shell, char *name);
+int					ft_value_exist(t_env *shell, char *name);
+void				ft_set_env_value(t_env *shell, char *name, char *value);
+void				ft_copy_env_value(t_env *shell, char *src, char *dst);
+void				ft_swap_env_value(t_env *shell, char *src, char *dst);
+char				**ft_get_env_addr(t_env *shell, char *name);
+char				*ft_get_env_value(t_env *shell, char *name);
+int					ft_namematch(char *name, char *var);
+int					ft_value_exist(t_env *shell, char *name);
 #endif

@@ -24,7 +24,10 @@ SRC =	main.c 			\
 	ft_managechar.c 	\
 	ft_put.c 			\
 	ft_moves.c			\
-	get_next_line.c
+	ft_strasplit.c		\
+	ft_free_strarray.c	\
+	ft_envtools.c		\
+	ft_envtools2.c
 
 OBJ = $(SRC:.c=.o)
 

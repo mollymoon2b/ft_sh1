@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+//	arthur
+
 int			ft_quit(t_env *e, char *inputs)
 {
 	if (inputs[0] == 3)

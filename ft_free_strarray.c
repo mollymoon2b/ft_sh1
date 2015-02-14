@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_free_strarray.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,50 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
+#include <stdio.h>
 
-static size_t	ft_nbr_words(char const *s, char c)
+// done
+
+void	ft_free_strarray(char ***array)
 {
-	int			i;
-	int			nbr;
+	char **ptr;
 
-	i = 0;
-	nbr = 0;
-	while (s[i])
+	printf("In\n");
+	// ptr = *array;
+	// while (*ptr)
+	// 	printf("\tShowing '%s'\n", *ptr++);
+	ptr = *array;
+	while (*ptr)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		while (s[i] && s[i] != c)
-			i++;
-		if (s[i] != '\0' || s[i - 1] != c)
-			nbr++;
+		printf("\tFreeing '%s'\n", *ptr);
+		free(*ptr++);
 	}
-	return (nbr);
-}
-
-char			**ft_strsplit(char const *s, char c)
-{
-	char		**str;
-	size_t		i;
-	size_t		j;
-	size_t		len;
-
-	i = 0;
-	if (s == NULL)
-		return (NULL);
-	len = ft_nbr_words(s, c);
-	str = (char **)malloc(sizeof(char *) * len + 1);
-	while (i < len)
-	{
-		j = 0;
-		while (*s && *s == c)
-			s = s + 1;
-		while (*(s + j) && *(s + j) != c)
-			j++;
-		*(str++) = ft_strsub(s, 0, j);
-		s = s + j;
-		i++;
-	}
-	*str = NULL;
-	return (str - len);
+	if (*array)
+		free(*array);
+	printf("Out\n");
 }

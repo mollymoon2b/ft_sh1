@@ -10,16 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_sh1.h"
-#include "get_next_line.h"
+
+// arthur
 
 void	ft_display_prompt(t_env *shell, int value)
 {
 	if (value == 1)
 	{
-		shell->path = ft_get_envpath(shell->env);
+		shell->path = ft_get_envpath(shell);
 		ft_parse_input(shell);
+		printf("\tCall1 :\n");
+		ft_free_strarray(&shell->path);
 	}
 	else if (value == 0)
 		ft_exit(shell);

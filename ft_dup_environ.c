@@ -10,28 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
-#include "libft/libft.h"
 #include "ft_sh1.h"
 
-char	**ft_dup_environ(const char **environ)
+// arthur
+
+char			**ft_dup_environ(const char **environ)
 {
-	char	**bis;
-	size_t	i;
+	const char	**ptr;
+	char		**bis;
+	char		**ptr2;
+	size_t		i;
 
 	i = 0;
-	while (environ[i])
+	ptr = environ;
+	while (*ptr++)
 		i++;
-	bis = (char **)malloc((i + 1) * sizeof(char *));
-	if (bis == NULL)
+	if (!(bis = (char **)malloc((i + 1) * sizeof(char *))))
 		return (NULL);
 	i = 0;
-	while (environ[i])
+	ptr = environ;
+	ptr2 = bis;
+	while (*ptr)
 	{
-		bis[i] = ft_strdup(environ[i]);
+		*ptr2++ = ft_strdup(*ptr++);
 		++i;
 	}
-	bis[i] = 0;
+	*ptr2 = NULL;
 	return (bis);
 }

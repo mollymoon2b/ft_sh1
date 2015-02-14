@@ -12,6 +12,8 @@
 
 #include "ft_sh1.h"
 
+// arthur
+
 char		*ft_chardup(char c)
 {
 	char	*str;
