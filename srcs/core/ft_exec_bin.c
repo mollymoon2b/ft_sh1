@@ -15,18 +15,23 @@
 char		*ft_linkpath(char *s1, char *s2)
 {
 	char	*str;
-	int		l1;
-	int		l2;
+	char	*ptr;
+	char	*p1;
+	char	*p2;
 
-	l1 = ft_strlen(s1);
-	l2 = ft_strlen(s2);
-	if (!(str = (char *)malloc(sizeof(l1 + l2 + 1))))
+	p1 = s1;
+	p2 = s2;
+	printf("Before : '%s' + '%s'\n", s1, s2);
+	if (!(str = (char *)malloc(sizeof(ft_strlen(s1) + ft_strlen(s2) + 2))))
 		return (NULL);
-	ft_strcpy(str, s1);
-	*(str + l1) = '/';
-	ft_strcpy(str + l1 + 1, s2);
-	*(str + l1 + l2 + 1) = '\0';
-	printf("'%s' + '%s' = '%s'\n", s1, s2, str);
+	ptr = str;
+	while (*p1)
+		*ptr++ = *p1++;
+	*ptr++ = '/';
+	while (*p2)
+		*ptr++ = *p2++;
+	*ptr = '\0';
+	printf("After : '%s' + '%s' = '%s'\n", s1, s2, str);
 	return (str);
 }
 
@@ -49,7 +54,9 @@ int			ft_set_binpath(t_env *shell)
 	 		{
 	 			// if (access(shell->binpath, F_OK) == 0)
 	 				// return (1);
+	 			printf("Before : '%s'\n", shell->path[i]);
 	 			free(shell->binpath);
+	 			printf("After : '%s'\n", shell->path[i]);
 	 		}
 			++i;
 		}

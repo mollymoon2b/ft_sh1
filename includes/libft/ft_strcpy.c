@@ -12,16 +12,16 @@
 
 #include "libft.h"
 
-char	*ft_strcpy(char *s1, const char *s2)
+char		*ft_strcpy(char *dst, const char *src)
 {
-	int	i;
+	size_t	c;
 
-	i = 0;
-	while (s2[i] != '\0')
+	c = 0;
+	while (src[c])
 	{
-		s1[i] = s2[i];
-		i++;
+		dst[c] = src[c];
+		c++;
 	}
-	s1[i] = '\0';
-	return (s1);
+	dst[c] = '\0';
+	return (dst);
 }
