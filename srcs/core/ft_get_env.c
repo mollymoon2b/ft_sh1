@@ -14,22 +14,22 @@
 
 // kind of done
 
-char	*ft_get_envhome(char **env)
-{
-	char	*home_line;
-	int		i;
+// char	*ft_get_envhome(char **env)
+// {
+// 	char	*home_line;
+// 	int		i;
 
-	home_line = NULL;
-	i = 0;
-	while (env[i] && home_line == NULL)
-	{
-		if (ft_namematch("HOME", env[i]))
-			home_line = ft_strdup(env[i] + 5);/*ft_strsub(ft_strdup(env[i]),
-				5, ft_strlen(env[i]) - 5);*/
-		++i;
-	}
-	return (home_line);
-}
+// 	home_line = NULL;
+// 	i = 0;
+// 	while (env[i] && home_line == NULL)
+// 	{
+// 		if (ft_namematch("HOME", env[i]))
+// 			home_line = ft_strdup(env[i] + 5);/*ft_strsub(ft_strdup(env[i]),
+// 				5, ft_strlen(env[i]) - 5);*/
+// 		++i;
+// 	}
+// 	return (home_line);
+// }
 
 // char	*ft_get_envoldpwd(char **env)
 // {
@@ -65,24 +65,24 @@ char	**ft_get_envpath(t_env *shell)
 	return (path);
 }
 
-char	*ft_get_envpwd(char **env)
-{
-	char	*get_pwd_line;
-	int		i;
+// char	*ft_get_envpwd(char **env)
+// {
+// 	char	*get_pwd_line;
+// 	int		i;
 
-	get_pwd_line = NULL;
-	i = 0;
-	while (env[i] && get_pwd_line == NULL)
-	{
-		if (ft_namematch("PWD", env[i]))
-			get_pwd_line = ft_strdup(env[i] + 4);
-			/*ft_strsub(ft_strdup(env[i]), 4, ft_strlen(env[i]) - 4);*/
-		++i;
-	}
-	return (get_pwd_line);
-}
+// 	get_pwd_line = NULL;
+// 	i = 0;
+// 	while (env[i] && get_pwd_line == NULL)
+// 	{
+// 		if (ft_namematch("PWD", env[i]))
+// 			get_pwd_line = ft_strdup(env[i] + 4);
+// 			/*ft_strsub(ft_strdup(env[i]), 4, ft_strlen(env[i]) - 4);*/
+// 		++i;
+// 	}
+// 	return (get_pwd_line);
+// }
 
-char	*ft_get_pwd(void)
-{
-	return (getcwd(NULL, 0));
-}
+// char	*ft_get_pwd(void)
+// {
+// 	return (getcwd(NULL, 0));
+// }

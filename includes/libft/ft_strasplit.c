@@ -42,7 +42,8 @@ char			**ft_strasplit(char const *s, char *c)
 	if (s == NULL)
 		return (NULL);
 	len = ft_nbr_words(s, c);
-	str = (char **)malloc(sizeof(char *) * len + 1);
+	if (!(str = (char **)malloc(sizeof(char *) * len + 1)))
+		return (NULL);
 	while (i < len)
 	{
 		j = 0;

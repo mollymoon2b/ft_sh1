@@ -71,15 +71,16 @@ void		ft_parse_input(t_env *shell)
 				ft_unsetenv(shell);
 			else if (ft_commandmatch("exit", shell->av[0]))
 				ft_exit(shell);
-			// else if (ft_commandmatch("cd", shell->av[0]))
-				// ft_cd(shell);
+			else if (ft_commandmatch("cd", shell->av[0]))
+				ft_cd(shell);
 			else
 				ft_exec_bin(shell);
 		}
 		if (shell->av)
 		{
-			// printf("\tCall2 :\n");
+			printf("\tCall 2 on:\n");
 			ft_free_strarray(&shell->av);
+			printf("\tCall 2 off:\n");
 		}
 	}
 }
