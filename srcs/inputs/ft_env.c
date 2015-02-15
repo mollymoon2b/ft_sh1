@@ -58,6 +58,7 @@ t_env			*ft_get_env(void)
 		e->index = 0;
 		if (!(e->histo = (t_str *)ft_memalloc(sizeof(t_str))))
 			return (NULL);
+		// e->histo = NULL;
 	}
 	return (e);
 }

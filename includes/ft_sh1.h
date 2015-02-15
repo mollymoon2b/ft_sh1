@@ -93,7 +93,7 @@ int					ft_setenv(t_env *shell);
 int					ft_unsetenv(t_env *shell);
 void				ft_exit(t_env *shell);
 char				**ft_get_envpath(t_env *shell);
-int					ft_exec_bin(t_env *shell);
+void				ft_exec_bin(t_env *shell);
 // char				*ft_get_envpwd(char **env);
 // char				*ft_get_envoldpwd(char **env);
 char				*ft_get_envhome(char **env);
