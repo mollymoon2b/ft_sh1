@@ -50,7 +50,7 @@ int			ft_set_binpath(t_env *shell)
 		}
 		while (shell->path[i] && shell->av[0])
 		{
-			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0])))
+			if ((shell->binpath = ft_linkpath(ft_strdup(shell->path[i]), shell->av[0])))
 	 		{
 	 			// if (access(shell->binpath, F_OK) == 0)
 	 				// return (1);
