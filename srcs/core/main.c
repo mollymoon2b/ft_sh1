@@ -30,6 +30,7 @@ int		main(void)
 	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
 	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
 	shell->env = ft_dup_environ(environ);
+	shell->binpath = NULL;
 	while ((value = ft_get_inputs(shell)))
 	{
 		if (shell != NULL)

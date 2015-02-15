@@ -12,7 +12,7 @@
 
 #include "../../includes/ft_sh1.h"
 
-char	*ft_linkpath(char *s1, char *s2)
+char		*ft_linkpath(char *s1, char *s2)
 {
 	char	*str;
 	int		l1;
@@ -36,40 +36,49 @@ int			ft_set_binpath(t_env *shell)
 	i = 0;
 	if (shell->path != NULL)
 	{
+		shell->binpath = NULL;
 		if (access(shell->av[0], F_OK) == 0)
-		{
+		{ //On a presume que binpath etait null
 			shell->binpath = ft_strdup(shell->av[0]);
-			return (0);
-		}
+			return (1);
+		} // binpath existe
 		while (shell->path[i] && shell->av[0])
-		{
+		{ //On a presume que binpath etait null
 			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0])))
-		 		if (access(shell->binpath, F_OK) == 0)
-		 			return (0);
-		 		printf("Free number 1 on : '%s'\n", shell->binpath);
-	 			// free(shell->binpath);
-	 			// shell->binpath = NULL;
-		 		printf("Free number 1 off : '%s'\n", shell->binpath);
+	 		{
+	 			if (access(shell->binpath, F_OK) == 0)
+	 				return (1); // binpath existe
+	 		}
+	 		// ft_putstr("1) About to bug with : '");
+	 		// ft_putstr(shell->binpath);
+	 		// ft_putstr("'\n");
+			free(shell->binpath);
+	 		// printf("Free number 1 on : '%s'\n", shell->binpath);
+	 		// shell->binpath = NULL;
+ 			// free(shell->binpath); // Binpath existe, car bin... = plus haut
+ 			// shell->binpath = NULL;
+	 		// printf("Free number 1 off : '%s'\n", shell->binpath);
 			++i;
 		}
-		shell->binpath = NULL;
+		// shell->binpath = NULL;
 		// ft_putstr("av[0] = '");
 		// ft_putstr(shell->av[0]);
 		// ft_putstr("'\n");
 //		printf("\n\nAv[0] = '%s'\n", shell->av[0]);
-		ft_error_2char(shell->av[0], ": command not found\n");
-		write(1, "a", 1);
+		// ft_error_2char(shell->av[0], ": command not found\n");
 	}
-	else
-		ft_error_2char(shell->av[0], ": Undefined environment PATH\n");
-	return (-1);
+	// else
+		// ft_error_2char(shell->av[0], ": Undefined environment PATH\n");
+	return (0);
 }
 
 int			ft_exec_bin(t_env *shell)
 {
 	 pid_t	cpid;
+	 char	*tmp;
 
-	if (ft_set_binpath(shell) == 0)
+	 tmp = NULL;
+	if (ft_set_binpath(shell))
 	{
 		cpid = fork();
 		if (cpid != -1)
@@ -79,10 +88,16 @@ int			ft_exec_bin(t_env *shell)
 			else
 				waitpid(cpid, 0, 0);
 		}
-		printf("Free number 2 on : '%s'\n", shell->binpath);
-		// free(shell->binpath);
+		// printf("Free number 2 on : '%s'\n", shell->binpath);
+ 		// shell->binpath = NULL;
+ 		// ft_putstr("2) About to bug with : '");
+ 		// ft_putstr(shell->binpath);
+ 		// ft_putstr("'\n");
+		free(shell->binpath);
+ 	// 	shell->binpath = NULL;
 		// shell->binpath = NULL;
-		printf("Free number 2 off : '%s'\n", shell->binpath);
+		// printf("Free number 2 off : '%s'\n", shell->binpath);
 	}
+	// free(shell->binpath);
 	return (0);
 }
