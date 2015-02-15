@@ -26,6 +26,7 @@ char		*ft_linkpath(char *s1, char *s2)
 	*(str + l1) = '/';
 	ft_strcpy(str + l1 + 1, s2);
 	*(str + l1 + l2 + 1) = '\0';
+	printf("'%s' + '%s' = '%s'\n", s1, s2, str);
 	return (str);
 }
 
@@ -36,18 +37,19 @@ int			ft_set_binpath(t_env *shell)
 	i = 0;
 	if (shell->path != NULL)
 	{
-		shell->binpath = ft_strnew(0);
-		if (access(shell->av[0], F_OK) == 0)
+		if (ft_strlen(shell->av[0]) > 3 && shell->av[0][0] == '.' &&
+			shell->av[0][1] == '/' && access(shell->av[0] + 2, F_OK) == 0)
 		{
-			shell->binpath = ft_strdup(shell->av[0]);
+			shell->binpath = ft_strdup(shell->av[0] + 2);
 			return (1);
 		}
 		while (shell->path[i] && shell->av[0])
 		{
 			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0])))
 	 		{
-	 			if (access(shell->binpath, F_OK) == 0)
-	 				return (1);
+	 			// if (access(shell->binpath, F_OK) == 0)
+	 				// return (1);
+	 			free(shell->binpath);
 	 		}
 			++i;
 		}
@@ -67,11 +69,13 @@ int			ft_exec_bin(t_env *shell)
 			if (cpid == 0)
 			{
 				if (execve(shell->binpath, shell->av, shell->env) == -1)
-					ft_putstr("\nERROR\n");
+					ft_putstr("\nERROR\n"); //make re && ./ft_minishell1
 			}
 			else
 				waitpid(cpid, 0, 0);
 		}
+		free(shell->binpath);
 	}
 	return (0);
+	cpid++;
 }

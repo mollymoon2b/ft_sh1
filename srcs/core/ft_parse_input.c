@@ -64,29 +64,25 @@ void		ft_parse_input(t_env *shell)
 //parse arg ok
 	if (*shell->str)
 	{
-		shell->av = ft_parse_args(shell->str);
-		printf("In loop %i, shell->av[0] = '%s'\n", i++, shell->av[0]); ///nfs/zfs-student-2/users/2014/achazal/.brew/bin/er
-		if ((shell->ac = ft_count_arg(shell->av)))
+		if ((shell->av = ft_parse_args(shell->str)))
 		{
-			// if (ft_commandmatch("env", shell->av[0]))
-			// 	ft_print_environ(shell);
-			// else if (ft_commandmatch("setenv", shell->av[0]))
-			// 	ft_setenv(shell);
-			// else if (ft_commandmatch("unsetenv", shell->av[0]))
-			// 	ft_unsetenv(shell);
-			// else if (ft_commandmatch("exit", shell->av[0]))
-			// 	ft_exit(shell);
-			// else if (ft_commandmatch("cd", shell->av[0]))
-			// 	ft_cd(shell);
-			// else
+			printf("In loop %i, shell->av[0] = '%s'\n", i++, shell->av[0]); ///nfs/zfs-student-2/users/2014/achazal/.brew/bin/er
+			if ((shell->ac = ft_count_arg(shell->av)))
+			{
+				if (ft_commandmatch("env", shell->av[0]))
+					ft_print_environ(shell);
+				else if (ft_commandmatch("setenv", shell->av[0]))
+					ft_setenv(shell);
+				else if (ft_commandmatch("unsetenv", shell->av[0]))
+					ft_unsetenv(shell);
+				else if (ft_commandmatch("exit", shell->av[0]))
+					ft_exit(shell);
+				else if (ft_commandmatch("cd", shell->av[0]))
+					ft_cd(shell);
+				else
 				ft_exec_bin(shell);
+			}
+			ft_free_strarray(&shell->av);
 		}
-		// if (shell->av)
-		// {
-			// printf("\tCall 2 on:\n");
-			// ft_free_strarray(&shell->av);
-			// shell->av = NULL;
-			// printf("\tCall 2 off:\n");
-		// }
 	}
 }

@@ -57,7 +57,7 @@ char	**ft_get_envpath(t_env *shell)
 
 	path_line = ft_get_env_value(shell, "PATH");
 	path = NULL;
-	if (path_line != NULL)
+	if (path_line)
 	{
 		path = ft_strsplit(path_line, ':');
 		free(path_line);
