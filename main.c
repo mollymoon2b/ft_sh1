@@ -19,42 +19,11 @@ void	ft_error_2char(char *str, char *str2)
 	ft_putstr(str2);
 }
 
-int			ft_exec_pwd_test(t_env *shell)
-{
-	pid_t	cpid;
-
-	cpid = fork();
-	if (cpid != -1)
-	{
-		if (cpid == 0)
-			execve("/bin/pwd", ft_strsplit("pwd", ' '), shell->env);
-		else
-			waitpid(cpid, 0, 0);
-	}
-	return (0);
-}
-
-int			ft_exec_ls_test(t_env *shell)
-{
-	pid_t	cpid;
-
-	cpid = fork();
-	if (cpid != -1)
-	{
-		if (cpid == 0)
-			execve("/bin/ls", ft_strsplit("ls .", ' '), shell->env);
-		else
-			waitpid(cpid, 0, 0);
-	}
-	return (0);
-}
-
 int		main(void)
 {
 	extern const char	**environ;
 	t_env				*shell;
 	int					value;
-	char *test;
 
 	if (!(shell = ft_get_env()))
 		return (0);
@@ -73,16 +42,4 @@ int		main(void)
 		ft_clean_env(shell);
 	}
 	return (0);
-
-shell->env = ft_dup_environ(environ);
-ft_exec_pwd_test(shell);
-test = ft_strdup("/nfs/zfs-student-2/users/2014/achazal/");
-if (access(test, F_OK) == 0)
-	chdir(test);
-ft_exec_pwd_test(shell);
-ft_exec_ls_test(shell);
-	return (0);
-	environ++;
-	value++;
-	shell++;
 }

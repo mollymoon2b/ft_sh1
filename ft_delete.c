@@ -75,17 +75,15 @@ int			ft_ctrlk(t_env *e)
 
 int			ft_ctrll(t_env *e)
 {
-	int		len;
+	size_t	mem;
 
 	tputs(tgetstr("cl", (char **)(&e->p->buf)), 1, ft_putc);
 	tputs(e->name, 1, ft_putc);
 	tputs(e->str, 1, ft_putc);
-	len = ft_strlen(e->name) + ft_strlen(e->str);
-	tputs(tgoto(tgetstr("cm", (char **)(&e->p->buf)),
-		len % tgetnum("co"), len / tgetnum("co")), 1, ft_putc);
-	len = ft_strlen(e->str) - e->index + ft_strlen(e->name);
-	while (len--)
-		tputs(tgetstr("le", (char **)(&e->p->buf)), 1, ft_putc);
+	mem = e->index;
+	e->index = e->max;
+	while (mem != e->index)
+		ft_goleft(e);
 	return (1);
 }
 

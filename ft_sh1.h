@@ -157,4 +157,6 @@ char				**ft_get_env_addr(t_env *shell, char *name);
 char				*ft_get_env_value(t_env *shell, char *name);
 int					ft_namematch(char *name, char *var);
 int					ft_value_exist(t_env *shell, char *name);
+void				ft_arrows2(t_env *e, char kind);
+void				ft_special(t_env *e, int kind);
 #endif

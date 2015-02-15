@@ -77,10 +77,22 @@ int		ft_arrows(t_env *e, char *inputs)
 		ft_shelldown(e);
 	if (inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 65)
 		ft_shellup(e);
-	if ((inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 68) ||
-		(inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 67) ||
-		(inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 66) ||
-		(inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 65))
+	if ((inputs[0] == 27 && inputs[1] == 91) && (inputs[2] == 65 ||
+		inputs[2] == 66 || inputs[2] == 67 || inputs[2] == 68))
 		return (1);
+	if ((inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 49 &&
+		inputs[3] == 59 && inputs[4] == 50) && (inputs[5] == 65 ||
+		inputs[5] == 66 || inputs[5] == 67 || inputs[5] == 68))
+	{
+		ft_arrows2(e, inputs[5]);
+		return (1);
+	}
+	if (inputs[0] == 27 && inputs[1] == 91 && inputs[3] == 0 &&
+		inputs[4] == 0 && inputs[5] == 0 && inputs[6] == 0 &&
+		((inputs[2] == 70) || inputs[2] == 72))
+	{
+		ft_special(e, inputs[2]);
+		return (1);
+	}
 	return (0);
 }

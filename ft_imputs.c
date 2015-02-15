@@ -70,7 +70,8 @@ int			ft_manage_inputs(t_env *e, char *inputs)
 	int value;
 
 	if ((inputs[0] == 3 || inputs[0] == 4 || inputs[0] == 10) &&
-		inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0 && inputs[4] == 0)
+		inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0 &&
+		inputs[4] == 0 && inputs[5] == 0 && inputs[6] == 0)
 		return (ft_quit(e, inputs));
 	else if (!ft_delete(e, inputs))
 		if (!ft_arrows(e, inputs))
@@ -83,18 +84,20 @@ int			ft_manage_inputs(t_env *e, char *inputs)
 
 int			ft_get_inputs(t_env *e)
 {
-	char	inputs[5];
+	char	inputs[7];
 	int		value;
 
-	bzero(inputs, 5);
+	bzero(inputs, 7);
 	ft_clean_histo(e);
 	ft_lstr_inputsinit(e);
 	tputs(e->name, 1, ft_putc);
-	while ((read(0, inputs, 5)) != EOF)
+	while ((read(0, inputs, 7)) != EOF)
 	{
+		// printf("\nInputs : %i %i %i %i %i %i %i\n",
+			// inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6]);
 		if ((value = ft_manage_inputs(e, inputs)) >= 0)
 			return (value);
-		bzero(inputs, 5);
+		bzero(inputs, 7);
 	}
 	ft_endline(e);
 	return (0);

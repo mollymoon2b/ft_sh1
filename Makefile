@@ -14,6 +14,8 @@ SRC =	main.c 			\
 	ft_unsetenv.c 		\
 	ft_setenv.c 		\
 	ft_arrows.c 		\
+	ft_arrows2.c 		\
+	ft_special.c		\
 	ft_charmanage.c 	\
 	ft_cursor.c 		\
 	ft_delete.c 		\
