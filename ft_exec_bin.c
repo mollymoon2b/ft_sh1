@@ -6,7 +6,7 @@
 /*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/19 10:44:47 by ade-bonn          #+#    #+#             */
-/*   Updated: 2015/01/19 10:44:59 by ade-bonn         ###   ########.fr       */
+/*   Updated: 2015/02/15 13:23:44 by ade-bonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int			ft_set_binpath(t_env *shell)
 		while (shell->path[i] && shell->av[0])
 		{
 			// printf("path[i] = '%s'\n", shell->path[i]);
-			// shell->binpath = ft_linkpath(shell->path[i], shell->av[0]);
-	// 		if (access(shell->binpath, F_OK) == 0)
-	// 			return (0);
-			// free(shell->binpath);
+			shell->binpath = ft_linkpath(shell->path[i], shell->av[0]);
+	 		if (access(shell->binpath, F_OK) == 0)
+	 			return (0);
+			if (shell->binpath)
+				cdfree(shell->binpath);
 			++i;
 		}
 		// if (shell->binpath)
