@@ -45,7 +45,7 @@ static int	ft_update_cdpwd(t_env *shell)
 	int		i;
 
 	i = 0;
-	printf("Added pwd2 = %s\n", getcwd(NULL, 0));
+	// printf("Added pwd2 = %s\n", getcwd(NULL, 0));
 	while (shell->env[i])
 	{
 		if (ft_namematch("CDPATH", shell->env[i]))
@@ -71,7 +71,7 @@ char	*ft_rel_pwd(char *path)
 		pwd = ft_strjoin(pwd, "/");
 		pwd = ft_strjoin(pwd, path);
 	}
-	printf("Returned path = '%s'\n", pwd);
+	// printf("Returned path = '%s'\n", pwd);
 	return (pwd);
 }
 
@@ -123,7 +123,7 @@ int		ft_cd(t_env *shell)
 		}
 		if (access(path, F_OK) == 0)
 		{
-			printf ("Moving the path to '%s'\n", path);
+			// printf ("Moving the path to '%s'\n", path);
 			chdir(path);
 			ft_update_env_pwd(shell);
 			ft_update_cdpwd(shell);

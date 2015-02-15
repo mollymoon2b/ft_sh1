@@ -39,7 +39,8 @@ int		main(void)
 			signal(SIGINT, SIG_IGN);
 		}
 		ft_display_prompt(shell, value);
-		ft_clean_env(shell);
+		if (!(ft_clean_env(shell)))
+			break ;
 	}
 	return (0);
 }

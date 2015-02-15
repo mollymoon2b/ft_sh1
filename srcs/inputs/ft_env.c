@@ -18,11 +18,13 @@ static t_params	*ft_get_params(void)
 {
 	t_params	*p;
 
-	p = (t_params *)ft_memalloc(sizeof(t_params));
+	if (!(p = (t_params *)ft_memalloc(sizeof(t_params))))
+		return (NULL);
 	p->c_pos_x = 0;
 	p->c_pos_y = 0;
 	p->print = 0;
-	p->v_term = getenv("TERM");
+	if (!(p->v_term = getenv("TERM")))
+		return (NULL);
 	if (tgetent(p->buf, p->v_term) < 1)
 		return (NULL);
 	tcgetattr(0, &p->term);
@@ -45,22 +47,28 @@ t_env			*ft_get_env(void)
 
 	if (!e)
 	{
-		e = (t_env *)ft_memalloc(sizeof(t_env));
+		if (!(e = (t_env *)ft_memalloc(sizeof(t_env))))
+			return (NULL);
 		e->name = ft_strdup("Shell > ");
 		if (!(e->p = ft_get_params()))
 			return (NULL);
-		e->str = ft_strdup("");
+		if (!(e->str = ft_strdup("")))
+			return (NULL);
 		e->max = 0;
 		e->index = 0;
-		e->histo = (t_str *)ft_memalloc(sizeof(t_str));
+		if (!(e->histo = (t_str *)ft_memalloc(sizeof(t_str))))
+			return (NULL);
 	}
 	return (e);
 }
 
-void			ft_clean_env(t_env *e)
+int				ft_clean_env(t_env *e)
 {
-	free(e->str);
-	e->str = ft_strdup("");
+	if (e->str)
+		free(e->str);
+	if (!(e->str = ft_strdup("")))
+		return (0);
 	e->index = 0;
 	e->max = 0;
+	return (1);
 }

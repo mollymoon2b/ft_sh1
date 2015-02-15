@@ -44,7 +44,7 @@ static char	**ft_parse_args(char *input)
 	return (ft_strasplit(input, " \t"));
 }
 
-static int	ft_commandmatch(char *name, char *test)
+int	ft_commandmatch(char *name, char *test)
 {
 	while (*name && *name == *test)
 	{
@@ -71,14 +71,14 @@ void		ft_parse_input(t_env *shell)
 				ft_unsetenv(shell);
 			else if (ft_commandmatch("exit", shell->av[0]))
 				ft_exit(shell);
-			else if (ft_commandmatch("cd", shell->av[0]))
-				ft_cd(shell);
+			// else if (ft_commandmatch("cd", shell->av[0]))
+				// ft_cd(shell);
 			else
 				ft_exec_bin(shell);
 		}
 		if (shell->av)
 		{
-			printf("\tCall2 :\n");
+			// printf("\tCall2 :\n");
 			ft_free_strarray(&shell->av);
 		}
 	}

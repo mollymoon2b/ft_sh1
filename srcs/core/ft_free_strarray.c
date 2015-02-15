@@ -18,17 +18,17 @@ void	ft_free_strarray(char ***array)
 {
 	char **ptr;
 
-	printf("In\n");
+	// printf("In\n");
 	// ptr = *array;
 	// while (*ptr)
 	// 	printf("\tShowing '%s'\n", *ptr++);
 	ptr = *array;
 	while (*ptr)
 	{
-		printf("\tFreeing '%s'\n", *ptr);
+		// printf("\tFreeing '%s'\n", *ptr);
 		free(*ptr++);
 	}
 	if (*array)
 		free(*array);
-	printf("Out\n");
+	// printf("Out\n");
 }

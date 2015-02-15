@@ -10,6 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	Penser à aller à la ligne à la fin des imputs
+*/
+
+
 #ifndef FT_SH1_H
 # define FT_SH1_H
 # include <sys/param.h>
@@ -126,7 +131,7 @@ int					ft_ctrll(t_env *e);
 int					ft_clear(t_env *e, char *inputs);
 // t_params				*ft_get_params(void);
 t_env				*ft_get_env(void);
-void				ft_clean_env(t_env *e);
+int					ft_clean_env(t_env *e);
 int					ft_quit(t_env *e, char *inputs);
 int					ft_delete(t_env *e, char *inputs);
 void				ft_lstr_inputsinit(t_env *e);
