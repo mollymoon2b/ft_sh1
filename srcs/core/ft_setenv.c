@@ -53,8 +53,9 @@ static void	ft_set_var_env(t_env *shell)
 	{
 		if (ft_namematch(shell->av[1], shell->env[i]))
 		{
-			free(var_env);
+			free(shell->env[i]);
 			shell->env[i] = ft_strdup(var_env);
+			free(var_env);
 			return ;
 		}
 		i++;
