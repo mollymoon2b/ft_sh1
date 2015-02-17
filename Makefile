@@ -13,6 +13,8 @@ SRC =	srcs/core/main.c 			\
 	srcs/core/ft_unsetenv.c 		\
 	srcs/core/ft_setenv.c 			\
 	srcs/core/ft_free_strarray.c	\
+	srcs/core/ft_envtools.c			\
+	srcs/core/ft_envtools2.c		\
 	srcs/inputs/ft_arrows.c 		\
 	srcs/inputs/ft_arrows2.c 		\
 	srcs/inputs/ft_special.c		\
@@ -25,9 +27,7 @@ SRC =	srcs/core/main.c 			\
 	srcs/inputs/ft_lstrmanage.c		\
 	srcs/inputs/ft_managechar.c		\
 	srcs/inputs/ft_put.c 			\
-	srcs/inputs/ft_moves.c			\
-	srcs/inputs/ft_envtools.c		\
-	srcs/inputs/ft_envtools2.c
+	srcs/inputs/ft_moves.c
 
 OBJ = $(SRC:.c=.o)
 
