@@ -41,7 +41,7 @@ void		ft_process_lchar(t_env *e, char *inputs)
 	free(e->str);
 	e->str = tmp2;
 	tputs(e->str + e->index, 1, ft_putc);
-	flag = ((int)(e->max + ft_strlen(e->name)) == (int)tgetnum("co") - 1);
+	flag = ((int)(e->max + ft_strlen(e->name)) % tgetnum("co") == (int)tgetnum("co") - 1);
 	len = e->index + flag;
 	e->index = e->max;
 	while (len != e->index)
