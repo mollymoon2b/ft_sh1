@@ -12,7 +12,7 @@
 
 #include "../../includes/ft_sh1.h"
 
-char		*ft_linkpath(char *s1, char *s2)
+char		*ft_linkpath(char *s1, char *s2, char c)
 {
 	char	*str;
 	char	*ptr;
@@ -21,17 +21,15 @@ char		*ft_linkpath(char *s1, char *s2)
 
 	p1 = s1;
 	p2 = s2;
-	printf("Before : '%s' + '%s'\n", s1, s2);
-	if (!(str = (char *)malloc(sizeof(ft_strlen(s1) + ft_strlen(s2) + 2))))
+	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2))))
 		return (NULL);
 	ptr = str;
 	while (*p1)
 		*ptr++ = *p1++;
-	*ptr++ = '/';
+	*ptr++ = c;
 	while (*p2)
 		*ptr++ = *p2++;
 	*ptr = '\0';
-	printf("After : '%s' + '%s' = '%s'\n", s1, s2, str);
 	return (str);
 }
 
@@ -40,49 +38,44 @@ int			ft_set_binpath(t_env *shell)
 	int		i;
 
 	i = 0;
+	shell->binpath = NULL;
 	if (shell->path != NULL)
 	{
-		if (ft_strlen(shell->av[0]) > 3 && shell->av[0][0] == '.' &&
-			shell->av[0][1] == '/' && access(shell->av[0] + 2, F_OK) == 0)
-		{
-			shell->binpath = ft_strdup(shell->av[0] + 2);
-			return (1);
-		}
+		if (access(shell->av[0], F_OK) == 0)
+			return (0);
 		while (shell->path[i] && shell->av[0])
 		{
-			if ((shell->binpath = ft_linkpath(ft_strdup(shell->path[i]), shell->av[0])))
-	 		{
-	 			// if (access(shell->binpath, F_OK) == 0)
-	 				// return (1);
-	 			printf("Before : '%s'\n", shell->path[i]);
-	 			free(shell->binpath);
-	 			printf("After : '%s'\n", shell->path[i]);
-	 		}
+			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0], '/')))
+			{
+	 			if (access(shell->binpath, F_OK) == 0)
+	 				return (0);
+				free(shell->binpath);
+			}
 			++i;
 		}
+		ft_error_2char(shell->av[0], ": command not found\n");
 	}
-	return (0);
+	else
+		ft_error_2char(shell->av[0], ": Undefined environment PATH\n");
+	return (-1);
 }
 
-int			ft_exec_bin(t_env *shell)
+void		ft_exec_bin(t_env *shell)
 {
 	pid_t	cpid;
 
-	if (ft_set_binpath(shell))
+	if (ft_set_binpath(shell) == 0)
 	{
 		cpid = fork();
 		if (cpid != -1)
 		{
 			if (cpid == 0)
-			{
-				if (execve(shell->binpath, shell->av, shell->env) == -1)
-					ft_putstr("\nERROR\n"); //make re && ./ft_minishell1
-			}
+				execve(shell->binpath, shell->av, shell->env);
 			else
 				waitpid(cpid, 0, 0);
 		}
 		free(shell->binpath);
 	}
-	return (0);
+	return ;
 	cpid++;
 }

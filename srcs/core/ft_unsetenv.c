@@ -27,7 +27,7 @@ static void	ft_remove_from_env(t_env *shell, int pos, int size)
 	while (size--)
 	{
 		if (pos-- == 0)
-			penv++;
+			free(*penv++);
 		*ptr++ = *penv++;
 	}
 	*ptr = '\0';

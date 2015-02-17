@@ -164,4 +164,7 @@ int					ft_namematch(char *name, char *var);
 int					ft_value_exist(t_env *shell, char *name);
 void				ft_arrows2(t_env *e, char kind);
 void				ft_special(t_env *e, int kind);
+void				ft_add_env_value(t_env *shell, char *name, char *value);
+void				ft_set_env_value(t_env *shell, char *name, char *value);
+char				*ft_linkpath(char *s1, char *s2, char c);
 #endif

@@ -16,22 +16,13 @@
 
 void	ft_display_prompt(t_env *shell, int value)
 {
-	ft_putstr("display_prompt.1\n");
 	if (value == 1)
 	{
-		ft_putstr("display_prompt.2\n");
-		if ((shell->path = ft_get_envpath(shell)))
-		{
-			ft_putstr("display_prompt.3\n");
-			ft_parse_input(shell);
-			// printf("\tCall1 on :\n");
-			ft_putstr("display_prompt.4\n");
-				// ft_free_strarray(&shell->path);
-			ft_putstr("display_prompt.5\n");
-		}
-		// shell->path = NULL;
-		// printf("\tCall1 off :\n");
+		shell->path = ft_get_envpath(shell);
+		ft_parse_input(shell);
+		// printf("\tCall1 :\n");
+		ft_free_strarray(&shell->path);
 	}
-	// else if (value == 0)
-		// ft_exit(shell);
+	else if (value == 0)
+		ft_exit(shell);
 }

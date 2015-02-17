@@ -2,21 +2,50 @@
 
 // arthur
 
+void		ft_add_env_value(t_env *shell, char *name, char *value)
+{
+	size_t	len;
+	char	**nenv;
+	char	**ptr;
+	char	**pnenv;
+
+	ptr = shell->env;
+	len = 0;
+	while (*ptr++)
+		len++;
+	if (!(nenv = (char **)malloc(sizeof(char *) * (len + 2))))
+		return ;
+	ptr = shell->env;
+	pnenv = nenv;
+	while (*ptr)
+		*pnenv++ = *ptr++;
+	*pnenv++ = ft_linkpath(name, value, '=');
+	*pnenv = NULL;
+	free(shell->env);
+	shell->env = nenv;
+	return ;
+}
+
 void		ft_set_env_value(t_env *shell, char *name, char *value)
 {
 	char	**ptr;
 	int		len;
 
-	len = ft_strlen(name);
-	ptr = ft_get_env_addr(shell, name);
-	if (ptr)
-		free(*ptr);
-	if (!(*ptr = (char *)malloc(sizeof(char) * len + ft_strlen(value) + 2)))
-		return ;
-	ft_strcpy(*ptr, name);
-	ft_strcpy(*ptr + len++, "=");
-	ft_strcpy(*ptr + len++, value);
-	*(*ptr + len + ft_strlen(value)) = '\0';
+	if (ft_get_env_addr(shell, name))
+	{
+		len = ft_strlen(name);
+		ptr = ft_get_env_addr(shell, name);
+		if (*ptr)
+			free(*ptr);
+		if (!(*ptr = (char *)malloc(sizeof(char) * len + ft_strlen(value) + 2)))
+			return ;
+		ft_strcpy(*ptr, name);
+		ft_strcpy(*ptr + len++, "=");
+		ft_strcpy(*ptr + len++, value);
+		*(*ptr + len + ft_strlen(value)) = '\0';
+	}
+	else
+		ft_add_env_value(shell, name, value);
 }
 
 void		ft_copy_env_value(t_env *shell, char *src, char *dst)
