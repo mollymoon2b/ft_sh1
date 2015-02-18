@@ -14,7 +14,7 @@
 
 // arthur
 
-void		ft_cursorup(t_env *e)
+static void	ft_cursorup(t_env *e)
 {
 	size_t	len;
 
@@ -25,7 +25,7 @@ void		ft_cursorup(t_env *e)
 		ft_goleft(e);
 }
 
-void		ft_cursordown(t_env *e)
+static void	ft_cursordown(t_env *e)
 {
 	size_t	len;
 
@@ -36,7 +36,7 @@ void		ft_cursordown(t_env *e)
 		ft_goright(e);
 }
 
-void		ft_cursorleft(t_env *e)
+static void	ft_cursorleft(t_env *e)
 {
 	if (!e->index)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
@@ -53,7 +53,7 @@ void		ft_cursorleft(t_env *e)
 	}
 }
 
-void		ft_cursorright(t_env *e)
+static void	ft_cursorright(t_env *e)
 {
 	if (e->index == e->max)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);

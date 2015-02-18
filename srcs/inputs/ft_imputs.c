@@ -53,7 +53,7 @@ int			ft_delete(t_env *e, char *inputs)
 	return (0);
 }
 
-void		ft_lstr_inputsinit(t_env *e)
+static void	ft_lstr_inputsinit(t_env *e)
 {
 	if (!(e->histo))
 		ft_lststr_add(&(e->histo), ft_lststr_new(""));
@@ -65,9 +65,9 @@ void		ft_lstr_inputsinit(t_env *e)
 	}
 }
 
-int			ft_manage_inputs(t_env *e, char *inputs)
+static int	ft_manage_inputs(t_env *e, char *inputs)
 {
-	int value;
+	int		value;
 
 	if ((inputs[0] == 4 || inputs[0] == 10) &&
 		inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0 &&

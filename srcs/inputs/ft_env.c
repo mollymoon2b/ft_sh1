@@ -14,7 +14,7 @@
 
 // arthur
 
-t_params	*ft_get_params(void)
+t_params		*ft_get_params(void)
 {
 	t_params	*p;
 
@@ -39,7 +39,7 @@ t_params	*ft_get_params(void)
 	return (p);
 }
 
-void			ft_update_shlvl(t_env *e)
+static void		ft_update_shlvl(t_env *e)
 {
 	char		**shlvl;
 	char		*v;

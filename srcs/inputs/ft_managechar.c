@@ -14,7 +14,7 @@
 
 // arthur
 
-void		ft_process_fchar(t_env *e, char *inputs)
+static void	ft_process_fchar(t_env *e, char *inputs)
 {
 	char	*tmp;
 
@@ -25,7 +25,7 @@ void		ft_process_fchar(t_env *e, char *inputs)
 	tputs(inputs, 1, ft_putc);
 }
 
-void		ft_process_lchar(t_env *e, char *inputs)
+static void	ft_process_lchar(t_env *e, char *inputs)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -49,7 +49,7 @@ void		ft_process_lchar(t_env *e, char *inputs)
 	e->index -= flag;
 }
 
-int			ft_process_char2(t_env *e, char *inputs)
+static int	ft_process_char2(t_env *e, char *inputs)
 {
 	if (e->index == e->max)
 		ft_process_fchar(e, inputs);
@@ -60,7 +60,7 @@ int			ft_process_char2(t_env *e, char *inputs)
 	return (1);
 }
 
-int			ft_process_charloop(t_env *e, char *inputs)
+static int	ft_process_charloop(t_env *e, char *inputs)
 {
 	int		i;
 	char	tmp[2];
@@ -69,9 +69,12 @@ int			ft_process_charloop(t_env *e, char *inputs)
 	i = 0;
 	while (inputs[i] && i < 7)
 	{
-		tmp[0] = inputs[i];
-		inputs[i] = '\0';
-		ft_process_char2(e, tmp);
+		if (inputs[i] <= 127)
+		{
+			tmp[0] = inputs[i];
+			inputs[i] = '\0';
+			ft_process_char2(e, tmp);
+		}
 		i++;
 	}
 	return (i);

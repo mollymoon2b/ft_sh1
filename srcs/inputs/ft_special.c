@@ -12,7 +12,7 @@
 
 #include "../../includes/ft_sh1.h"
 
-void	ft_home(t_env *e)
+static void	ft_home(t_env *e)
 {
 	if (!e->index)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
@@ -21,7 +21,7 @@ void	ft_home(t_env *e)
 			ft_goleft(e);
 }
 
-void	ft_end(t_env *e)
+static void	ft_end(t_env *e)
 {
 	if (e->index == e->max)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
@@ -30,7 +30,7 @@ void	ft_end(t_env *e)
 			ft_goright(e);
 }
 
-void	ft_special(t_env *e, int kind)
+void		ft_special(t_env *e, int kind)
 {
 	if (kind == 70)
 		ft_end(e);

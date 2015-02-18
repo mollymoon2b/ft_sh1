@@ -55,7 +55,7 @@ int			ft_process_back_delete(t_env *e)
 	return (0);
 }
 
-int			ft_ctrlk(t_env *e)
+static int	ft_ctrlk(t_env *e)
 {
 	char	*tmp;
 
@@ -73,7 +73,7 @@ int			ft_ctrlk(t_env *e)
 	return (1);
 }
 
-int			ft_ctrll(t_env *e)
+static int	ft_ctrll(t_env *e)
 {
 	size_t	mem;
 

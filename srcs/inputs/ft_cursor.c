@@ -26,12 +26,8 @@ void		ft_update_imput(t_env *e)
 
 void		ft_endline(t_env *e)
 {
-	ft_cursor_to_end(e);
+	while (e->index < e->max)
+		ft_goright(e);
 	tputs("\n", 1, ft_putc);
 }
 
-void		ft_cursor_to_end(t_env *e)
-{
-	while (e->index < e->max)
-		ft_goright(e);
-}

@@ -14,7 +14,7 @@
 
 // arthur
 
-void	ft_shellup(t_env *e)
+static void	ft_shellup(t_env *e)
 {
 	if (e->phisto->next)
 	{
@@ -32,7 +32,7 @@ void	ft_shellup(t_env *e)
 	}
 }
 
-void	ft_shelldown(t_env *e)
+static void	ft_shelldown(t_env *e)
 {
 	if (e->phisto != e->histo)
 	{
@@ -50,7 +50,7 @@ void	ft_shelldown(t_env *e)
 	}
 }
 
-void	ft_leftright(t_env *e, char *inputs)
+static void	ft_leftright(t_env *e, char *inputs)
 {
 	// int n;
 
@@ -70,7 +70,7 @@ void	ft_leftright(t_env *e, char *inputs)
 	}
 }
 
-int		ft_arrows(t_env *e, char *inputs)
+int			ft_arrows(t_env *e, char *inputs)
 {
 	ft_leftright(e, inputs);
 	if (inputs[0] == 27 && inputs[1] == 91 && inputs[2] == 66)

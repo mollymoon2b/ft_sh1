@@ -23,19 +23,3 @@ void	ft_free_strarray(char ***array)
 		free(*ptr++);
 	free(*array);
 }
-
-
-// void        ft_free_strarray(char ***array)
-// {
-//     int		i;
-//     char	**cpy;
-
-//     i = 0;
-//     cpy = *array;
-//     while (cpy[i])
-//     {
-//         ft_strdel(cpy + i);
-//         i++;
-//     }
-//     ft_memdel((void **)array);
-// }

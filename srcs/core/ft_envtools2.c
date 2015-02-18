@@ -2,7 +2,7 @@
 
 // arthur
 
-void		ft_add_env_value(t_env *shell, char *name, char *value)
+static void	ft_add_env_value(t_env *shell, char *name, char *value)
 {
 	size_t	len;
 	char	**nenv;

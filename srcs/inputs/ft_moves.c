@@ -2,9 +2,9 @@
 
 // arthur
 
-void 	ft_trucbidule(t_env *e)
+static void		ft_trucbidule(t_env *e)
 {
-	char tmp[2];
+	char		tmp[2];
 
 	if (((ft_strlen(e->name) + e->index) % tgetnum("co"))
 			!= tgetnum("co") - 1)
@@ -20,13 +20,13 @@ void 	ft_trucbidule(t_env *e)
 	}
 }
 
-int sizeoftab(t_env *e, int i)
+static int		sizeoftab(t_env *e, int i)
 {
-	int size;
-	int pos;
-	int sizecol;
-	char *ptr;
-	char *end;
+	int			size;
+	int			pos;
+	int			sizecol;
+	char		*ptr;
+	char		*end;
 
 	size = 8;
 	pos = 0;
@@ -46,19 +46,14 @@ int sizeoftab(t_env *e, int i)
 			if ((--size) == 0)
 				size = 8;
 		}
-		// if (pos > sizecol)
-		// {
-		// 	pos = 0;
-		// 	size = 8;
-		// }
 		ptr++;
 	}
 	return (size);
 }
 
-void ft_goleft(t_env *e)
+void			ft_goleft(t_env *e)
 {
-	int n;
+	int			n;
 
 	if (e->str[e->index - 1] == '\t')
 	{
@@ -72,9 +67,9 @@ void ft_goleft(t_env *e)
 	e->index--;
 }
 
-void ft_goright(t_env *e)
+void			ft_goright(t_env *e)
 {
-	int n;
+	int			n;
 	
 	if (e->str[e->index] == '\t')
 	{

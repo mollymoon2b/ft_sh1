@@ -33,7 +33,7 @@ char		*ft_linkpath(char *s1, char *s2, char c)
 	return (str);
 }
 
-int			ft_set_binpath(t_env *shell)
+static int	ft_set_binpath(t_env *shell)
 {
 	int		i;
 

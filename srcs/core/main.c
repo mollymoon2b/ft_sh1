@@ -12,9 +12,9 @@
 
 #include "../../includes/ft_sh1.h"
 
-t_env	*ft_call_env(t_env **shell)
+t_env				*ft_call_env(t_env **shell)
 {
-	static t_env *save;
+	static t_env	*save;
 
 	if (shell && *shell)
 	{
@@ -25,16 +25,16 @@ t_env	*ft_call_env(t_env **shell)
 		return (save);
 }
 
-void	ft_error_2char(char *str, char *str2)
+void				ft_error_2char(char *str, char *str2)
 {
 	ft_putstr("Shell :");
 	ft_putstr(str);
 	ft_putstr(str2);
 }
 
-void ft_ctrl_c(int sig_num)
+static void			ft_ctrl_c(int sig_num)
 {
-	t_env *shell;
+	t_env			*shell;
 
 	shell = ft_call_env(NULL);
 	if (shell->cpid)
@@ -46,7 +46,7 @@ void ft_ctrl_c(int sig_num)
 	sig_num++;
 }
 
-int		main(int argc, char **argv, char **envp)
+int						main(int argc, char **argv, char **envp)
 {
 	t_env				*shell;
 	int					value;

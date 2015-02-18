@@ -13,7 +13,7 @@
 #include "../../includes/ft_sh1.h"
 //done (edit static lower)
 
-void		ft_print_environ(t_env *shell)
+static void	ft_print_environ(t_env *shell)
 {
 	int		i;
 
@@ -39,12 +39,7 @@ static int	ft_count_arg(char **av)
 	return (i);
 }
 
-
-
-
-
-
-int	ft_commandmatch(char *name, char *test)
+static int	ft_commandmatch(char *name, char *test)
 {
 	while (*name && *name == *test)
 	{

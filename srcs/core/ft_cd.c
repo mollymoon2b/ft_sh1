@@ -84,7 +84,7 @@ static char	*ft_update(t_env *shell, char *elem, char *str, char *error)
 }*/
 
 
-char	*ft_rel_pwd(t_env *shell, char *path)
+static char	*ft_rel_pwd(t_env *shell, char *path)
 {
 	char	*pwd;
 	char	*tmp;
@@ -105,10 +105,10 @@ char	*ft_rel_pwd(t_env *shell, char *path)
 	return (pwd);
 }
 
-int		ft_cd_less(t_env *shell)
+static int	ft_cd_less(t_env *shell)
 {
-	char *pwd;
-	char *old;
+	char	*pwd;
+	char	*old;
 	
 	if (!(pwd = ft_get_env_value(shell, "PWD")))
 	{
@@ -130,7 +130,7 @@ int		ft_cd_less(t_env *shell)
 	return (0);
 }
 
-int			ft_cd_home(t_env *shell)
+static int	ft_cd_home(t_env *shell)
 {
 	char	*path;
 
@@ -139,21 +139,24 @@ int			ft_cd_home(t_env *shell)
 	{
 		ft_set_env_value(shell, "PWD", path);
 		chdir(path);
-		free(path);
+		free(shell->pwd);
+		shell->pwd = path;
+		//free(path);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
-char		*ft_remove_last(char *path)
+/*static char	*ft_remove_last(char *path)
 {
 	char	*ptr;
 
 	if ((ptr = ft_strrchr(path, '/')))
 		*path = '\0';
 	return (ft_strdup(ptr));
-}
+}*/
 
-int			ft_cd_normal(t_env *shell, char *path)
+static int	ft_cd_normal(t_env *shell, char *path)
 {
 	char	*tmp;
 
@@ -163,19 +166,44 @@ int			ft_cd_normal(t_env *shell, char *path)
 		ft_copy_env_value(shell, "PWD", "OLDPWD");
 		tmp = getcwd(NULL, 0);
 		ft_set_env_value(shell, "PWD", tmp);
-		free(tmp);
+		free(shell->pwd);
+		shell->pwd = tmp;
+		//free(tmp);
 		return (1);
 	}
 	return (0);
 }
 
-int		ft_cd(t_env *shell)
+static int	ft_cd_double(t_env *shell)
+{
+	char	*ptr;
+	char	*pwd;
+
+	if (!(pwd = ft_get_env_value(shell, "PWD")))
+		pwd = ft_strdup(shell->pwd);
+
+	if (!(ptr = ft_strstr(shell->av[2], shell->av[1])))
+	{
+		ft_putstr("cd: string not in pwd: ");
+		ft_putstr(shell->av[1]);
+		ft_putchar('\n');
+		return (0);
+	}
+	tmp = ft_strndup(shell->av[1])
+	return (1);
+}
+
+int			ft_cd(t_env *shell)
 {
 	char	*path;
-	int i;
+	int		i;
 
 	i = 0;
-	if (shell->av[1] && !(shell->av[1][0] == '~' && !shell->av[1][1]))
+	if (shell->ac == 1)
+		return (ft_cd_home(shell));
+	if (shell->ac == 3)
+		return (ft_cd_double(shell));
+	if (shell->ac == 2 && shell->av[1] && !(shell->av[1][0] == '~' && !shell->av[1][1]))
 	{
 		if (shell->av[1][0] == '.' && !shell->av[1][1])
 			return (0);
@@ -186,8 +214,9 @@ int		ft_cd(t_env *shell)
 		if (!ft_cd_normal(shell, path))
 			ft_error_2char(shell->av[1], ": No such file or directory\n");
 		free(path);
+		return (1);
 	}
 	else
-		return (ft_cd_home(shell));
-	return (-1);
+		ft_putstr("cd : Invalid usage\n");
+	return (0);
 }
