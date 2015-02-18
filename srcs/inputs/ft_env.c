@@ -14,7 +14,7 @@
 
 // arthur
 
-static t_params	*ft_get_params(void)
+t_params	*ft_get_params(void)
 {
 	t_params	*p;
 
@@ -34,32 +34,47 @@ static t_params	*ft_get_params(void)
 	p->term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &p->term) == -1)
 		return (NULL);
-	p->height = tgetnum ("li");
-	p->width = tgetnum ("co");
 	p->max_size = 1;
 	p->col_count = 1;
 	return (p);
 }
 
-t_env			*ft_get_env(void)
+void			ft_update_shlvl(t_env *e)
 {
-	static t_env	*e = NULL;
+	char		**shlvl;
+	char		*v;
 
-	if (!e)
+	if ((shlvl = ft_get_env_addr(e, "SHLVL")))
 	{
-		if (!(e = (t_env *)ft_memalloc(sizeof(t_env))))
-			return (NULL);
-		e->name = ft_strdup("Shell > ");
-		if (!(e->p = ft_get_params()))
-			return (NULL);
-		if (!(e->str = ft_strdup("")))
-			return (NULL);
-		e->max = 0;
-		e->index = 0;
-		if (!(e->histo = (t_str *)ft_memalloc(sizeof(t_str))))
-			return (NULL);
-		// e->histo = NULL;
+		v = ft_itoa(ft_atoi(*shlvl + 6) + 1);
+		ft_set_env_value(e, "SHLVL", v);
+		free(v);
 	}
+	else
+		ft_set_env_value(e, "SHLVL", "1");
+}
+
+t_env			*ft_get_env(char **envp)
+{
+	t_env		*e;
+
+	if (!(e = (t_env *)ft_memalloc(sizeof(t_env))))
+		return (NULL);
+	e->name = ft_strdup("Shell > ");
+	if (!(e->p = ft_get_params()))
+		return (NULL);
+	if (!(e->str = ft_strdup("")))
+		return (NULL);
+	e->max = 0;
+	e->index = 0;
+	if (!(e->histo = (t_str *)ft_memalloc(sizeof(t_str))))
+		return (NULL);
+	e->env = ft_dup_environ(envp);
+	e->pwd = ft_get_env_value(e, "PWD");
+	e->home = ft_get_env_value(e, "HOME");
+	e->oldpwd = ft_get_env_value(e, "OLDPWD");
+	ft_update_shlvl(e);
+	e->binpath = NULL;
 	return (e);
 }
 

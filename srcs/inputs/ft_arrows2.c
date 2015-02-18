@@ -21,16 +21,8 @@ void		ft_cursorup(t_env *e)
 	len = tgetnum("co");
 	if (!e->index)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
-	else if ((ft_strlen(e->name) + e->index) < len)
-	{
-		while (e->index)
-			ft_goleft(e);
-	}
-	else
-	{
-		while (e->index && len--)
-			ft_goleft(e);
-	}
+	while (e->index && len--)
+		ft_goleft(e);
 }
 
 void		ft_cursordown(t_env *e)
@@ -40,16 +32,8 @@ void		ft_cursordown(t_env *e)
 	len = tgetnum("co");
 	if (e->index == e->max)
 		tputs(tgetstr("bl", (char **)(&e->p->buf)), 1, ft_putc);
-	else if ((ft_strlen(e->name) + e->index) / len == e->max / len)
-	{
-		while (e->index != e->max)
-			ft_goright(e);
-	}
-	else
-	{
-		while (e->index != e->max && len--)
-			ft_goright(e);
-	}
+	while (e->index != e->max && len--)
+		ft_goright(e);
 }
 
 void		ft_cursorleft(t_env *e)

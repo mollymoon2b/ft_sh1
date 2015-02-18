@@ -41,13 +41,16 @@ int			ft_set_binpath(t_env *shell)
 	shell->binpath = NULL;
 	if (shell->path != NULL)
 	{
-		if (access(shell->av[0], F_OK) == 0)
+		if (access(shell->av[0], X_OK) == 0)
+		{
+			shell->binpath = ft_strdup(shell->av[0]);
 			return (0);
+		}
 		while (shell->path[i] && shell->av[0])
 		{
 			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0], '/')))
 			{
-	 			if (access(shell->binpath, F_OK) == 0)
+	 			if (access(shell->binpath, X_OK) == 0)
 	 				return (0);
 				free(shell->binpath);
 			}
@@ -74,8 +77,10 @@ void		ft_exec_bin(t_env *shell)
 			else
 				waitpid(cpid, 0, 0);
 		}
+		free(shell->p);
+		if (!(shell->p = ft_get_params()))
+			return ;
 		free(shell->binpath);
 	}
 	return ;
-	cpid++;
 }

@@ -10,37 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/ft_sh1.h"
-
-// int 	ft_home(t_env *shell)
+// if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P')
+// 	|| (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && shell->av[1][2] == 'P')
+// 	|| (shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == 'L')) ///Volumes/Data/nfs/zfs-student-2/users/2014/ade-bonn
 // {
-// 	int i;
-
-// 	i = 0;
-// 	while (shell->av[i])
-// 	{
-// 		if (ft_namematch("HOME", shell->env[i])
-// 		{
-// 			shell->env[i] = ft_strjoin("HOME=", shell->env[i]);
-// 			shell->env[i] = ft_get_envhome(shell->env);
-// 			return (0);
-// 		}
-// 		i++;
-// 	}
-// 	return (-1);
+// 	if (shell->home != NULL)
+// 		path = shell->home;
+// 	else
+// 		ft_putstr(" cd: << HOME P>> undefined \n");
+// 	return (0);
+// }
+// if (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && !shell->av[1][2]) //nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
+// {
+// 	if (shell->home != NULL)
+// 		path = shell->home;
+// 	else
+// 		ft_putstr(" cd: << HOME >> undefined \n");
+// 	return (0);
 // }
 
-static void	ft_update_env_pwd(t_env *shell)
-{
-	char	*tmp;
+#include "../../includes/ft_sh1.h"
 
-	ft_copy_env_value(shell, "PWD", "OLDPWD");
-	tmp = getcwd(NULL, 0);
-	ft_set_env_value(shell, "PWD", tmp);
-	free(tmp);
+static char	*ft_update(t_env *shell, char *elem, char *str, char *error)
+{
+	char *path;
+
+	if ((path = ft_get_env_value(shell, elem)) && access(path, F_OK) == 0)
+		return (path);
+	free(path);
+	if ((path = ft_strdup(str)) && access(path, F_OK) == 0)
+	{
+		ft_set_env_value(shell, elem, path);
+		return (path);
+	}
+	ft_putstr(error);
+	free(path);
+	return (NULL);
 }
 
-static int	ft_update_cdpwd(t_env *shell)
+// static void	ft_update_env_pwd(t_env *shell)
+// {
+// 	char	*tmp;
+
+// 	ft_copy_env_value(shell, "PWD", "OLDPWD");
+// 	tmp = getcwd(NULL, 0);
+// 	ft_set_env_value(shell, "PWD", tmp);
+// 	free(tmp);
+// }
+
+/*static int	ft_update_cdpwd(t_env *shell)
 {
 	int		i;
 	char	*tmp;
@@ -63,15 +81,16 @@ static int	ft_update_cdpwd(t_env *shell)
 	shell->env[i] = ft_strjoin("CDPATH=", tmp);
 	free(tmp);
 	return (0);
-}
+}*/
 
 
-char	*ft_rel_pwd(char *path)
+char	*ft_rel_pwd(t_env *shell, char *path)
 {
 	char	*pwd;
 	char	*tmp;
 
-	pwd = getcwd(NULL, 0);
+	if (!(pwd = ft_get_env_value(shell, "PWD")))
+		pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
 		if (!(tmp = (char *)malloc(sizeof(char) *
@@ -88,17 +107,65 @@ char	*ft_rel_pwd(char *path)
 
 int		ft_cd_less(t_env *shell)
 {
-	char *tmp;
+	char *pwd;
+	char *old;
 	
-	if (ft_value_exist(shell, "OLDPWD"))
+	if (!(pwd = ft_get_env_value(shell, "PWD")))
 	{
-		ft_swap_env_value(shell, "PWD", "OLDPWD");//path = shell->oldpwd;
-		tmp = ft_get_env_value(shell, "PWD");
-		chdir(tmp);
-		free(tmp);
+		if (!(pwd = shell->pwd))
+			pwd = getcwd(NULL, 0);
+	}
+	if (!(old = ft_get_env_value(shell, "OLDPWD")))
+		old = shell->oldpwd;
+	if (old && !access(old, F_OK))
+	{
+		ft_set_env_value(shell, "PWD", old);
+		ft_set_env_value(shell, "OLDPWD", pwd);
+		chdir(old);
 	}
 	else
 		ft_putstr(" cd: << OLDPWD >> undefined\n");
+	free(pwd);
+	free(old);
+	return (0);
+}
+
+int			ft_cd_home(t_env *shell)
+{
+	char	*path;
+
+	if ((path = ft_update(shell, "HOME", shell->home, 
+							" cd: << HOME >> undefined\n\n")))
+	{
+		ft_set_env_value(shell, "PWD", path);
+		chdir(path);
+		free(path);
+	}
+	return (1);
+}
+
+char		*ft_remove_last(char *path)
+{
+	char	*ptr;
+
+	if ((ptr = ft_strrchr(path, '/')))
+		*path = '\0';
+	return (ft_strdup(ptr));
+}
+
+int			ft_cd_normal(t_env *shell, char *path)
+{
+	char	*tmp;
+
+	if (access(path, F_OK) == 0)
+	{
+		chdir(path);
+		ft_copy_env_value(shell, "PWD", "OLDPWD");
+		tmp = getcwd(NULL, 0);
+		ft_set_env_value(shell, "PWD", tmp);
+		free(tmp);
+		return (1);
+	}
 	return (0);
 }
 
@@ -108,44 +175,19 @@ int		ft_cd(t_env *shell)
 	int i;
 
 	i = 0;
-	if (shell->av[1])
+	if (shell->av[1] && !(shell->av[1][0] == '~' && !shell->av[1][1]))
 	{
-		path = (shell->av[1][0] && shell->av[1][0] != '/')
-			? ft_rel_pwd(shell->av[1]) : ft_strdup(shell->av[1]);
-		if (shell->av[1][0] == '-' && !shell->av[1][1])
-		{
-			free(path);
-			return (ft_cd_less(shell));
-		}// if ((shell->av[1][0] == '-' && shell->av[1][1] == 'P')
-		// 	|| (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && shell->av[1][2] == 'P')
-		// 	|| (shell->av[1][0] == '-' && shell->av[1][1] == 'P' && shell->av[1][2] == 'L')) ///Volumes/Data/nfs/zfs-student-2/users/2014/ade-bonn
-		// {
-		// 	if (shell->home != NULL)
-		// 		path = shell->home;
-		// 	else
-		// 		ft_putstr(" cd: << HOME P>> undefined \n");
-		// 	return (0);
-		// }
-		// if (shell->av[1][0] == '-' && shell->av[1][1] == 'L' && !shell->av[1][2]) //nfs/zfs-student-2/users/2014/ade-bonn mais aussi cd tout court
-		// {
-		// 	if (shell->home != NULL)
-		// 		path = shell->home;
-		// 	else
-		// 		ft_putstr(" cd: << HOME >> undefined \n");
-		// 	return (0);
-		// }
-		if (access(path, F_OK) == 0)
-		{
-			// printf ("Moving the path to '%s'\n", path);
-			chdir(path);
-			ft_update_env_pwd(shell);
-			ft_update_cdpwd(shell);
-			free(path);
+		if (shell->av[1][0] == '.' && !shell->av[1][1])
 			return (0);
-		}
-		else
+		if (shell->av[1][0] == '-' && !shell->av[1][1])
+			return (ft_cd_less(shell));
+		path = (shell->av[1][0] && shell->av[1][0] != '/')
+			? ft_rel_pwd(shell, shell->av[1]) : ft_strdup(shell->av[1]);
+		if (!ft_cd_normal(shell, path))
 			ft_error_2char(shell->av[1], ": No such file or directory\n");
 		free(path);
 	}
+	else
+		return (ft_cd_home(shell));
 	return (-1);
 }

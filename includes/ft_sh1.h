@@ -43,9 +43,7 @@ typedef struct		s_params
 	char			buf[2048];
 	struct termios	term;
 	char			r_char[4];
-	int				height;
 	int				print;
-	int				width;
 	tcflag_t		old_term;
 	int				c_pos_x;
 	int				c_pos_y;
@@ -73,8 +71,8 @@ typedef struct		s_env
 	char			*pwd;
 	char			*oldpwd;
 	char			*binpath;
-	char			*name;
 	char			*home;
+	char			*name;
 	t_params		*p;
 	char			*str;
 	size_t			index;
@@ -83,9 +81,9 @@ typedef struct		s_env
 	t_str			*phisto;
 }					t_env;
 
-char				**ft_dup_environ(const char **environ);
+char				**ft_dup_environ(char **environ);
 void				ft_display_prompt(t_env *shell, int value);
-void			ft_print_environ(t_env *shell);
+void				ft_print_environ(t_env *shell);
 int					ft_fork(t_env *shell);
 void				ft_parse_input(t_env *shell);
 // int					ft_count_arg(char **argv);
@@ -100,7 +98,7 @@ char				*ft_get_envhome(char **env);
 int					ft_cd(t_env *shell);
 // char				*ft_get_pwd(void);
 int					ft_cd(t_env *shell);
-char				*ft_rel_pwd(char *path);
+char				*ft_rel_pwd(t_env *shell, char *path);
 // int					ft_updat_cdpwd(t_env *shell);
 // int					ft_update_env_pwd(t_env *shell);
 // int					ft_update_old_pwd(t_env *shell);
@@ -130,7 +128,7 @@ int					ft_ctrlk(t_env *e);
 int					ft_ctrll(t_env *e);
 int					ft_clear(t_env *e, char *inputs);
 // t_params				*ft_get_params(void);
-t_env				*ft_get_env(void);
+t_env				*ft_get_env(char **envp);
 int					ft_clean_env(t_env *e);
 int					ft_quit(t_env *e, char *inputs);
 int					ft_delete(t_env *e, char *inputs);
@@ -167,4 +165,5 @@ void				ft_special(t_env *e, int kind);
 void				ft_add_env_value(t_env *shell, char *name, char *value);
 void				ft_set_env_value(t_env *shell, char *name, char *value);
 char				*ft_linkpath(char *s1, char *s2, char c);
+t_params			*ft_get_params(void);
 #endif

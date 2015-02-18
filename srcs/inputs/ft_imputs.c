@@ -87,27 +87,16 @@ int			ft_get_inputs(t_env *e)
 	char	inputs[7];
 	int		value;
 
-	// ft_putstr("get_inputs.1\n");
 	bzero(inputs, 7);
-	// ft_putstr("get_inputs.2\n");
 	ft_clean_histo(e);
-	// ft_putstr("get_inputs.3\n");
 	ft_lstr_inputsinit(e);
-	// ft_putstr("get_inputs.4\n");
 	tputs(e->name, 1, ft_putc);
-	// ft_putstr("get_inputs.5\n");
 	while ((read(0, inputs, 7)) != EOF)
 	{
-	// ft_putstr("get_inputs.6\n");
-		// printf("\nInputs : %i %i %i %i %i %i %i\n",
-			// inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6]);
 		if ((value = ft_manage_inputs(e, inputs)) >= 0)
 			return (value);
-	// ft_putstr("get_inputs.7\n");
 		bzero(inputs, 7);
-	// ft_putstr("get_inputs.8\n");
 	}
 	ft_endline(e);
-	// ft_putstr("get_inputs.9\n");
 	return (0);
 }

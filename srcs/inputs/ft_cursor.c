@@ -33,8 +33,5 @@ void		ft_endline(t_env *e)
 void		ft_cursor_to_end(t_env *e)
 {
 	while (e->index < e->max)
-	{
-		tputs(tgetstr("nd", (char **)(&e->p->buf)), 1, ft_putc);
-		e->index++;
-	}
+		ft_goright(e);
 }

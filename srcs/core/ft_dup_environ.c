@@ -14,9 +14,9 @@
 
 // arthur
 
-char			**ft_dup_environ(const char **environ)
+char			**ft_dup_environ(char **environ)
 {
-	const char	**ptr;
+	char	**ptr;
 	char		**bis;
 	char		**ptr2;
 	size_t		i;
