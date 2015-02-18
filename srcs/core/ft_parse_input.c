@@ -65,8 +65,11 @@ void			ft_len_word(char *ptr, int *len, int *size)
 				break ;
 		}
 		(*ptr && (*len)++) ? ptr += 1 : ptr;
+		// printf("L1\n");
 	}
-	(*(ptr - 1) == '\\') ? (*len)-- : *len;
+	// printf("Out\n");
+	(*(ptr - 1) != '\\') ? (*len)-- : *len;
+	// (*len)--;
 }
 
 void			ft_copy_word(char **word, char *str)
@@ -75,6 +78,7 @@ void			ft_copy_word(char **word, char *str)
 	char		*ptr;
 
 	quote = '\0';
+	printf("Testing = \"%s\"\n", str);
 	ptr = *word;
 	while (*str)
 	{
@@ -86,13 +90,14 @@ void			ft_copy_word(char **word, char *str)
 				quote = *str;
 			else if (quote && *str == quote)
 				quote = '\0';
-			else if (*str == ' ' || *str == '\t')
+			else if (!quote && (*str == ' ' || *str == '\t'))
 				break ;
 			else
 				*ptr++ = *str;
 		}
 		str++;
 	}
+	printf("Word = \"%s\"\n", *word);
 	*ptr = '\0';
 }
 
@@ -105,11 +110,15 @@ char			*ft_get_word(char **str)
 	len = 0;
 	size = 0;
 	ft_len_word(*str, &len, &size);
+	printf("\nStr = \"%s\", len = %i, size = %i\n", *str, len, size);
 	// printf("The length of the word = %i, %i\n", len, size);
 	if (!(word = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	ft_copy_word(&word, (**str == '\'' || **str == '"') ? *str + 1 : *str);
+	ft_copy_word(&word, *str);
+	// ft_copy_word(&word, (**str == '\'' || **str == '"') ? *str + 1 : *str);
 	*str += len + size;
+	printf("Newstr = \"%s\"", *str);
+	// printf("\tNewstr = \"%s\", len = %i, size = %i\n", *str, len, size);
 	return (word);
 }
 
@@ -191,12 +200,12 @@ static char		**ft_parse_args(char *input)
 	ptr = argv;
 	while (len--)
 	{
-		*argv++ = ft_get_word(&input);
+		*ptr++ = ft_get_word(&input);
 		while (*input == ' ' || *input == '\t')
 			input++;
-		printf("Adding word : '%s'\n", *(argv - 1));
+		printf("Adding word : '%s'\n", *(ptr - 1));
 	}
-	*argv = NULL;
+	*ptr = NULL;
 	return (argv);
 	// str = ft_strdup(input);
 	// printf("Len = %i\n", len);
@@ -239,6 +248,6 @@ void		ft_parse_input(t_env *shell)
 				ft_exec_bin(shell);
 		}
 		// if (shell->av)
-			// ft_free_strarray(&shell->av);
+			ft_free_strarray(&shell->av);
 	}
 }
