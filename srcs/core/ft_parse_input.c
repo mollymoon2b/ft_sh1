@@ -105,7 +105,6 @@ static char		**ft_parse_args(char *input)
 			ptr++;
 		else
 			free(*ptr);
-		printf("Adding the word '%s'\n", *(ptr - 1));
 		while (*input == ' ' || *input == '\t')
 			input++;
 	}
