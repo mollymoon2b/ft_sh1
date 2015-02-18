@@ -39,15 +39,13 @@ static int	ft_count_arg(char **av)
 	return (i);
 }
 
-char			*ft_get_word(char **str)
+char			*ft_get_word(char **str, char quote)
 {
-	char		quote;
 	char		*ptr;
 	char		*word;
 
 	if (!(word = (char *)ft_memalloc(sizeof(char) * ft_strlen(*str))))
 		return (NULL);
-	quote = '\0';
 	ptr = word;
 	while (*(*str))
 	{
@@ -70,16 +68,6 @@ char			*ft_get_word(char **str)
 	return (word);
 }
 
-// char			*ft_get_word(char **str)
-// {
-// 	char		*word;
-
-// 	if (!(word = (char *)ft_memalloc(sizeof(char) * ft_strlen(*str))))
-// 		return (NULL);
-// 	ft_copy_word(&word, str);
-// 	return (word);
-// }
-
 static size_t	ft_parse_len(char *str)
 {
 	char	*tmp;
@@ -88,7 +76,7 @@ static size_t	ft_parse_len(char *str)
 	v = 0;
 	while (*str)
 	{
-		tmp = ft_get_word(&str);
+		tmp = ft_get_word(&str, '\0');
 		free(tmp);
 		while (*str == ' ' || *str == '\t')
 			str++;
@@ -112,19 +100,17 @@ static char		**ft_parse_args(char *input)
 	ptr = argv;
 	while (len-- && *input)
 	{
-		*ptr++ = ft_get_word(&input);
+		*ptr = ft_get_word(&input, '\0');
+		if (**ptr)
+			ptr++;
+		else
+			free(*ptr);
+		printf("Adding the word '%s'\n", *(ptr - 1));
 		while (*input == ' ' || *input == '\t')
 			input++;
-		printf("Adding word : '%s'\n", *(ptr - 1));
 	}
 	*ptr = NULL;
 	return (argv);
-	// str = ft_strdup(input);
-	// printf("Len = %i\n", len);
-	// printf("\tGENERATED WORD = '%s'\n", ft_get_word(&input));
-	// return (ft_strasplit(input, " \t"));
-	// free(str);
-	// return (output);
 }
 
 int	ft_commandmatch(char *name, char *test)
