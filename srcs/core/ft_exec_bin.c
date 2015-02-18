@@ -65,17 +65,15 @@ int			ft_set_binpath(t_env *shell)
 
 void		ft_exec_bin(t_env *shell)
 {
-	pid_t	cpid;
-
 	if (ft_set_binpath(shell) == 0)
 	{
-		cpid = fork();
-		if (cpid != -1)
+		shell->cpid = fork();
+		if (shell->cpid != -1)
 		{
-			if (cpid == 0)
+			if (shell->cpid == 0)
 				execve(shell->binpath, shell->av, shell->env);
 			else
-				waitpid(cpid, 0, 0);
+				waitpid(shell->cpid, 0, 0);
 		}
 		free(shell->p);
 		if (!(shell->p = ft_get_params()))

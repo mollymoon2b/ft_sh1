@@ -20,7 +20,6 @@ void	ft_display_prompt(t_env *shell, int value)
 	{
 		shell->path = ft_get_envpath(shell);
 		ft_parse_input(shell);
-		// printf("\tCall1 :\n");
 		ft_free_strarray(&shell->path);
 	}
 	else if (value == 0)

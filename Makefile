@@ -9,6 +9,7 @@ SRC =	srcs/core/main.c 			\
 	srcs/core/ft_exit.c 			\
 	srcs/core/ft_get_env.c 			\
 	srcs/core/ft_parse_input.c 		\
+	srcs/core/ft_get_args.c 		\
 	srcs/core/ft_cd.c 				\
 	srcs/core/ft_unsetenv.c 		\
 	srcs/core/ft_setenv.c 			\

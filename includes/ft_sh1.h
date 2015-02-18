@@ -79,6 +79,7 @@ typedef struct		s_env
 	size_t			max;
 	t_str			*histo;
 	t_str			*phisto;
+	pid_t			cpid;
 }					t_env;
 
 char				**ft_dup_environ(char **environ);
@@ -86,30 +87,17 @@ void				ft_display_prompt(t_env *shell, int value);
 void				ft_print_environ(t_env *shell);
 int					ft_fork(t_env *shell);
 void				ft_parse_input(t_env *shell);
-// int					ft_count_arg(char **argv);
 int					ft_setenv(t_env *shell);
 int					ft_unsetenv(t_env *shell);
 void				ft_exit(t_env *shell);
 char				**ft_get_envpath(t_env *shell);
 void				ft_exec_bin(t_env *shell);
-// char				*ft_get_envpwd(char **env);
-// char				*ft_get_envoldpwd(char **env);
 char				*ft_get_envhome(char **env);
 int					ft_cd(t_env *shell);
-// char				*ft_get_pwd(void);
-int					ft_cd(t_env *shell);
 char				*ft_rel_pwd(t_env *shell, char *path);
-// int					ft_updat_cdpwd(t_env *shell);
-// int					ft_update_env_pwd(t_env *shell);
-// int					ft_update_old_pwd(t_env *shell);
 void				ft_error_2char(char *str, char *str2);
 int					ft_unsetenv(t_env *shell);
-// int					ft_valid_unsetenv_arg(char *str);
-// int					ft_unset_from_env(t_env *shell);
-// int					ft_add_var_env(t_env *shell, int len, char *var_env);
 int					ft_setenv(t_env *shell);
-// int					ft_valid_setenv(char **argv);
-// int					ft_set_var_env(t_env *shell);
 char				**ft_strasplit(char const *s, char *c);
 
 void				ft_shellup(t_env *e);
@@ -166,4 +154,5 @@ void				ft_add_env_value(t_env *shell, char *name, char *value);
 void				ft_set_env_value(t_env *shell, char *name, char *value);
 char				*ft_linkpath(char *s1, char *s2, char c);
 t_params			*ft_get_params(void);
+char				**ft_parse_args(char *input);
 #endif

@@ -69,7 +69,7 @@ int			ft_manage_inputs(t_env *e, char *inputs)
 {
 	int value;
 
-	if ((inputs[0] == 3 || inputs[0] == 4 || inputs[0] == 10) &&
+	if ((inputs[0] == 4 || inputs[0] == 10) &&
 		inputs[1] == 0 && inputs[2] == 0 && inputs[3] == 0 &&
 		inputs[4] == 0 && inputs[5] == 0 && inputs[6] == 0)
 		return (ft_quit(e, inputs));
@@ -93,6 +93,7 @@ int			ft_get_inputs(t_env *e)
 	tputs(e->name, 1, ft_putc);
 	while ((read(0, inputs, 7)) != EOF)
 	{
+		// printf("Imputs : %i %i %i %i %i %i %i\n", inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6]);
 		if ((value = ft_manage_inputs(e, inputs)) >= 0)
 			return (value);
 		bzero(inputs, 7);
