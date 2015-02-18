@@ -171,6 +171,12 @@ static int	ft_cd_normal(t_env *shell, char *path)
 		//free(tmp);
 		return (1);
 	}
+	else
+	{
+		ft_putstr("cd: no such file or directory: ");
+		ft_putstr(path);
+		ft_putchar('\n');
+	}
 	return (0);
 }
 
@@ -178,19 +184,36 @@ static int	ft_cd_double(t_env *shell)
 {
 	char	*ptr;
 	char	*pwd;
+	char	*tmp;
+	int		v;
 
 	if (!(pwd = ft_get_env_value(shell, "PWD")))
 		pwd = ft_strdup(shell->pwd);
-
-	if (!(ptr = ft_strstr(shell->av[2], shell->av[1])))
+	if (!(ptr = ft_strstr(pwd, shell->av[1])))
 	{
 		ft_putstr("cd: string not in pwd: ");
 		ft_putstr(shell->av[1]);
 		ft_putchar('\n');
 		return (0);
 	}
-	tmp = ft_strndup(shell->av[1])
-	return (1);
+	if (!(tmp = (char *)malloc(sizeof(char) * (ft_strlen(pwd +
+		ft_strlen(shell->av[2]) - ft_strlen(shell->av[1]))))))
+		return (0);
+	ft_strncpy(tmp, pwd, ptr - pwd);
+	ft_strcpy(tmp + (ptr - pwd), shell->av[2]);
+	ft_strcpy(tmp + (ptr - pwd) + ft_strlen(shell->av[2]), ptr + ft_strlen(shell->av[1]));
+	free(pwd);
+	v = ft_cd_normal(shell, tmp);
+	free(tmp);
+	return (v);
+	// if (access(tmp, F_OK) == 0)
+	// {
+	// 	chdir(tmp);
+	// 	free(shell->pwd);
+	// 	shell->pwd = tmp;
+	// 	return (1);
+	// }
+	// return (0);
 }
 
 int			ft_cd(t_env *shell)
