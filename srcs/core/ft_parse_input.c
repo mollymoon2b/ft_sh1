@@ -39,149 +39,61 @@ static int	ft_count_arg(char **av)
 	return (i);
 }
 
-void			ft_len_word(char *ptr, int *len, int *size)
-{
-	char		quote;
-
-	quote = '\0';
-	while (*ptr)
-	{
-		if (!quote && *ptr == '\\')
-		{
-			ptr++;
-			(*size)++;
-		}
-		else
-		{
-			if (!quote && (*ptr == '\'' || *ptr == '"'))
-			{
-				quote = *ptr;
-				*size += 2;
-				*len -= 2;
-			}
-			else if (quote)
-				quote = (*ptr == quote) ? '\0' : quote;
-			else if (*ptr == ' ' || *ptr == '\t')
-				break ;
-		}
-		(*ptr && (*len)++) ? ptr += 1 : ptr;
-		// printf("L1\n");
-	}
-	// printf("Out\n");
-	(*(ptr - 1) != '\\') ? (*len)-- : *len;
-	// (*len)--;
-}
-
-void			ft_copy_word(char **word, char *str)
+char			*ft_get_word(char **str)
 {
 	char		quote;
 	char		*ptr;
+	char		*word;
 
+	if (!(word = (char *)ft_memalloc(sizeof(char) * ft_strlen(*str))))
+		return (NULL);
 	quote = '\0';
-	printf("Testing = \"%s\"\n", str);
-	ptr = *word;
-	while (*str)
+	ptr = word;
+	while (*(*str))
 	{
-		if (!quote && *str == '\\')
-			*ptr++ = *++str;
+		if (!quote && *(*str) == '\\')
+			*ptr++ = *++(*str);
 		else
 		{
-			if (!quote && (*str == '\'' || *str == '"'))
-				quote = *str;
-			else if (quote && *str == quote)
+			if (!quote && (*(*str) == '\'' || *(*str) == '"'))
+				quote = *(*str);
+			else if (quote && *(*str) == quote)
 				quote = '\0';
-			else if (!quote && (*str == ' ' || *str == '\t'))
+			else if (!quote && (*(*str) == ' ' || *(*str) == '\t'))
 				break ;
 			else
-				*ptr++ = *str;
+				*ptr++ = *(*str);
 		}
-		str++;
+		(*str)++;
 	}
-	printf("Word = \"%s\"\n", *word);
 	*ptr = '\0';
-}
-
-char			*ft_get_word(char **str)
-{
-	char		*word;
-	int 		len;
-	int 		size;
-
-	len = 0;
-	size = 0;
-	ft_len_word(*str, &len, &size);
-	printf("\nStr = \"%s\", len = %i, size = %i\n", *str, len, size);
-	// printf("The length of the word = %i, %i\n", len, size);
-	if (!(word = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	ft_copy_word(&word, *str);
-	// ft_copy_word(&word, (**str == '\'' || **str == '"') ? *str + 1 : *str);
-	*str += len + size;
-	printf("Newstr = \"%s\"", *str);
-	// printf("\tNewstr = \"%s\", len = %i, size = %i\n", *str, len, size);
 	return (word);
 }
 
+// char			*ft_get_word(char **str)
+// {
+// 	char		*word;
+
+// 	if (!(word = (char *)ft_memalloc(sizeof(char) * ft_strlen(*str))))
+// 		return (NULL);
+// 	ft_copy_word(&word, str);
+// 	return (word);
+// }
+
 static size_t	ft_parse_len(char *str)
 {
-	/*char	*ptr;
-	char	quote;
-	size_t	size;
-	int		in;
-
-	quote = '\0';
-	in = 0;
-	size = 0;
-	ptr = input;
-	while (*ptr)
-	{
-		if (*ptr == '\\')
-			ptr++;
-		else
-		{
-			if (quote)
-			{
-				if (*ptr == quote)
-					quote = '\0';
-			}
-			else if (*ptr == '\'' || *ptr == '"')
-				quote = *ptr;
-			else
-			{
-				if (in)
-				{
-					if (*ptr == ' ' || *ptr == '\t')
-						in = 0;
-				}
-				else if (*ptr != ' ' && *ptr != '\t')
-				{
-					in = 1;
-					size++;
-				}
-			}
-		}
-		ptr++;
-	}
-	return (size);*/
-	int		len;
-	int		size;
+	char	*tmp;
 	size_t	v;
 
 	v = 0;
-	// printf("\nInit : '%s'\n", str);
 	while (*str)
 	{
-		len = 0;
-		size = 0;
-		ft_len_word(str, &len, &size);
-		str += len + size;
-		// printf("Len = %i, size = %i\n", len, size);
-		// printf("Newptr : '%s'\n", str);
+		tmp = ft_get_word(&str);
+		free(tmp);
 		while (*str == ' ' || *str == '\t')
 			str++;
 		v++;
 	}
-	// printf("\nV = %i\n\n", (int)v);
 	return (v);
 }
 
@@ -198,7 +110,7 @@ static char		**ft_parse_args(char *input)
 	if (!(argv = (char **)malloc(sizeof(char *) * len + 1)))
 		return (NULL);
 	ptr = argv;
-	while (len--)
+	while (len-- && *input)
 	{
 		*ptr++ = ft_get_word(&input);
 		while (*input == ' ' || *input == '\t')
