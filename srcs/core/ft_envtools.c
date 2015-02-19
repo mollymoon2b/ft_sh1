@@ -1,6 +1,16 @@
-#include "../../includes/ft_sh1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_envtools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/01/19 13:27:07 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/01/19 13:27:48 by ade-bonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// arthur
+#include "../../includes/ft_sh1.h"
 
 char		**ft_get_env_addr(t_env *shell, char *name)
 {
@@ -54,4 +64,22 @@ int			ft_value_exist(t_env *shell, char *name)
 		ptr++;
 	}
 	return (0);
+}
+
+void		ft_exit(t_env *shell)
+{
+	int		i;
+
+	i = 0;
+	while (shell->env[i])
+		free(shell->env[i++]);
+	if ((shell)->env)
+		free(shell->env);
+	i = 0;
+	while (shell->av[i])
+		free(shell->av[i++]);
+	if (shell->av)
+		free(shell->av);
+	shell->pid = 0;
+	exit(shell->pid);
 }

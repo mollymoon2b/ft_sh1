@@ -12,25 +12,25 @@
 
 #include "../../includes/ft_sh1.h"
 
-t_env				*ft_call_env(t_env **shell)
+static char			**ft_get_envpath(t_env *shell)
 {
-	static t_env	*save;
+	char			*path_line;
+	char			**path;
 
-	if (shell && *shell)
+	if (!(path_line = ft_get_env_value(shell, "PATH")))
 	{
-		save = *shell;
-		return (NULL);
+		path_line = ft_strdup(shell->path);
+		ft_set_env_value(shell, "PATH", path_line);
 	}
-	else
-		return (save);
+	path = NULL;
+	if (path_line)
+	{
+		path = ft_strsplit(path_line, ':');
+		free(path_line);
+	}
+	return (path);
 }
 
-void				ft_error_2char(char *str, char *str2)
-{
-	ft_putstr("Shell :");
-	ft_putstr(str);
-	ft_putstr(str2);
-}
 
 static void			ft_ctrl_c(int sig_num)
 {
@@ -46,22 +46,43 @@ static void			ft_ctrl_c(int sig_num)
 	sig_num++;
 }
 
-int						main(int argc, char **argv, char **envp)
+void			ft_launch(t_env *shell)
 {
-	t_env				*shell;
-	int					value;
+	char			**imputs;
+	char			**ptr;
+
+	if (!(imputs = ft_strsplit(shell->str, ';')))
+		return ;
+	free(shell->str);
+	ptr = imputs;
+	while (ptr && *ptr)
+	{
+		shell->str = *ptr++;
+		shell->paths = ft_get_envpath(shell);
+		ft_parse_input(shell);
+		ft_free_strarray(&shell->paths);
+	}
+	ft_free_strarray(&imputs);
+	shell->str = NULL;
+}
+
+int					main(int argc, char **argv, char **envp)
+{
+	t_env			*shell;
+	int				value;
 
 	if (!(shell = ft_get_env(envp)))
 		return (0);
 	ft_call_env(&shell);
 	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
 	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
-	
 	signal(SIGINT, ft_ctrl_c);
-
 	while ((value = ft_get_inputs(shell)))
 	{
-		ft_display_prompt(shell, value);
+		if (value == 0)
+			ft_exit(shell);
+		if (shell->str && *shell->str)
+			ft_launch(shell);
 		if (!(ft_clean_env(shell)))
 			break ;
 	}

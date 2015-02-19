@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/ft_sh1.h"
-//done (edit static lower)
 
 static void	ft_print_environ(t_env *shell)
 {

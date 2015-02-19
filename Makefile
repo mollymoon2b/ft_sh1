@@ -3,19 +3,17 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 INCLUDE = 
 SRC =	srcs/core/main.c 			\
-	srcs/core/ft_display_prompt.c	\
 	srcs/core/ft_dup_environ.c 		\
 	srcs/core/ft_exec_bin.c 		\
-	srcs/core/ft_exit.c 			\
-	srcs/core/ft_get_env.c 			\
 	srcs/core/ft_parse_input.c 		\
 	srcs/core/ft_get_args.c 		\
 	srcs/core/ft_cd.c 				\
-	srcs/core/ft_unsetenv.c 		\
-	srcs/core/ft_setenv.c 			\
+	srcs/core/ft_cd2.c 				\
+	srcs/core/ft_editenv.c 			\
 	srcs/core/ft_free_strarray.c	\
 	srcs/core/ft_envtools.c			\
 	srcs/core/ft_envtools2.c		\
+	srcs/core/ft_tools.c			\
 	srcs/inputs/ft_arrows.c 		\
 	srcs/inputs/ft_arrows2.c 		\
 	srcs/inputs/ft_special.c		\

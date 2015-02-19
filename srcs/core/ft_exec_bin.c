@@ -12,25 +12,17 @@
 
 #include "../../includes/ft_sh1.h"
 
-char		*ft_linkpath(char *s1, char *s2, char c)
+t_env				*ft_call_env(t_env **shell)
 {
-	char	*str;
-	char	*ptr;
-	char	*p1;
-	char	*p2;
+	static t_env	*save;
 
-	p1 = s1;
-	p2 = s2;
-	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2))))
+	if (shell && *shell)
+	{
+		save = *shell;
 		return (NULL);
-	ptr = str;
-	while (*p1)
-		*ptr++ = *p1++;
-	*ptr++ = c;
-	while (*p2)
-		*ptr++ = *p2++;
-	*ptr = '\0';
-	return (str);
+	}
+	else
+		return (save);
 }
 
 static int	ft_set_binpath(t_env *shell)
@@ -46,9 +38,10 @@ static int	ft_set_binpath(t_env *shell)
 			shell->binpath = ft_strdup(shell->av[0]);
 			return (0);
 		}
-		while (shell->path[i] && shell->av[0])
+		while (shell->paths[i] && shell->av[0])
 		{
-			if ((shell->binpath = ft_linkpath(shell->path[i], shell->av[0], '/')))
+			if (shell->paths[i] && shell->av[0] &&
+				(shell->binpath = ft_linkpath(shell->paths[i], shell->av[0], '/')))
 			{
 	 			if (access(shell->binpath, X_OK) == 0)
 	 				return (0);
@@ -56,10 +49,10 @@ static int	ft_set_binpath(t_env *shell)
 			}
 			++i;
 		}
-		ft_error_2char(shell->av[0], ": command not found\n");
+		ft_error_2char("shell: no such file or directory: ", shell->av[0]);
 	}
 	else
-		ft_error_2char(shell->av[0], ": Undefined environment PATH\n");
+		ft_error_2char("Undefined environment PATH :", shell->av[0]);
 	return (-1);
 }
 
@@ -76,9 +69,9 @@ void		ft_exec_bin(t_env *shell)
 				waitpid(shell->cpid, 0, 0);
 		}
 		free(shell->p);
+		free(shell->binpath);
 		if (!(shell->p = ft_get_params()))
 			return ;
-		free(shell->binpath);
 	}
 	return ;
 }

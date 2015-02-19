@@ -38,7 +38,9 @@ static	char	*ft_get_word(char **str, char quote)
 		(*str)++;
 	}
 	*ptr = '\0';
-	return (word);
+	ptr = ft_strdup(word);
+	free(word);
+	return (ptr);
 }
 
 static size_t	ft_parse_len(char *str)

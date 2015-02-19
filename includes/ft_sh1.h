@@ -67,12 +67,13 @@ typedef struct		s_env
 	char			*input;
 	int				ac;
 	char			**av;
-	char			**path;
+	char			**paths;
 	char			*pwd;
 	char			*oldpwd;
 	char			*binpath;
 	char			*home;
 	char			*name;
+	char			*path;
 	t_params		*p;
 	char			*str;
 	size_t			index;
@@ -83,13 +84,11 @@ typedef struct		s_env
 }					t_env;
 
 char				**ft_dup_environ(char **environ);
-void				ft_display_prompt(t_env *shell, int value);
 int					ft_fork(t_env *shell);
 void				ft_parse_input(t_env *shell);
 int					ft_setenv(t_env *shell);
 int					ft_unsetenv(t_env *shell);
 void				ft_exit(t_env *shell);
-char				**ft_get_envpath(t_env *shell);
 void				ft_exec_bin(t_env *shell);
 char				*ft_get_envhome(char **env);
 int					ft_cd(t_env *shell);
@@ -110,7 +109,6 @@ t_env				*ft_get_env(char **envp);
 int					ft_clean_env(t_env *e);
 int					ft_quit(t_env *e, char *inputs);
 int					ft_delete(t_env *e, char *inputs);
-// void				ft_lstr_inputsinit(t_env *e);
 int					ft_get_inputs(t_env *e);
 void				ft_lststr_add(t_str **lst, t_str *new);
 t_str				*ft_lststr_new(char *str);
@@ -133,9 +131,12 @@ int					ft_namematch(char *name, char *var);
 int					ft_value_exist(t_env *shell, char *name);
 void				ft_arrows2(t_env *e, char kind);
 void				ft_special(t_env *e, int kind);
-// void				ft_add_env_value(t_env *shell, char *name, char *value);
 void				ft_set_env_value(t_env *shell, char *name, char *value);
 char				*ft_linkpath(char *s1, char *s2, char c);
 t_params			*ft_get_params(void);
 char				**ft_parse_args(char *input);
+
+char				*ft_update(t_env *shell, char *elem, char *str, char *error);
+char				*ft_rel_pwd(t_env *shell, char *path);
+t_env				*ft_call_env(t_env **shell);
 #endif

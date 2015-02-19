@@ -1,6 +1,16 @@
-#include "../../includes/ft_sh1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_envtools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ade-bonn <ade-bonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/01/19 13:27:07 by ade-bonn          #+#    #+#             */
+/*   Updated: 2015/01/19 13:27:48 by ade-bonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// arthur
+#include "../../includes/ft_sh1.h"
 
 static void	ft_add_env_value(t_env *shell, char *name, char *value)
 {

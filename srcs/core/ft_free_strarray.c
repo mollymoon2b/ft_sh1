@@ -20,6 +20,8 @@ void	ft_free_strarray(char ***array)
 
 	ptr = *array;
 	while (*ptr)
+	{
 		free(*ptr++);
+	}
 	free(*array);
 }
