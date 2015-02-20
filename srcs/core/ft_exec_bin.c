@@ -25,12 +25,11 @@ t_env				*ft_call_env(t_env **shell)
 		return (save);
 }
 
-static int	ft_set_binpath(t_env *shell)
+static int			ft_set_binpath(t_env *shell)
 {
-	int		i;
+	int				i;
 
 	i = 0;
-	shell->binpath = NULL;
 	if (shell->path != NULL)
 	{
 		if (access(shell->av[0], X_OK) == 0)
@@ -40,14 +39,13 @@ static int	ft_set_binpath(t_env *shell)
 		}
 		while (shell->paths[i] && shell->av[0])
 		{
-			if (shell->paths[i] && shell->av[0] &&
-				(shell->binpath = ft_linkpath(shell->paths[i], shell->av[0], '/')))
+			if ((shell->binpath = ft_linkpath(shell->paths[i++],\
+									shell->av[0], '/')))
 			{
-	 			if (access(shell->binpath, X_OK) == 0)
-	 				return (0);
+				if (access(shell->binpath, X_OK) == 0)
+					return (0);
 				free(shell->binpath);
 			}
-			++i;
 		}
 		ft_error_2char("shell: no such file or directory: ", shell->av[0]);
 	}
@@ -56,10 +54,11 @@ static int	ft_set_binpath(t_env *shell)
 	return (-1);
 }
 
-void		ft_exec_bin(t_env *shell)
+void				ft_exec_bin(t_env *shell)
 {
 	if (ft_set_binpath(shell) == 0)
 	{
+		dprintf(1, "Forking '%s'\n", shell->binpath);
 		shell->cpid = fork();
 		if (shell->cpid != -1)
 		{
@@ -70,8 +69,7 @@ void		ft_exec_bin(t_env *shell)
 		}
 		free(shell->p);
 		free(shell->binpath);
-		if (!(shell->p = ft_get_params()))
-			return ;
+		shell->p = ft_get_params();
+		shell->cpid = 0;
 	}
-	return ;
 }

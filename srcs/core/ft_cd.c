@@ -16,7 +16,7 @@ static int	ft_cd_less(t_env *shell)
 {
 	char	*pwd;
 	char	*old;
-	
+
 	if (!(pwd = ft_get_env_value(shell, "PWD")))
 	{
 		if (!(pwd = shell->pwd))
@@ -41,7 +41,7 @@ static int	ft_cd_home(t_env *shell)
 {
 	char	*path;
 
-	if ((path = ft_update(shell, "HOME", shell->home, 
+	if ((path = ft_update(shell, "HOME", shell->home,
 							" cd: << HOME >> undefined\n\n")))
 	{
 		ft_set_env_value(shell, "PWD", path);
@@ -91,7 +91,8 @@ static int	ft_cd_double(t_env *shell)
 		return (0);
 	ft_strncpy(tmp, pwd, ptr - pwd);
 	ft_strcpy(tmp + (ptr - pwd), shell->av[2]);
-	ft_strcpy(tmp + (ptr - pwd) + ft_strlen(shell->av[2]), ptr + ft_strlen(shell->av[1]));
+	ft_strcpy(tmp + (ptr - pwd) + ft_strlen(shell->av[2]),
+				ptr + ft_strlen(shell->av[1]));
 	free(pwd);
 	v = ft_cd_normal(shell, tmp);
 	free(tmp);
@@ -104,11 +105,12 @@ int			ft_cd(t_env *shell)
 	int		i;
 
 	i = 0;
-	if (shell->ac == 1 || (shell->ac == 2 && (shell->av[1][0] == '~' && !shell->av[1][1])))
+	if (shell->ac == 1 || (shell->ac == 2 &&
+				(shell->av[1][0] == '~' && !shell->av[1][1])))
 		return (ft_cd_home(shell));
 	if (shell->ac == 3)
 		return (ft_cd_double(shell));
-	if (shell->ac == 2 && shell->av[1] && !(shell->av[1][0] == '~' && !shell->av[1][1]))
+	if (shell->ac == 2 && shell->av[1])
 	{
 		if (shell->av[1][0] == '.' && !shell->av[1][1])
 			return (0);

@@ -134,9 +134,15 @@ void				ft_special(t_env *e, int kind);
 void				ft_set_env_value(t_env *shell, char *name, char *value);
 char				*ft_linkpath(char *s1, char *s2, char c);
 t_params			*ft_get_params(void);
-char				**ft_parse_args(char *input);
+char				**ft_parse_args(t_env *shell, char *input);
 
 char				*ft_update(t_env *shell, char *elem, char *str, char *error);
 char				*ft_rel_pwd(t_env *shell, char *path);
 t_env				*ft_call_env(t_env **shell);
+char				*ft_redup(char **str);
+
+//SIGNALS
+
+void				ft_init_signals(void);
+int					ft_reboot_imput(t_env *shell);
 #endif

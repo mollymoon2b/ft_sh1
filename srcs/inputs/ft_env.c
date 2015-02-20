@@ -52,10 +52,10 @@ static void		ft_composepath(t_env *shell)
 	if (access("/usr/sbin", F_OK) == 0)
 		ft_linkpathfree(&(shell->path), "/usr/sbin", ':');
 	if (access("/opt/X11/bin", F_OK) == 0)
-		ft_linkpathfree(&(shell->path), "/opt/X11/bin", ':');
-	if (access("/usr/texbin", F_OK) == 0)
-		ft_linkpathfree(&(shell->path), "/usr/texbin", ':');
-	if (shell->path && *shell->path)
+	// 	ft_linkpathfree(&(shell->path), "/opt/X11/bin", ':');
+	// if (access("/usr/texbin", F_OK) == 0)
+	// 	ft_linkpathfree(&(shell->path), "/usr/texbin", ':');
+	// if (shell->path && *shell->path)
 		ft_set_env_value(shell, "PATH", shell->path);
 	else
 	{

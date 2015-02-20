@@ -1,0 +1,15 @@
+Process:         ft_minishell1 [52943]
+Path:            /Volumes/Data/nfs/zfs-student-2/users/2014/achazal/Desktop/sh/clone/ft_minishell1
+Load Address:    0x102789000
+Identifier:      ft_minishell1
+Version:         0
+Code Type:       X86-64
+Parent Process:  zsh [45001]
+
+Date/Time:       2015-02-20 03:50:21.252 +0100
+OS Version:      Mac OS X 10.9.5 (13F34)
+Report Version:  7
+
+leaks Report Version:  2.0
+Process 52943: 360 nodes malloced for 31 KB
+Process 52943: 0 leaks for 0 total leaked bytes.

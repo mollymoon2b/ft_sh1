@@ -40,7 +40,10 @@ t_params		*ft_get_params(void)
 int				ft_clean_env(t_env *e)
 {
 	if (e->str)
+	{
 		free(e->str);
+		e->str = NULL;
+	}
 	if (!(e->str = ft_strdup("")))
 		return (0);
 	e->index = 0;
@@ -50,7 +53,7 @@ int				ft_clean_env(t_env *e)
 
 char			**ft_dup_environ(char **environ)
 {
-	char	**ptr;
+	char		**ptr;
 	char		**bis;
 	char		**ptr2;
 	size_t		i;

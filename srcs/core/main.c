@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/ft_sh1.h"
+#include <stdlib.h>
 
 static char			**ft_get_envpath(t_env *shell)
 {
@@ -31,29 +32,18 @@ static char			**ft_get_envpath(t_env *shell)
 	return (path);
 }
 
-
-static void			ft_ctrl_c(int sig_num)
-{
-	t_env			*shell;
-
-	shell = ft_call_env(NULL);
-	if (shell->cpid)
-	{
-		ft_putstr("^C\n");
-		shell->cpid = 0;
-	}
-	return ;
-	sig_num++;
-}
-
-void			ft_launch(t_env *shell)
+static void			ft_launch(t_env *shell)
 {
 	char			**imputs;
 	char			**ptr;
 
 	if (!(imputs = ft_strsplit(shell->str, ';')))
 		return ;
-	free(shell->str);
+	if (shell->str)
+	{
+		free(shell->str);
+		shell->str = NULL;
+	}
 	ptr = imputs;
 	while (ptr && *ptr)
 	{
@@ -66,17 +56,11 @@ void			ft_launch(t_env *shell)
 	shell->str = NULL;
 }
 
-int					main(int argc, char **argv, char **envp)
+int					ft_reboot_imput(t_env *shell)
 {
-	t_env			*shell;
 	int				value;
 
-	if (!(shell = ft_get_env(envp)))
-		return (0);
-	ft_call_env(&shell);
-	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
-	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
-	signal(SIGINT, ft_ctrl_c);
+	ft_init_signals();
 	while ((value = ft_get_inputs(shell)))
 	{
 		if (value == 0)
@@ -86,7 +70,43 @@ int					main(int argc, char **argv, char **envp)
 		if (!(ft_clean_env(shell)))
 			break ;
 	}
+	// exit(0);
 	return (0);
-	argc++;
-	argv++;
+}
+
+static int			ft_minishell(char **envp)
+{
+	t_env			*shell;
+
+	if (!(shell = ft_get_env(envp)))
+		return (0);
+	ft_call_env(&shell);
+	// ft_init_signals();
+	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
+	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
+	ft_reboot_imput(shell);
+	// while ((value = ft_get_inputs(shell)))
+	// {
+	// 	if (value == 0)
+	// 		ft_exit(shell);
+	// 	if (shell->str && *shell->str)
+	// 		ft_launch(shell);
+	// 	if (!(ft_clean_env(shell)))
+	// 		break ;
+	// }
+	return (0);
+	envp++;
+	// ft_launch(NULL);
+}
+
+int					main(int ac, char **av, char **envp)
+{
+	int				ret;
+
+	(void)ac;
+	(void)av;
+	ret = ft_minishell(envp);
+	system("leaks ft_minishell1 > leaks.info");
+	system("cat leaks.info");
+	return (ret);
 }

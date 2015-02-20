@@ -50,11 +50,27 @@ static int	ft_commandmatch(char *name, char *test)
 	return (0);
 }
 
+// void		ft_putargs(char **array)
+// {
+// 	char	**ptr;
+
+// 	ptr = array;
+// 	ft_putstr("Arguments are : ");
+// 	while (ptr && *ptr)
+// 	{
+// 		write(1, "\"", 1);
+// 		ft_putstr(*ptr++);
+// 		write(1, "\" ", 2);
+// 	}
+// 	write(1, "\n", 1);
+// }
+
 void		ft_parse_input(t_env *shell)
 {
 	if (*shell->str)
 	{
-		shell->av = ft_parse_args(shell->str);
+		shell->av = ft_parse_args(shell, shell->str);
+		// ft_putargs(shell->av);
 		if ((shell->ac = ft_count_arg(shell->av)))
 		{
 			if (ft_commandmatch("env", shell->av[0]))

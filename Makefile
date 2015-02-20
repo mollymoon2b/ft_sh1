@@ -1,6 +1,6 @@
 NAME = ft_minishell1
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE = 
 SRC =	srcs/core/main.c 			\
 	srcs/core/ft_dup_environ.c 		\
@@ -10,7 +10,6 @@ SRC =	srcs/core/main.c 			\
 	srcs/core/ft_cd.c 				\
 	srcs/core/ft_cd2.c 				\
 	srcs/core/ft_editenv.c 			\
-	srcs/core/ft_free_strarray.c	\
 	srcs/core/ft_envtools.c			\
 	srcs/core/ft_envtools2.c		\
 	srcs/core/ft_tools.c			\
@@ -26,7 +25,8 @@ SRC =	srcs/core/main.c 			\
 	srcs/inputs/ft_lstrmanage.c		\
 	srcs/inputs/ft_managechar.c		\
 	srcs/inputs/ft_put.c 			\
-	srcs/inputs/ft_moves.c
+	srcs/inputs/ft_moves.c			\
+	srcs/signals/ft_init.c
 
 OBJ = $(SRC:.c=.o)
 

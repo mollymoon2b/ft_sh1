@@ -80,7 +80,8 @@ int			ft_unsetenv(t_env *shell)
 	if (shell->ac == 2)
 	{
 		if (ft_got_space(shell->av[1]))
-			ft_error_2char("unsetenv: not valid in this context: ", shell->av[1]);
+			ft_error_2char("unsetenv: not valid in this context: ",\
+								shell->av[1]);
 		else if (ft_get_env_addr(shell, shell->av[1]))
 			ft_unset_from_env(shell);
 		else
