@@ -58,6 +58,7 @@ void				ft_exec_bin(t_env *shell)
 {
 	if (ft_set_binpath(shell) == 0)
 	{
+		ft_restore_signals(shell);
 		dprintf(1, "Forking '%s'\n", shell->binpath);
 		shell->cpid = fork();
 		if (shell->cpid != -1)
@@ -71,5 +72,6 @@ void				ft_exec_bin(t_env *shell)
 		free(shell->binpath);
 		shell->p = ft_get_params();
 		shell->cpid = 0;
+		ft_init_signals();
 	}
 }

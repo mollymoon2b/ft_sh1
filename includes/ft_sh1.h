@@ -81,6 +81,30 @@ typedef struct		s_env
 	t_str			*histo;
 	t_str			*phisto;
 	pid_t			cpid;
+	char			*name_shell;
+	char			*name_process;
+
+
+	void			*sigabrt;
+	void			*sigalrm;
+	void			*sigbus;
+	void			*sigfpe;
+	void			*sighup;
+	void			*sigill;
+	void			*sigint;
+	void			*sigkill;
+	void			*sigpipe;
+	void			*sigsegv;
+	void			*sigstop;
+	void			*sigterm;
+	void			*sigusr1;
+	void			*sigusr2;
+	void			*sigprof;
+	void			*sigsys;
+	void			*sigtrap;
+	void			*sigvtalrm;
+	void			*sigxcpu;
+	void			*sigxfsz;
 }					t_env;
 
 char				**ft_dup_environ(char **environ);
@@ -145,4 +169,6 @@ char				*ft_redup(char **str);
 
 void				ft_init_signals(void);
 int					ft_reboot_imput(t_env *shell);
+void				ft_restore_signals(t_env *shell);
+
 #endif

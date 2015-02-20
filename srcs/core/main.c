@@ -81,6 +81,8 @@ static int			ft_minishell(char **envp)
 	if (!(shell = ft_get_env(envp)))
 		return (0);
 	ft_call_env(&shell);
+	shell->name_shell = ft_strdup("shell");
+	shell->name_process = ft_strdup("test");
 	// ft_init_signals();
 	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
 	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);

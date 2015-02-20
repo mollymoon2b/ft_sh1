@@ -1,15 +1,16 @@
-Process:         ft_minishell1 [55590]
+Process:         ft_minishell1 [58792]
 Path:            /Volumes/Data/nfs/zfs-student-2/users/2014/achazal/Desktop/sh/clone/ft_minishell1
-Load Address:    0x10279a000
+Load Address:    0x101a08000
 Identifier:      ft_minishell1
 Version:         0
 Code Type:       X86-64
-Parent Process:  zsh [53803]
+Parent Process:  zsh [45001]
 
-Date/Time:       2015-02-20 04:22:03.917 +0100
+Date/Time:       2015-02-20 04:56:05.059 +0100
 OS Version:      Mac OS X 10.9.5 (13F34)
 Report Version:  7
 
 leaks Report Version:  2.0
-Process 55590: 360 nodes malloced for 31 KB
-Process 55590: 0 leaks for 0 total leaked bytes.
+Process 58792: 367 nodes malloced for 31 KB
+Process 58792: 1 leak for 16 total leaked bytes.
+Leak: 0x7fad32403ab0  size=16  zone: DefaultMallocZone_0x101a16000  "xterm-256color"

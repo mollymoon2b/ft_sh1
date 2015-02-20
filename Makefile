@@ -26,7 +26,8 @@ SRC =	srcs/core/main.c 			\
 	srcs/inputs/ft_managechar.c		\
 	srcs/inputs/ft_put.c 			\
 	srcs/inputs/ft_moves.c			\
-	srcs/signals/ft_init.c
+	srcs/signals/ft_init.c			\
+	srcs/signals/ft_reset.c
 
 OBJ = $(SRC:.c=.o)
 
