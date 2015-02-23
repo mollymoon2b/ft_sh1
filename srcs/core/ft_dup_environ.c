@@ -21,8 +21,8 @@ t_params		*ft_get_params(void)
 	p->c_pos_x = 0;
 	p->c_pos_y = 0;
 	p->print = 0;
-	if (!(p->v_term = ft_strdup("xterm-256color")))
-		return (NULL);
+	// if (!(p->v_term = ft_strdup("xterm-256color")))
+		// return (NULL);
 	if (tgetent(p->buf, p->v_term) < 1)
 		return (NULL);
 	tcgetattr(0, &p->term);

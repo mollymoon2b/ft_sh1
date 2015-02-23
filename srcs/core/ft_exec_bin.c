@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/ft_sh1.h"
+#include <sys/stat.h>
 
 t_env				*ft_call_env(t_env **shell)
 {
@@ -25,6 +26,18 @@ t_env				*ft_call_env(t_env **shell)
 		return (save);
 }
 
+static char	ft_isexec(char *path)
+{
+	struct stat sb;
+
+	if (!stat(path, &sb))
+	{
+		if (IS_REG(sb.st_mode) && sb.st_mode & 0111)
+			return (1);
+	}
+	return (0);
+}
+
 static int			ft_set_binpath(t_env *shell)
 {
 	int				i;
@@ -32,8 +45,9 @@ static int			ft_set_binpath(t_env *shell)
 	i = 0;
 	if (shell->path != NULL)
 	{
-		if (access(shell->av[0], X_OK) == 0)
+		if (ft_isexec(shell->av[0]))
 		{
+			dprintf(1, "Direct path\n");
 			shell->binpath = ft_strdup(shell->av[0]);
 			return (0);
 		}
@@ -42,7 +56,7 @@ static int			ft_set_binpath(t_env *shell)
 			if ((shell->binpath = ft_linkpath(shell->paths[i++],\
 									shell->av[0], '/')))
 			{
-				if (access(shell->binpath, X_OK) == 0)
+				if (ft_isexec(shell->binpath))
 					return (0);
 				free(shell->binpath);
 			}
@@ -59,7 +73,6 @@ void				ft_exec_bin(t_env *shell)
 	if (ft_set_binpath(shell) == 0)
 	{
 		ft_restore_signals(shell);
-		dprintf(1, "Forking '%s'\n", shell->binpath);
 		shell->cpid = fork();
 		if (shell->cpid != -1)
 		{

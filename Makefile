@@ -1,52 +1,78 @@
-NAME = ft_minishell1
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: achazal <achazal@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2014/11/03 11:54:29 by achazal           #+#    #+#              #
+#    Updated: 2014/12/13 12:55:35 by achazal          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# -------------Compilateur------------------#
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-INCLUDE = 
-SRC =	srcs/core/main.c 			\
-	srcs/core/ft_dup_environ.c 		\
-	srcs/core/ft_exec_bin.c 		\
-	srcs/core/ft_parse_input.c 		\
-	srcs/core/ft_get_args.c 		\
-	srcs/core/ft_cd.c 				\
-	srcs/core/ft_cd2.c 				\
-	srcs/core/ft_editenv.c 			\
-	srcs/core/ft_envtools.c			\
-	srcs/core/ft_envtools2.c		\
-	srcs/core/ft_tools.c			\
-	srcs/inputs/ft_arrows.c 		\
-	srcs/inputs/ft_arrows2.c 		\
-	srcs/inputs/ft_special.c		\
-	srcs/inputs/ft_charmanage.c 	\
-	srcs/inputs/ft_cursor.c 		\
-	srcs/inputs/ft_delete.c 		\
-	srcs/inputs/ft_env.c 			\
-	srcs/inputs/ft_imputs.c 		\
-	srcs/inputs/ft_clean.c 			\
-	srcs/inputs/ft_lstrmanage.c		\
-	srcs/inputs/ft_managechar.c		\
-	srcs/inputs/ft_put.c 			\
-	srcs/inputs/ft_moves.c			\
-	srcs/signals/ft_init.c			\
-	srcs/signals/ft_reset.c
+CFLAGS = -Wall -Wextra -Werror -I./includes -O3 -g
+#--------------Name-------------------------#
+NAME = ft_minishell1
 
-OBJ = $(SRC:.c=.o)
+#--------------Sources----------------------#
+FILES_CORE =	main.c	\
+	ft_dup_environ.c	\
+	ft_exec_bin.c		\
+	ft_parse_input.c	\
+	ft_get_args.c		\
+	ft_cd.c				\
+	ft_cd2.c			\
+	ft_editenv.c		\
+	ft_envtools.c		\
+	ft_envtools2.c		\
+	ft_tools.c
 
-all : $(NAME)
+FILES_INPUTS =	ft_arrows.c	\
+	ft_arrows2.c			\
+	ft_special.c			\
+	ft_charmanage.c			\
+	ft_cursor.c				\
+	ft_delete.c				\
+	ft_env.c				\
+	ft_imputs.c				\
+	ft_clean.c				\
+	ft_lstrmanage.c			\
+	ft_managechar.c			\
+	ft_put.c				\
+	ft_moves.c
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+FILES_SIGNALS =	ft_init.c	\
+	ft_reset.c
+
+OBJECT =	$(patsubst %.c,%.o,$(FILES_CORE)) \
+			$(patsubst %.c,%.o,$(FILES_INPUTS)) \
+			$(patsubst %.c,%.o,$(FILES_SIGNALS))
+BASEDIR_CORE = srcs/core
+BASEDIR_INPUTS = srcs/inputs
+BASEDIR_SIGNALS = srcs/signals
+#--------------Actions----------------------#
+
+all:$(NAME)
 
 $(NAME):
-	make -C includes/libft
-	$(CC) $(CFLAGS) -o $(NAME) $(SRC) -L ./includes/libft -l ft -L /usr/lib -ltermcap
+	@make -C includes/libft
+	@$(CC) -c $(CFLAGS)	$(addprefix $(BASEDIR_CORE)/, $(FILES_CORE)) \
+						$(addprefix $(BASEDIR_INPUTS)/, $(FILES_INPUTS)) \
+						$(addprefix $(BASEDIR_SIGNALS)/, $(FILES_SIGNALS))
+	@$(CC) -o $(NAME) $(OBJECT) -L ./includes/libft -l ft -L /usr/lib -ltermcap
+	@bash -c "sh setIcon.sh icon/gladosh_icon.png ft_minishell1"
+	@bash -c "touch auteur && echo \"achazal\" > auteur"
+	@bash -c "sh setIcon.sh icon/auteur_icon.png auteur"
+	@bash -c "sh setIcon.sh icon/gladosh_icon.png ft_minishell1"
 
-clean:
-	rm -rf $(OBJ)
+clean :
+		rm -Rf $(OBJECT)
 
 fclean: clean
-	rm -rf $(NAME)
+		rm -Rf $(NAME)
 
 re: fclean all
 
 .PHONY: all, fclean, clean, re 
-

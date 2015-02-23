@@ -35,6 +35,8 @@
 # include <curses.h>
 # define MIN_W 10
 
+# define IS_REG(m) ((m & 0170000) == 0100000)
+
 typedef struct		s_params
 {
 	char			**av;
