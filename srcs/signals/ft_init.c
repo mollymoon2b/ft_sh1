@@ -1,28 +1,40 @@
 #include "../../includes/ft_sh1.h"
+#include <stdio.h>
+
+/*
+AtlasView4.nib
+AudioPlaybackView.nib
+AudioRecordingView.nib
+BizLSig_num = 2, str = ls -R /, cpid = 78121
+^F
+OUT
+Shell >
+*/
 
 static void			ft_sig_to_reload(int sig_num)
 {
 	t_env			*shell;
 
 	shell = ft_call_env(NULL);
-	// if (shell->cpid)
-		// write(0, "^C", 2);
 	if (sig_num == SIGINT)
-		ft_putstr("\n");
+	{
+		if (shell->cpid)
+		{
+			write(0, "^F\n", 3);
+			shell->cpid = 0;
+		}
+		else
+		{
+			write(1, "\n", 1);
+			ft_putstr(shell->name);
+			free(shell->str);
+			shell->str = ft_strdup("");
+			shell->index = 0;
+			shell->max = 0;
+		}
+	}
 	else if (sig_num == SIGSYS)
-		ft_putstr("COUCOU C'EST MOI\n");
-	// ft_clean_env(shell);
-	// if (shell->str)
-	// {
-	// 	free(shell->str);
-	// 	shell->str = NULL;
-	// }
-	shell->index = 0;
-	shell->max = 0;
-	ft_putstr(shell->name);
-	// ft_reboot_imput(shell);
-	return ;
-	(void)sig_num;
+		write(1, "COUCOU C'EST MOI\n", 17);
 }
 
 static void			ft_sigterm(int sig_num)
@@ -30,10 +42,14 @@ static void			ft_sigterm(int sig_num)
 	t_env			*shell;
 
 	shell = ft_call_env(NULL);
-	ft_putstr("GladOs: Did you really try to kill me ? Hehe, no chance !\n");
+	ft_putstr("\nGladOsh: Did you really try to kill me ? Hehe, no chance !\n");
+	// shell->index = 0;
+	// shell->max = 0;
+	// ft_putstr(shell->name);
+	free(shell->str);
+	shell->str = ft_strdup("");
 	shell->index = 0;
 	shell->max = 0;
-	ft_putstr(shell->name);
 	// ft_clean_env(shell);
 	// ft_reboot_imput(shell);
 	return ;
@@ -44,32 +60,39 @@ static void			ft_sig_to_exit(int sig_num)
 {
 	t_env			*shell;
 
+	write(1, "SIGNAL\n", 7);
 	shell = ft_call_env(NULL);
-	ft_putstr(shell->name_shell);
-	if (sig_num == SIGABRT)
-		ft_putstr(": abort ");
-	else if (sig_num == SIGALRM)
-		ft_putstr(": ti");
-	else if (sig_num == SIGBUS)
-		ft_putstr(": bus error ");
-	else if (sig_num == SIGFPE)
-		ft_putstr(": floating point exception ");
-	else if (sig_num == SIGHUP || sig_num == SIGPIPE)
-		exit(0);
-	else if (sig_num == SIGKILL)
-		ft_putstr(": killed ");
-	else if (sig_num == SIGILL)
-		ft_putstr(": illegal hardware instruction ");
-	else if (sig_num == SIGSEGV)
-		ft_putstr(": segmentation fault ");
-	else if (sig_num == SIGVTALRM)
-		ft_putstr(": virtual time alarm ");
-	else if (sig_num == SIGXCPU)
-		ft_putstr(": cpu limit exceeded ");
-	else if (sig_num == SIGXCPU)
-		ft_putstr(": size limit exceeded ");
-	ft_putstr(shell->name_process);
-	ft_putchar('\n');
+	// ft_putstr(shell->name_shell);
+	// if (sig_num == SIGABRT)
+	// 	ft_putstr(": abort ");
+	// else if (sig_num == SIGALRM)
+	// 	ft_putstr(": ti");
+	// else if (sig_num == SIGBUS)
+	// 	ft_putstr(": bus error ");
+	// else if (sig_num == SIGFPE)
+	// 	ft_putstr(": floating point exception ");
+	// else if (sig_num == SIGHUP || sig_num == SIGPIPE)
+	// 	exit(0);
+	// else if (sig_num == SIGKILL)
+	// 	ft_putstr(": killed ");
+	// else if (sig_num == SIGILL)
+	// 	ft_putstr(": illegal hardware instruction ");
+	// else if (sig_num == SIGSEGV)
+	// 	ft_putstr(": segmentation fault ");
+	// else if (sig_num == SIGVTALRM)
+	// 	ft_putstr(": virtual time alarm ");
+	// else if (sig_num == SIGXCPU)
+	// 	ft_putstr(": cpu limit exceeded ");
+	// else if (sig_num == SIGXCPU)
+	// 	ft_putstr(": size limit exceeded ");
+	// ft_putstr(shell->name_process);
+	// ft_putchar('\n');
+	if (shell->cpid)
+	{
+		shell->name_shell = ft_strdup("shell");
+		shell->name_process = ft_strdup("test");
+	}
+	(void)sig_num;
 	exit(0);
 }
 

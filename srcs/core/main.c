@@ -60,7 +60,7 @@ int					ft_reboot_imput(t_env *shell)
 {
 	int				value;
 
-	ft_init_signals();
+	// ft_init_signals();
 	while ((value = ft_get_inputs(shell)))
 	{
 		if (value == 0)
@@ -83,7 +83,7 @@ static int			ft_minishell(char **envp)
 	ft_call_env(&shell);
 	shell->name_shell = ft_strdup("shell");
 	shell->name_process = ft_strdup("test");
-	ft_init_signals();
+	ft_save_signals(shell);
 	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
 	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
 	ft_reboot_imput(shell);
@@ -108,7 +108,7 @@ int					main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	ret = ft_minishell(envp);
-	system("leaks ft_minishell1 > info/leaks.info");
-	system("cat info/leaks.info");
+	system("leaks ft_minishell1");// > info/leaks.info");
+	// system("cat info/leaks.info");
 	return (ret);
 }

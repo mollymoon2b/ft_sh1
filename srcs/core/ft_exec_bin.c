@@ -47,7 +47,6 @@ static int			ft_set_binpath(t_env *shell)
 	{
 		if (ft_isexec(shell->av[0]))
 		{
-			dprintf(1, "Direct path\n");
 			shell->binpath = ft_strdup(shell->av[0]);
 			return (0);
 		}
@@ -68,11 +67,20 @@ static int			ft_set_binpath(t_env *shell)
 	return (-1);
 }
 
+void ignore( int sig )
+{
+	(void)sig;
+    write (0, "^B\n", 3); // Print a new line
+    // This function does nothing except ignore ctrl-c
+}
+
 void				ft_exec_bin(t_env *shell)
 {
 	if (ft_set_binpath(shell) == 0)
 	{
-		ft_restore_signals(shell);
+		// ft_restore_signals(shell);
+		// ft_init_signals();
+		// signal(SIGINT, ignore);
 		shell->cpid = fork();
 		if (shell->cpid != -1)
 		{
@@ -85,6 +93,6 @@ void				ft_exec_bin(t_env *shell)
 		free(shell->binpath);
 		shell->p = ft_get_params();
 		shell->cpid = 0;
-		ft_init_signals();
+		// ft_init_signals();
 	}
 }

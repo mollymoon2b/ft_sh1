@@ -172,5 +172,6 @@ char				*ft_redup(char **str);
 void				ft_init_signals(void);
 int					ft_reboot_imput(t_env *shell);
 void				ft_restore_signals(t_env *shell);
+void				ft_save_signals(t_env *shell);
 
 #endif

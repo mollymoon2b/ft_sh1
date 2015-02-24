@@ -46,12 +46,14 @@ FILES_INPUTS =	ft_arrows.c	\
 FILES_SIGNALS =	ft_init.c	\
 	ft_reset.c
 
-OBJECT =	$(patsubst %.c,%.o,$(FILES_CORE)) \
-			$(patsubst %.c,%.o,$(FILES_INPUTS)) \
+OBJECT =	$(patsubst %.c,%.o,$(FILES_CORE))	\
+			$(patsubst %.c,%.o,$(FILES_INPUTS))	\
 			$(patsubst %.c,%.o,$(FILES_SIGNALS))
 BASEDIR_CORE = srcs/core
 BASEDIR_INPUTS = srcs/inputs
 BASEDIR_SIGNALS = srcs/signals
+
+CURRENT_DIR = $(shell pwd)/$(NAME)
 #--------------Actions----------------------#
 
 all:$(NAME)
@@ -65,7 +67,7 @@ $(NAME):
 	@bash -c "sh setIcon.sh icon/gladosh_icon.png ft_minishell1"
 	@bash -c "touch auteur && echo \"achazal\" > auteur"
 	@bash -c "sh setIcon.sh icon/auteur_icon.png auteur"
-	@bash -c "sh setIcon.sh icon/gladosh_icon.png ft_minishell1"
+	echo $(CURRENT_DIR)
 
 clean :
 		rm -Rf $(OBJECT)
