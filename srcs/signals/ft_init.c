@@ -1,16 +1,6 @@
 #include "../../includes/ft_sh1.h"
 #include <stdio.h>
 
-/*
-AtlasView4.nib
-AudioPlaybackView.nib
-AudioRecordingView.nib
-BizLSig_num = 2, str = ls -R /, cpid = 78121
-^F
-OUT
-Shell >
-*/
-
 static void			ft_sig_to_reload(int sig_num)
 {
 	t_env			*shell;
@@ -33,7 +23,8 @@ static void			ft_sig_to_reload(int sig_num)
 			shell->max = 0;
 		}
 	}
-	else if (sig_num == SIGSYS)
+	// else if (sig_num == SIGSYS)
+	else
 		write(1, "COUCOU C'EST MOI\n", 17);
 }
 
@@ -60,39 +51,25 @@ static void			ft_sig_to_exit(int sig_num)
 {
 	t_env			*shell;
 
-	write(1, "SIGNAL\n", 7);
 	shell = ft_call_env(NULL);
-	// ft_putstr(shell->name_shell);
-	// if (sig_num == SIGABRT)
-	// 	ft_putstr(": abort ");
-	// else if (sig_num == SIGALRM)
-	// 	ft_putstr(": ti");
-	// else if (sig_num == SIGBUS)
-	// 	ft_putstr(": bus error ");
-	// else if (sig_num == SIGFPE)
-	// 	ft_putstr(": floating point exception ");
-	// else if (sig_num == SIGHUP || sig_num == SIGPIPE)
-	// 	exit(0);
-	// else if (sig_num == SIGKILL)
-	// 	ft_putstr(": killed ");
-	// else if (sig_num == SIGILL)
-	// 	ft_putstr(": illegal hardware instruction ");
-	// else if (sig_num == SIGSEGV)
-	// 	ft_putstr(": segmentation fault ");
-	// else if (sig_num == SIGVTALRM)
-	// 	ft_putstr(": virtual time alarm ");
-	// else if (sig_num == SIGXCPU)
-	// 	ft_putstr(": cpu limit exceeded ");
-	// else if (sig_num == SIGXCPU)
-	// 	ft_putstr(": size limit exceeded ");
-	// ft_putstr(shell->name_process);
-	// ft_putchar('\n');
-	if (shell->cpid)
-	{
-		shell->name_shell = ft_strdup("shell");
-		shell->name_process = ft_strdup("test");
-	}
-	(void)sig_num;
+	ft_putstr(shell->name_shell);
+	if (sig_num == SIGABRT || sig_num == SIGALRM)
+		ft_putstr((sig_num == SIGABRT) ? ": abort " : ": ti");
+	else if (sig_num == SIGKILL || sig_num == SIGBUS)
+		ft_putstr((sig_num == SIGKILL) ? ": killed " : ": bus error ");
+	else if (sig_num == SIGFPE)
+		ft_putstr(": floating point exception ");
+	else if (sig_num == SIGILL)
+		ft_putstr(": illegal hardware instruction ");
+	else if (sig_num == SIGSEGV)
+		ft_putstr(": segmentation fault ");
+	else if (sig_num == SIGVTALRM)
+		ft_putstr(": virtual time alarm ");
+	else if (sig_num == SIGXCPU)
+		ft_putstr(": cpu limit exceeded ");
+	else if (sig_num == SIGXCPU)
+		ft_putstr(": size limit exceeded ");
+	ft_putendl(shell->name_shell);
 	exit(0);
 }
 
@@ -126,41 +103,9 @@ static void			ft_sigtrap(int sig_num)
 	(void)sig_num;
 }
 
-void				ft_save_signals(t_env *shell)
-{
-	shell->sigabrt = signal(SIGABRT, ft_sig_to_exit);
-	shell->sigalrm = signal(SIGALRM, ft_sig_to_exit);
-	shell->sigbus = signal(SIGBUS, ft_sig_to_exit);
-	// shell->sig = // signal(SIGCHLD, ft_sigchld); // Son died // ZSH PRINT NOTHING WITHOUT EXEC
-	// shell->sig = // signal(SIGCONT, ft_sigcont); // Wake up (fg) // ZSH PRINT NOTHING WITHOUT EXEC
-	shell->sigfpe = signal(SIGFPE, ft_sig_to_exit);
-	shell->sighup = signal(SIGHUP, ft_sig_to_exit);
-	shell->sigill = signal(SIGILL, ft_sig_to_exit);
-	shell->sigint = signal(SIGINT, ft_sig_to_reload);
-	shell->sigkill = signal(SIGKILL, ft_sig_to_exit);
-	shell->sigpipe = signal(SIGPIPE, ft_sig_to_exit);
-	// shell->sig = // signal(SIGQUIT, ft_sigquit); // UNKNOWN // ZSH PRINT NOTHING WITHOUT EXEC
-	shell->sigsegv = signal(SIGSEGV, ft_sig_to_exit);
-	shell->sigstop = signal(SIGSTOP, ft_sigstop); // Stop (fg)
-	shell->sigterm = signal(SIGTERM, ft_sigterm);
-	// shell->sig = // signal(SIGTSTP, ft_sigtstp); // Break (fg) // ZSH PRINT NOTHING WITHOUT EXEC
-	// shell->sig = // signal(SIGTTIN, ft_sig_define_user); // Not precise (Input relatif) // ZSH PRINT NOTHING WITHOUT EXEC
-	// shell->sig = // signal(SIGTTOU, ft_sig_define_user); // Not precise (Input relatif) // ZSH PRINT NOTHING WITHOUT EXEC
-	shell->sigusr1 = signal(SIGUSR1, ft_sig_define_user); // UNKNOWN
-	shell->sigusr2 = signal(SIGUSR2, ft_sig_define_user); // UNKNOWN
-	// shell->sig = // signal(SIGPOLL, ft_sigpoll); // ... // Can't be used with kill
-	shell->sigprof = signal(SIGPROF, ft_sigprof); // Pthread -> Plus tard
-	shell->sigsys = signal(SIGSYS, ft_sig_to_reload);
-	shell->sigtrap = signal(SIGTRAP, ft_sigtrap); // Do not set
-	// shell->sig = // signal(SIGURG, ft_sigurg); // Server, may not have to be set // ZSH PRINT NOTHING WITHOUT EXEC
-	shell->sigvtalrm = signal(SIGVTALRM, ft_sig_to_exit); // Time related
-	shell->sigxcpu = signal(SIGXCPU, ft_sig_to_exit); // Time out
-	shell->sigxfsz = signal(SIGXFSZ, ft_sig_to_exit); // Max file size
-}
-
 void				ft_init_signals(void)
 {
-	signal(SIGABRT, ft_sig_to_exit);
+	signal(SIGABRT, ft_sig_to_reload);
 	signal(SIGALRM, ft_sig_to_exit);
 	signal(SIGBUS, ft_sig_to_exit);
 	// signal(SIGCHLD, ft_sigchld); // Son died // ZSH PRINT NOTHING WITHOUT EXEC

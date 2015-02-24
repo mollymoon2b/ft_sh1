@@ -34,17 +34,22 @@ static char			**ft_get_envpath(t_env *shell)
 
 static void			ft_launch(t_env *shell)
 {
-	char			**imputs;
+	char			**inputs;
 	char			**ptr;
 
-	if (!(imputs = ft_strsplit(shell->str, ';')))
+	if (!(inputs = ft_strsplit(shell->str, ';')))
 		return ;
+	// if (ft_strlen(inputs) > 2 && inputs[0] == ';' && inputs[1])
+	// {
+	// 	free()
+	// }
+	
 	if (shell->str)
 	{
 		free(shell->str);
 		shell->str = NULL;
 	}
-	ptr = imputs;
+	ptr = inputs;
 	while (ptr && *ptr)
 	{
 		shell->str = *ptr++;
@@ -52,7 +57,7 @@ static void			ft_launch(t_env *shell)
 		ft_parse_input(shell);
 		ft_free_strarray(&shell->paths);
 	}
-	ft_free_strarray(&imputs);
+	ft_free_strarray(&inputs);
 	shell->str = NULL;
 }
 
@@ -81,9 +86,9 @@ static int			ft_minishell(char **envp)
 	if (!(shell = ft_get_env(envp)))
 		return (0);
 	ft_call_env(&shell);
+	ft_init_signals();
 	shell->name_shell = ft_strdup("shell");
 	shell->name_process = ft_strdup("test");
-	ft_save_signals(shell);
 	tputs(tgetstr("ve", (char **)(&shell->p->buf)), 1, ft_putc);
 	tputs(tgetstr("vs", (char **)(&shell->p->buf)), 1, ft_putc);
 	ft_reboot_imput(shell);
