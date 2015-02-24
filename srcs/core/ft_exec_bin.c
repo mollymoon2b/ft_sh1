@@ -76,37 +76,74 @@ void ignore( int sig )
 
 // #include <sys/types.h>
 // #include <sys/wait.h>
+/*
+static void			ft_sigprof(int sig_num)
+{ //To handle for real
+	ft_putstr("shell: profile signal shell\n");
+	exit(0);
+	(void)sig_num;
+}
 
+static void			ft_sigtrap(int sig_num)
+{ //To handle for real
+	ft_putstr("shell: trace trap shell\n");
+	exit(0);
+	(void)sig_num;
+}
+*/
 void				ft_wrong_exit(char *father, int sig_num, char *son)
 {
 	if (sig_num == SIGPIPE)
 		return ;
 	ft_putstr(father);
-	if (sig_num == SIGABRT)
-		write(1, ": abort ", 8);
-	else if (sig_num == SIGALRM)
-		write(1, ": ti", 4);
-	else if (sig_num == SIGBUS)
-		write(1, ": bus error ", 12);
-	else if (sig_num == SIGFPE)
-		write(1, ": floating point exception ", 27);
-	else if (sig_num == SIGHUP)
-		write(1, ": hangup ", 9);
-	else if (sig_num == SIGKILL)
-		write(1, ": killed ", 9);
+	if (sig_num == SIGHUP)
+		write(1, ": hangup ", 9); //INT
+	//3 SIGQUIT zsh: quit       ./loop
 	else if (sig_num == SIGILL)
 		write(1, ": illegal hardware instruction ", 31);
+	else if (sig_num == SIGTRAP)
+		ft_putstr(1, ": trace trap shell", 18);
+	else if (sig_num == SIGABRT)
+		write(1, ": abort ", 8);
+	//7 GEMT zsh: EMT instruction  ./loop
+	else if (sig_num == SIGFPE)
+		write(1, ": floating point exception ", 27);
+	else if (sig_num == SIGKILL)
+		write(1, ": killed ", 9);
+	else if (sig_num == SIGBUS)
+		write(1, ": bus error ", 12);
 	else if (sig_num == SIGSEGV)
 		write(1, ": segmentation fault ", 21);
-	else if (sig_num == SIGVTALRM)
-		write(1, ": virtual time alarm ", 21);
+	//12 SYS zsh: invalid system call  ./loop
+	//13 PIPE NULL
+	else if (sig_num == SIGALRM)
+		write(1, ": ti", 4);
+	//15 TERM zsh: terminated  ./loop
+	//16 URG
+	//17 STOP
+	//18 TSTP
+	//19 CONT
+	//20 CHLD
+	//21 TTIN
+	//22 TTOU
+	//23 GIO
 	else if (sig_num == SIGXCPU)
 		write(1, ": cpu limit exceeded ", 21);
-	else if (sig_num == SIGXCPU)
+	else if (sig_num == SIGXFSZ)
 		write(1, ": size limit exceeded ", 22);
+	else if (sig_num == SIGVTALRM)
+		write(1, ": virtual time alarm ", 21);
+	else if (sig_num == SIGPROF)
+		ft_putstr(1, ": profile signal shell", 22);
+	//28 WINCH
+	//29 INFO
+	else if (sig_num == SIGUSR1)
+		ft_putstr(1, ": user-defined signal 1 shell", 29);
+	else if (sig_num == SIGUSR2)
+		ft_putstr(1, ": user-defined signal 2 shell", 29);
 	ft_putendl(son);
 }
-
+// SIGQUIT
 void				ft_exec_bin(t_env *shell)
 {
 	int				stat_loc;
