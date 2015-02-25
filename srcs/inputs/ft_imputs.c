@@ -87,7 +87,7 @@ int			ft_get_inputs(t_env *e)
 	char	inputs[7];
 	int		value;
 
-	bzero(inputs, 7);
+	ft_bzero(inputs, 7);
 	ft_clean_histo(e);
 	ft_lstr_inputsinit(e);
 	tputs(e->name, 1, ft_putc);
@@ -96,7 +96,7 @@ int			ft_get_inputs(t_env *e)
 		// printf("Imputs : %i %i %i %i %i %i %i\n", inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6]);
 		if ((value = ft_manage_inputs(e, inputs)) >= 0)
 			return (value);
-		bzero(inputs, 7);
+		ft_bzero(inputs, 7);
 	}
 	ft_endline(e);
 	return (0);

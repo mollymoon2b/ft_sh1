@@ -119,14 +119,14 @@ void				ft_wrong_exit(char *father, int sig_num, char *son)
 	else if (sig_num == SIGALRM)
 		write(1, ": ti", 4);
 	//15 TERM zsh: terminated  ./loop
-	//16 URG
-	//17 STOP
-	//18 TSTP
-	//19 CONT
-	//20 CHLD
-	//21 TTIN
-	//22 TTOU
-	//23 GIO
+	//16 URG NULL ??
+	//17 STOP zsh: suspended (signal)  ./loop
+	//18 TSTP ??
+	//19 CONT ?? NULL
+	//20 CHLD ?? NULL
+	//21 TTIN zsh: suspended (tty input)  ./loop
+	//22 TTOU zsh: suspended (tty output)  ./loop
+	//23 GIO ??KILL
 	else if (sig_num == SIGXCPU)
 		write(1, ": cpu limit exceeded ", 21);
 	else if (sig_num == SIGXFSZ)
@@ -135,15 +135,15 @@ void				ft_wrong_exit(char *father, int sig_num, char *son)
 		write(1, ": virtual time alarm ", 21);
 	else if (sig_num == SIGPROF)
 		ft_putstr(1, ": profile signal shell", 22);
-	//28 WINCH
-	//29 INFO
+	//28 WINCH ??
+	//29 INFO ??
 	else if (sig_num == SIGUSR1)
 		ft_putstr(1, ": user-defined signal 1 shell", 29);
 	else if (sig_num == SIGUSR2)
 		ft_putstr(1, ": user-defined signal 2 shell", 29);
 	ft_putendl(son);
 }
-// SIGQUIT
+
 void				ft_exec_bin(t_env *shell)
 {
 	int				stat_loc;
