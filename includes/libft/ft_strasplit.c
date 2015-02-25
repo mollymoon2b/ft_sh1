@@ -21,7 +21,7 @@ static size_t	ft_nbr_words(char const *s, char *c)
 	nbr = 0;
 	while (s[i])
 	{
-		while (s[i] && ft_strchr(c,s[i]))
+		while (s[i] && ft_strchr(c, s[i]))
 			i++;
 		while (s[i] && !ft_strchr(c, s[i]))
 			i++;
