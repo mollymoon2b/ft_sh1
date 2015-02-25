@@ -102,7 +102,7 @@ void				ft_wrong_exit(char *father, int sig_num, char *son)
 	else if (sig_num == SIGILL)
 		write(1, ": illegal hardware instruction ", 31);
 	else if (sig_num == SIGTRAP)
-		ft_putstr(1, ": trace trap shell", 18);
+		write(1, ": trace trap shell", 18);
 	else if (sig_num == SIGABRT)
 		write(1, ": abort ", 8);
 	//7 GEMT zsh: EMT instruction  ./loop
@@ -134,13 +134,13 @@ void				ft_wrong_exit(char *father, int sig_num, char *son)
 	else if (sig_num == SIGVTALRM)
 		write(1, ": virtual time alarm ", 21);
 	else if (sig_num == SIGPROF)
-		ft_putstr(1, ": profile signal shell", 22);
+		write(1, ": profile signal shell", 22);
 	//28 WINCH ??
 	//29 INFO ??
 	else if (sig_num == SIGUSR1)
-		ft_putstr(1, ": user-defined signal 1 shell", 29);
+		write(1, ": user-defined signal 1 shell", 29);
 	else if (sig_num == SIGUSR2)
-		ft_putstr(1, ": user-defined signal 2 shell", 29);
+		write(1, ": user-defined signal 2 shell", 29);
 	ft_putendl(son);
 }
 
